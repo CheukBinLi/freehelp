@@ -3,7 +3,7 @@
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
 <style>
-input[name=file] {
+input[type=file] {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -24,9 +24,7 @@ input[name=file] {
 		<input type="text" name="idCard">
 		<input type="hidden" name="type" style="width: 450" value="jpg">
 		<a>
-			<input type="file" id="file" name="file[]" style="width: 220" multiple="multiple" onchange="OO(this)" accept="image/*" value="a">
-			<input type="file" name="file1" width="200" upload="true" onchange="a(this)">
-			<input type="file" name="file2" style="display: none" upload="true">
+			<input type="file" id="file" style="width: 220" multiple="multiple" onchange="OO(this)" accept="image/*" value="a">
 			<img alt="" src="" width="200px;" height="200px;" id="upimg0">
 			<img alt="" src="" width="200px;" height="200px;" id="upimg1">
 		</a>
@@ -47,11 +45,7 @@ input[name=file] {
 			for (var i = 0; i < obj.files.length; i++) {
 				if (!/image\/\w+/.test(obj.files[i].type))
 					return alert("只能选择图片格式文件");
-				files[i].files[0] = obj.files[i];
 				console.log(obj.files[i]);
-				alert(files[i].files[0].name)
-				console.log(files[i].files[0]);
-				//alert(obj.files[i].name)
 			}
 			if (window.FileReader) {
 				loading(obj, 0, obj.files.length);
@@ -72,7 +66,11 @@ input[name=file] {
 		}
 		function AAXX() {
 			var fd = new FormData($('#aaxx')[0]);
-			console.log(fd);
+			//var fd = new FormData();
+			var file = $("#file");
+			fd.append("file1", file[0].files[0]);
+			fd.append("file2", file[0].files[1]);
+
 			$.ajax({
 				url : "${request.contextPath}/system/upload/idcard",
 				type : "POST",
