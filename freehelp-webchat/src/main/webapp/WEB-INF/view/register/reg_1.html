@@ -1,0 +1,39 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+</head>
+<body>
+	<h2>index</h2>
+	<form action="reg_2" method="POST" id="f0">
+		<input type="text" name="phone" placeholder="手机号码" maxlength="11" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+		<a id="submit" href="javascript:void(0);">获取验证码</a>
+	</form>
+</html>
+</body>
+<script type="text/javascript">
+	$("#submit").click(
+			function() {
+				var phone = $("input[name='phone']");
+				if (phone.val().length != 11) {
+					//提示输入不对
+					return;
+				}
+				ajax.POST("checkUser", 'phone=' + phone.val(), function(data) {
+					//console.log(data);
+					//alert(msgModel.getCode(data));
+					if (msgModel.getCode(data) == '1') {
+						if (msgModel.getData(data) == '0') {
+							ajax.POST('verificationcode', 'sendCode=true&phone='+ phone.val(),
+									function() {
+										return $('#f0').submit();
+									})
+
+						} else
+							return alert('此号码已经是会员');
+					} else
+						alert(msgModel.getMsg(data));
+				});
+			});
+</script>

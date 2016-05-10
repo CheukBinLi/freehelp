@@ -1,0 +1,87 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<style>
+input[name=file] {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 100px;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	width: 400px;
+	height: 200px;
+}
+</style>
+</head>
+<body>
+	<h2>实名验证</h2>
+	<form action="" id="aaxx" enctype="multipart/form-data">
+		<label>真实姓名</label>
+		<input type="text" name="reallyName">
+		<label>身份证号码</label>
+		<input type="text" name="idCard">
+		<input type="hidden" name="type" style="width: 450" value="jpg">
+		<a>
+			<input type="file" id="file" name="file[]" style="width: 220" multiple="multiple" onchange="OO(this)" accept="image/*" value="a">
+			<input type="file" name="file1" width="200" upload="true" onchange="a(this)">
+			<input type="file" name="file2" style="display: none" upload="true">
+			<img alt="" src="" width="200px;" height="200px;" id="upimg0">
+			<img alt="" src="" width="200px;" height="200px;" id="upimg1">
+		</a>
+		<a href="javascript:void(0)" onclick="AAXX()">aaaxxx</a>
+	</form>
+
+
+	<script type="text/javascript">
+		function a(obj) {
+			console.log(obj);
+		}
+
+		function OO(obj) {
+			console.log(obj.files);
+			if (obj.files.length != 2)
+				alert("前选择身份证：正面，和背面照");
+			var files = $("input[upload='true']");
+			for (var i = 0; i < obj.files.length; i++) {
+				if (!/image\/\w+/.test(obj.files[i].type))
+					return alert("只能选择图片格式文件");
+				files[i].files[0] = obj.files[i];
+				console.log(obj.files[i]);
+				alert(files[i].files[0].name)
+				console.log(files[i].files[0]);
+				//alert(obj.files[i].name)
+			}
+			if (window.FileReader) {
+				loading(obj, 0, obj.files.length);
+			} else
+				alert("不支持HTML5");
+		}
+
+		function loading(obj, current, last) {
+			if (current >= last)
+				return;
+			var fr = new FileReader();
+			fr.onloadend = function(e) {
+				//document.getElementById("portrait").src = e.target.result;
+				$('#upimg' + current).attr('src', e.target.result);
+				loading(obj, ++current, last);
+			};
+			fr.readAsDataURL(obj.files[current]);
+		}
+		function AAXX() {
+			var fd = new FormData($('#aaxx')[0]);
+			console.log(fd);
+			$.ajax({
+				url : "${request.contextPath}/system/upload/idcard",
+				type : "POST",
+				data : fd,
+				processData : false, // 告诉jQuery不要去处理发送的数据
+				contentType : false
+			// 告诉jQuery不要去设置Content-Type请求头
+			});
+		}
+	</script>
+</body>
+</html>

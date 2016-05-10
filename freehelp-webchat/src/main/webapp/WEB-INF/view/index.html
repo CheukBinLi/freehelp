@@ -1,0 +1,33 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+</head>
+<body>
+	<h2>index</h2>
+	<form method="POST" id="f0">
+		<input type="text" name="phone">
+		<input type="password" name="password">
+		<a id="submit" href="javascript:void(0);">登录</a>
+	</form>
+	<a href="${request.contextPath}/register/reg_1">注册</a>
+</body>
+</html>
+<script type="text/javascript">
+	$("#submit").click(function() {
+		var phone = $("input[name='phone']").val();
+		var password = $("input[name='password']").val();
+		
+		if (phone.length < 1 && password.length < 1)
+			return alert("用户名/密码输入有误");
+		
+		ajax.POST("register/login", $("#f0").serialize(), function(data) {
+			if (msgModel.getCode(data) == '1')
+				location.href = "${request.contextPath}/system/index";
+			else {
+				alert("登录失败");
+			}
+		});
+	});
+</script>

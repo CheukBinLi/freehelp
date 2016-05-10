@@ -1,0 +1,48 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+</head>
+<body>
+	<h2>index</h2>
+	<form action="register" method="POST" id="f0">
+		<input type="text" name="verificationcode" placeholder="验证码" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;"
+			onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+		<input type="text" name="password" placeholder="密码">
+		<input type="text" name="phone" placeholder="手机号" value="${phone}" hidden="true">
+		<!-- <input type="submit" value="完成"> -->
+		<a href="javascript:void(0)" id="submit">完成 </a>
+	</form>
+</body>
+</html>
+<script>
+	var phone = $("input[name='phone']");
+	$("input[name='verificationcode']").keyup(
+			function() {
+				if ($(this).val().length == 6) {
+					var code = '&verificationcode=' + $(this).val();
+					ajax.POST('verificationcode',
+							'phone=' + phone.val() + code, function(data) {
+								if (msgModel.getCode(data) == '1') {
+									alert('通过');
+									$("input[name='verificationcode']").attr("readonly","readonly");
+									$('#submit').click(function() {
+										fromData = $('#f0').serialize();
+										ajax.POST("../register/", fromData, function(data) {
+											if(msgModel.getCode(data)=='1'){
+													alert("注册成功,请重新登录系统");
+													location.href = "${request.contextPath}/index";
+												}
+											else{
+													alert(msgModel.getMsg(data));
+													location.href = "${request.contextPath}/register/reg_1";
+												}
+										});	
+									});
+								} else
+									alert('验证码输入有误');
+							});
+				}
+			});
+</script>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>project</groupId>
+		<artifactId>freehelp</artifactId>
+		<version>${freehelp.version}</version>
+	</parent>
+
+	<groupId>project</groupId>
+	<artifactId>freehelp-webchat</artifactId>
+	<version>${freehelp.version}</version>
+	<packaging>war</packaging>
+	<name>freehelp-webchat Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<build>
+		<finalName>freehelp-webchat</finalName>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>project</groupId>
+			<artifactId>freehelp-common</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>8.5.0</version>
+		</dependency>
+	</dependencies>
+</project>

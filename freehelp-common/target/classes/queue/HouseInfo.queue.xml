@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QueryList SYSTEM "Query.dtd">
+<QueryList package="project.freehelp.common.entity.HouseInfo">
+	<Alias name="project.freehelp.common.entity.HouseInfo" Alias="HouseInfo" />
+	<Query name="list" type="HQL" freemarkFormat="true" Alias="true">
+		<![CDATA[ 
+			FROM HouseInfo A 
+			WHERE 
+			1=1
+			<#if address??>
+				and A.address=:address
+			</#if>
+			<#if id??>
+				and A.id=:id
+			</#if>
+			<#if remark??>
+				and A.remark=:remark
+			</#if>
+			<#if status??>
+				and A.status=:status
+			</#if>
+			<#if image??>
+				and A.image=:image
+			</#if>
+			<#if longitude??>
+				and A.longitude=:longitude
+			</#if>
+			<#if master??>
+				and A.master=:master
+			</#if>
+			<#if title??>
+				and A.title=:title
+			</#if>
+			<#if traffic??>
+				and A.traffic=:traffic
+			</#if>
+			<#if area??>
+				and A.area=:area
+			</#if>
+			<#if bed??>
+				and A.bed=:bed
+			</#if>
+			<#if pledge??>
+				and A.pledge=:pledge
+			</#if>
+			<#if latitude??>
+				and A.latitude=:latitude
+			</#if>
+			<#if count??>
+				and A.count=:count
+			</#if>
+			<#if price??>
+				and A.price=:price
+			</#if>
+			<#if facility??>
+				and A.facility=:facility
+			</#if>
+		]]>
+	</Query>
+</QueryList>

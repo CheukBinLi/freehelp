@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>project</groupId>
+		<artifactId>freehelp</artifactId>
+		<version>${freehelp.version}</version>
+	</parent>
+	<groupId>project</groupId>
+	<artifactId>freehelp-manager</artifactId>
+	<version>${freehelp.version}</version>
+	<packaging>war</packaging>
+	<name>freehelp-manager Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>project</groupId>
+			<artifactId>master-dbmanager</artifactId>
+			<version>${master.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>freehelp-manager</finalName>
+	</build>
+</project>

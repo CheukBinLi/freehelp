@@ -1,0 +1,176 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	function callback(msg) {
+		//document.getElementById("file").outerHTML = document.getElementById("file").outerHTML;   
+		document.getElementById("msg").innerHTML = " <font color=red>" + msg
+				+ " </font>";
+	}
+	var fload = true;
+	function f1() {
+		if (fload) {
+			fload = false;
+			return;
+		}
+		var r = getIFrameContent("hidden_frame");
+		alert(r);
+		var iframe = $(window.frames["hidden_frame"].document);
+		var msg = iframe.find('#msg');
+		alert(msg.html());
+		var o = $.parseJSON(msg.html());
+		alert(o.src)
+		$('#img1').attr('src', "${request.contextPath}/" + o.src);
+	}
+	//取iframe的innerHTML  
+	function getIFrameContent(id) {
+		var bobo = document.getElementById(id);
+		if (document.getElementById) {
+			if (bobo && !window.opera) {
+				if (bobo.contentDocument) {
+					return bobo.contentDocument.body.innerHTML;
+				} else if (bobo.Document) {
+					return bobo.Document.body.innerHTML;
+				}
+			}
+		}
+	}
+
+	$("img[name='upimg']").click(function() {
+		form1 = $('#form1');
+		alert($(this).attr('direction'));
+		form1.find(".direction").val($(this).attr('direction'));
+
+	});
+</script>
+</head>
+<body>
+	<h2>实名验证</h2>
+	<form action="" method="post" enctype="multipart/form-data">
+		<label>真实姓名</label>
+		<input type="text" name="reallyName">
+		<label>身份证号码</label>
+		<input type="text" name="idCard">
+		<input type="text" name="p">
+		<input type="text" name="b">
+	</form>
+
+	<div>
+		<form action="" id="aaxx" enctype="multipart/form-data">
+			<input type="file" id="file" name="file" style="width: 220" multiple="multiple" onchange="OO(this)" accept="image/*">
+			<input type="file" id="file" name="file" style="width: 120" onchange="showImage(this,'upimg1');">
+			<input type="file" id="file" name="file1" style="width: 120" onchange="showImage(this,'upimg2');">
+			<input type="hidden" name="direction" style="width: 450" value="p">
+			<input type="hidden" name="type" style="width: 450" value="jpg">
+			<img alt="" src="" width="200px;" height="200px;" name="upimg" direction="p" id="upimg0"> <img alt="" src="" width="200px;" height="200px;" name="upimg" direction="b" id="upimg1">
+		</form>
+		<a href="javascript:void(0)" onclick="AAXX()">aaaxxx</a>
+	</div>
+
+
+	<script type="text/javascript">
+		function OO(obj) {
+			console.log(obj.files);
+			if (obj.files.length != 2)
+				alert("前选择身份证：正面，和背面照");
+			for (var i = 0; i < obj.files.length; i++) {
+				if (!/image\/\w+/.test(obj.files[i].type))
+					return alert("只能选择图片格式文件");
+			}
+			if (window.FileReader) {
+				loading(obj, 0, obj.files.length);
+			} else
+				alert("不支持HTML5");
+		}
+
+		function loading(obj, current, last) {
+			if (current >= last)
+				return;
+			var fr = new FileReader();
+			fr.onloadend = function(e) {
+				//document.getElementById("portrait").src = e.target.result;
+				$('#upimg' + current).attr('src', e.target.result);
+				loading(obj, ++current, last);
+			};
+			fr.readAsDataURL(obj.files[current]);
+		}
+
+		function AAXX() {
+			var fd = new FormData($('#aaxx')[0]);
+			$.ajax({
+				url : "${request.contextPath}/system/upload/idcard",
+				type : "POST",
+				data : fd,
+				processData : false, // 告诉jQuery不要去处理发送的数据
+				contentType : false
+			// 告诉jQuery不要去设置Content-Type请求头
+			});
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function showImage(source, id) {
+			var file = source.files[0];
+			if (window.FileReader) {
+				var fr = new FileReader();
+				fr.onloadend = function(e) {
+					document.getElementById(id).src = e.target.result;
+				};
+				fr.readAsDataURL(file);
+			}
+		}
+	</script>
+
+
+
+	A1
+	<form action="../../system/upload/idcard" id="form1" name="form1" encType="multipart/form-data" method="post" target="hidden_frame">
+		<input type="file" id="file" name="file" style="width: 450">
+		<input type="hidden" name="direction" style="width: 450" value="p">
+		<input type="hidden" name="type" style="width: 450" value="jpg">
+		<INPUT type="submit" value="上传文件">
+		<span id="msg"> </span>
+	</form>
+	IF
+	<iframe name='hidden_frame' id="hidden_frame" onload="f1();"></iframe>
+	<img alt="" src="" id="img1"> OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<script type="text/javascript">
+		function showPreview(source) {
+			var file = source.files[0];
+			if (window.FileReader) {
+				var fr = new FileReader();
+				fr.onloadend = function(e) {
+					document.getElementById("portrait").src = e.target.result;
+				};
+				fr.readAsDataURL(file);
+			}
+		}
+	</script>
+
+	<input type="file" name="file" onchange="showPreview(this)" />
+	<img id="portrait" src="" width="200" height="200">
+	<form>
+		<fieldset>
+			<legend>分度读取文件：</legend>
+			<input type="file" id="File" />
+			<input type="button" value="中断" id="Abort" />
+			<p>
+				<label>读取进度：</label>
+				<progress id="Progress" value="0" max="100"></progress>
+			</p>
+			<p id="Status"></p>
+		</fieldset>
+	</form>
+
+
+</body>
+</html>

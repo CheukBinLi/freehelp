@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QueryList SYSTEM "Query.dtd">
+<QueryList package="project.freehelp.common.entity.HouseSteward">
+	<Alias name="project.freehelp.common.entity.HouseSteward" Alias="HouseSteward" />
+	<Query name="list" type="HQL" freemarkFormat="true" Alias="true">
+		<![CDATA[ 
+			FROM HouseSteward A 
+			WHERE 
+			1=1
+			<#if id??>
+				and A.id=:id
+			</#if>
+			<#if house??>
+				and A.house=:house
+			</#if>
+			<#if steward??>
+				and A.steward=:steward
+			</#if>
+		]]>
+	</Query>
+</QueryList>
