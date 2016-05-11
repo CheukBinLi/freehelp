@@ -1,0 +1,61 @@
+<html>
+<head>
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+</head>
+<body>
+	<button id="x" status='0'>显示</button>
+	<div id="main">
+		<input type="file" multiple="multiple">
+		<h2>房源描述</h2>
+		<i>图</i>
+		<input type="text" name="title" placeholder="标题">
+		<i>图</i>
+		<input type="text" name="address" placeholder="门牌地址">
+		<input type="hidden" name="longitude" placeholder="经度">
+		<input type="hidden" name="latitude" placeholder="纬度">
+		<i>图</i>
+		<input type="text" name="traffic" placeholder="交通描述">
+		<h2>房源描述</h2>
+		<i>图</i>
+		<input type="text" name="area" placeholder="房屋面积">
+		<i>图</i>
+		<input type="text" name="design" placeholder="房屋户型">
+		<i>图</i>
+		<input type="text" name="count" placeholder="入住人数">
+		<i>图</i>
+		<input type="text" name="bed" placeholder="床型">
+		<i>图</i>
+		<input type="text" name="facility" placeholder="配套设施">
+		<h2>价格规则</h2>
+		<i>图</i>
+		<input type="text" name="price" placeholder="日 价">
+		<i>图</i>
+		<input type="text" name="pledge" placeholder="押金">
+		<i>图</i>
+		<input type="text" name="foregn" placeholder="是否接纳外籍人员">
+		<i>图</i>
+		<input type="text" name="remark" placeholder="贴士">
+
+	</div>
+	<div id="browse" style="display: none;">123</div>
+</body>
+</html>
+<script type="text/javascript">
+	$('#x').click(function() {
+		var a = $(this);
+		if (a.attr('status') == '0') {
+			$('#main').hide();
+			$('#browse').show();
+			a.attr('status', 1);
+			$("#browse").load("${request.contextPath}/system/index");
+			a.html("隐藏");
+		} else {
+			$('#main').show();
+			$('#browse').hide();
+			a.attr('status', 0);
+			a.html("显示");
+		}
+	});
+</script>

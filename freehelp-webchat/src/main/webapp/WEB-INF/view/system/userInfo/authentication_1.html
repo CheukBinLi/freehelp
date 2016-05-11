@@ -3,7 +3,7 @@
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
 <style>
-input[type=file] {
+/* input[type=file] {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -12,46 +12,98 @@ input[type=file] {
 	filter: alpha(opacity = 0);
 	width: 400px;
 	height: 200px;
-}
+} */
 </style>
 </head>
 <body>
+
+
 	<h2>实名验证</h2>
 	<form action="" id="aaxx" enctype="multipart/form-data">
 		<label>真实姓名</label>
-		<input type="text" name="reallyName">
+		<input type="text" name="reallyName" v="true" msg="请输入真实姓名">
 		<label>身份证号码</label>
-		<input type="text" name="idCard">
+		<input type="text" name="idCard" v="true" msg="请输入有效身份证号码" test='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/' />
 		<input type="hidden" name="type" style="width: 450" value="jpg">
 		<a>
-			<input type="file" id="file" style="width: 220" multiple="multiple" onchange="OO(this)" accept="image/*" value="a">
+			<input type="file" id="file" style="width: 220" multiple="multiple" accept="image/*">
 			<img alt="" src="" width="200px;" height="200px;" id="upimg0">
 			<img alt="" src="" width="200px;" height="200px;" id="upimg1">
 		</a>
-		<a href="javascript:void(0)" onclick="AAXX()">aaaxxx</a>
+		<a href="javascript:void(0)" id="submit">提交</a>
 	</form>
 
 
 	<script type="text/javascript">
-		function a(obj) {
-			console.log(obj);
+		$("#submit").click(function() {
+			submitEvent();
+		});
+		function submitEvent() {
+			var o;
+			var pass = true;
+			var msg = '';
+			$("input[v='true']").each(function(index) {
+				o = $(this);
+				var test = o.attr('test');
+				if (test && !eval(test).test(o.val())) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				} else if (o.val().length < 1) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				}
+			});
+			if (!pass)
+				return alert(msg);
+			var fd = new FormData($('#aaxx')[0]);
+			//var fd = new FormData();
+			var file = $("#file");
+			
+			if (file[0].files.length < 2)
+					return alert("前选择身份证：正面，和背面照");
+			
+			$("#submit").off("click", "**");
+			for(var i=0;i<file[0].files.length;i++)
+				fd.append("file"+i, file[0].files[i]);
+			//fd.append("file2", file[0].files[1]);
+			$.ajax({
+						url : "${request.contextPath}/system/userInfo/",
+						type : "POST",
+						data : fd,
+						processData : false, // 告诉jQuery不要去处理发送的数据
+						contentType : false,// 告诉jQuery不要去设置Content-Type请求头
+						success : function(data) {
+							if (msgModel.getCode(data) == '1')
+								location.href = "${request.contextPath}/system/userInfo/authentication_2";
+						},
+						error : function(XMLHttpRequest, textStatus,
+								errorThrown) {
+							// 通常 textStatus 和 errorThrown 之中
+							// 只有一个会包含信息
+							// this; // 调用本次AJAX请求时传递的options参数
+							$("#submit").click(function() {
+								submitEvent()
+							});
+							alert('提交失败，请重试');
+						}
+					});
 		}
 
-		function OO(obj) {
-			console.log(obj.files);
+		$("#file").change(function() {
+			var obj = $(this)[0];
+			//console.log(obj.files);
 			if (obj.files.length != 2)
-				alert("前选择身份证：正面，和背面照");
-			var files = $("input[upload='true']");
+				return alert("前选择身份证：正面，和背面照");
 			for (var i = 0; i < obj.files.length; i++) {
 				if (!/image\/\w+/.test(obj.files[i].type))
 					return alert("只能选择图片格式文件");
-				console.log(obj.files[i]);
+				//console.log(obj.files[i]);
 			}
 			if (window.FileReader) {
 				loading(obj, 0, obj.files.length);
 			} else
-				alert("不支持HTML5");
-		}
+				return alert("不支持HTML5");
+		});
 
 		function loading(obj, current, last) {
 			if (current >= last)
@@ -63,22 +115,6 @@ input[type=file] {
 				loading(obj, ++current, last);
 			};
 			fr.readAsDataURL(obj.files[current]);
-		}
-		function AAXX() {
-			var fd = new FormData($('#aaxx')[0]);
-			//var fd = new FormData();
-			var file = $("#file");
-			fd.append("file1", file[0].files[0]);
-			fd.append("file2", file[0].files[1]);
-
-			$.ajax({
-				url : "${request.contextPath}/system/upload/idcard",
-				type : "POST",
-				data : fd,
-				processData : false, // 告诉jQuery不要去处理发送的数据
-				contentType : false
-			// 告诉jQuery不要去设置Content-Type请求头
-			});
 		}
 	</script>
 </body>

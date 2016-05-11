@@ -28,6 +28,11 @@
 									alert('通过');
 									$("input[name='verificationcode']").attr("readonly","readonly");
 									$('#submit').click(function() {
+										var password=$("input[name='password']");
+										if(password.val().length<6)
+											return alert('请输入6位以上12位以下密码');
+										
+										
 										fromData = $('#f0').serialize();
 										ajax.POST("../register/", fromData, function(data) {
 											if(msgModel.getCode(data)=='1'){

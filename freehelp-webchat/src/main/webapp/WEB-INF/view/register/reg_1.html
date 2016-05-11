@@ -16,8 +16,9 @@
 	$("#submit").click(
 			function() {
 				var phone = $("input[name='phone']");
-				if (phone.val().length != 11) {
+				if (! /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(phone.val())||phone.val().length != 11) {
 					//提示输入不对
+					alert();
 					return;
 				}
 				ajax.POST("checkUser", 'phone=' + phone.val(), function(data) {
