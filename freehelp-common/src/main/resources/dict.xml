@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE List SYSTEM "E:\JavaProject\freehelp\freehelp-common\src\main\resources\dict.dtd">
+<List>
+	<Dictionary>
+		<id>101</id>
+		<key>床型</key>
+		<status>0</status>
+	</Dictionary>
+	<Dictionary>
+		<id>102</id>
+		<key>房屋户型</key>
+		<status>0</status>
+	</Dictionary>
+	<Dictionary>
+		<id>103</id>
+		<key>配套设施</key>
+		<status>0</status>
+	</Dictionary>
+</List>
