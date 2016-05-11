@@ -10,5 +10,7 @@ public interface Constant {
 	final String UPLOAD_TEMP_PATH = "WEB-INF/resource/temp/";
 
 	final String ID_CARD_IMAGE_PATH = "WEB-INF/resource/upload/idcard/";
+	
+	final String ACCESS_CARD_IMAGE_PATH = "WEB-INF/resource/upload/idcard/";
 
 }

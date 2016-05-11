@@ -40,11 +40,13 @@ public class HouseInfo extends AbstractEntity {
 	private String traffic;// 交通描述
 	private int area;// 面积
 	private int count;// 入住人数
+	private String design;// 户型
 	@Column(columnDefinition = "text")
 	private String facility;// 配套设施(数据字典)
 	private String bed;// 床型(数据字典)
 	private int price;// 日价
 	private int pledge;// 押金
+	private int foregn;// 是否接纳外国人
 	private int status;// 状态
 	private String remark;// 备注
 
@@ -138,6 +140,15 @@ public class HouseInfo extends AbstractEntity {
 		return this;
 	}
 
+	public String getDesign() {
+		return design;
+	}
+
+	public HouseInfo setDesign(String design) {
+		this.design = design;
+		return this;
+	}
+
 	public String getFacility() {
 		return facility;
 	}
@@ -171,6 +182,15 @@ public class HouseInfo extends AbstractEntity {
 
 	public HouseInfo setPledge(int pledge) {
 		this.pledge = pledge;
+		return this;
+	}
+
+	public int getForegn() {
+		return foregn;
+	}
+
+	public HouseInfo setForegn(int foregn) {
+		this.foregn = foregn;
 		return this;
 	}
 

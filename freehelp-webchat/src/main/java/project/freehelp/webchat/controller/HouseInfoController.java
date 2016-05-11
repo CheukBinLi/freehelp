@@ -21,13 +21,13 @@ import project.master.fw.sh.common.AbstractController;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/system/houseInfo/")
+@RequestMapping(value = { "/system/houseInfo/", "/system/houseRelease/" })
 public class HouseInfoController extends AbstractController {
 
 	@Autowired
 	private HouseInfoService houseInfoService;
 
-	@RequestMapping(value = "houseInfo_{number}", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request));
 	}
@@ -105,7 +105,7 @@ public class HouseInfoController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<HouseInfo> list = houseInfoService.getList(map, true,page, size);
+			List<HouseInfo> list = houseInfoService.getList(map, true, page, size);
 			return new ModelAndView("houseInfo_" + next).addObject("houseInfoList", list);
 		} catch (Throwable e) {
 			return exceptionPage(e);
@@ -119,7 +119,7 @@ public class HouseInfoController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<HouseInfo> list = houseInfoService.getList(map, true,page, size);
+			List<HouseInfo> list = houseInfoService.getList(map, true, page, size);
 			return success(list);
 		} catch (Throwable e) {
 			return fail(e);
