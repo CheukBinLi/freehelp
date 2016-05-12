@@ -27,4 +27,6 @@
 	<bean id="upLoadFileFactory" class="project.master.fw.sh.common.UpLoadFileFactory" />
 	<!--登录Session -->
 	<bean id="settingSession" class="project.freehelp.common.SettingSession" />
+	<!--init -->
+	<bean id="init" class="project.freehelp.common.Init" />
 </beans>

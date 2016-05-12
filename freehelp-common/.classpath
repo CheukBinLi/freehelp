@@ -28,5 +28,15 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/repository/org/apache/tomcat/tomcat-annotations-api/8.5.0/tomcat-annotations-api-8.5.0.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="tomcat-annotations-api-8.5.0.jar"/>
+			<attribute name="maven.groupId" value="org.apache.tomcat"/>
+			<attribute name="maven.artifactId" value="tomcat-annotations-api"/>
+			<attribute name="maven.version" value="8.5.0"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

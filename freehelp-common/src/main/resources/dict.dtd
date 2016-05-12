@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ELEMENT List (Dictionary*)>
-<!ELEMENT Dictionary (id,parent,key,value?,attachment?,attachment2?,status?,remark?)>
+<!ELEMENT Dictionary  (#PCDATA)>
 
-<!ELEMENT id (#PCDATA)>
-<!ELEMENT parent (#PCDATA)>
-<!ELEMENT key (#PCDATA)>
-<!ELEMENT value (#PCDATA)>
-<!ELEMENT attachment (#PCDATA)>
-<!ELEMENT attachment2 (#PCDATA)>
-<!ELEMENT status (#PCDATA)>
-<!ELEMENT remark (#PCDATA)>
+<!ATTLIST Dictionary id CDATA #REQUIRED>
+<!ATTLIST Dictionary parent CDATA #REQUIRED>
+<!ATTLIST Dictionary key CDATA #REQUIRED>
+<!ATTLIST Dictionary value CDATA #IMPLIED>
+<!ATTLIST Dictionary attachment CDATA #IMPLIED>
+<!ATTLIST Dictionary attachment2 CDATA #IMPLIED>
+<!ATTLIST Dictionary status (0|1) #REQUIRED>
+<!ATTLIST Dictionary remark CDATA #IMPLIED>
+

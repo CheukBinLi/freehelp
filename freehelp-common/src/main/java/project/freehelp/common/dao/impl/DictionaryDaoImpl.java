@@ -1,5 +1,6 @@
 package project.freehelp.common.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,7 @@ public class DictionaryDaoImpl extends AbstractDao<Dictionary, Integer> implemen
 		return dBAdapter;
 	}
 
+	public Dictionary replicate(Dictionary t) throws Throwable {
+		return dBAdapter.replicate(t, IGNORE);
+	}
 }

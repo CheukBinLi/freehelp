@@ -32,6 +32,7 @@ public class Dictionary extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = true)
 	public int id;// ID
 	private String parent;// 父ID(0：主节点)
 	@Column(name = "dect_key")
