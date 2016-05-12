@@ -198,12 +198,12 @@ public class RegisterController extends AbstractController {
 				return fail();
 		else {
 			try {
-				smsFactory.sendCode(phone, "【自游帮】#code#(动态验证码)，请在5分钟内填写。", "#code#");
+				smsFactory.sendCode(phone, "#code#(动态验证码)，请在5分钟内填写。", "#code#");
 				if (null == sendCode)
 					return fail();
 				return success();
 			} catch (Throwable e) {
-				return fail(e);
+				return fail("发送失败", e);
 			}
 		}
 	}
