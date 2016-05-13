@@ -1,43 +1,66 @@
+<!DOCTYPE HTML>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#submit").click(function() {
+			var phone = $("input[name='phone']");
+			if (!/^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(phone.val()) || phone.val().length != 11) {
+				//提示输入不对
+				alert("请输入正解手机号码");
+				return;
+			}
+			ajax.POST("checkUser", 'phone=' + phone.val(), function(data) {
+				//console.log(data);
+				//alert(msgModel.getCode(data));
+				if (msgModel.getCode(data) == '1') {
+					if (msgModel.getData(data) == '0') {
+						ajax.POST('verificationcode', 'sendCode=true&phone=' + phone.val(), function(data) {
+							if (msgModel.getCode(data) == '1')
+								return $('#f0').submit();
+							else
+								alert(msgModel.getMsg(data));
+						})
+
+					} else
+						return alert('此号码已经是会员');
+				} else
+					alert(msgModel.getMsg(data));
+			});
+		});
+	});
+</script>
 
 </head>
-<body>
-	<h2>index</h2>
-	<form action="reg_2" method="POST" id="f0">
-		<input type="text" name="phone" placeholder="手机号码" maxlength="11" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-		<a id="submit" href="javascript:void(0);">获取验证码</a>
-	</form>
-</html>
-</body>
-<script type="text/javascript">
-	$("#submit").click(
-			function() {
-				var phone = $("input[name='phone']");
-				if (! /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/.test(phone.val())||phone.val().length != 11) {
-					//提示输入不对
-					alert();
-					return;
-				}
-				ajax.POST("checkUser", 'phone=' + phone.val(), function(data) {
-					//console.log(data);
-					//alert(msgModel.getCode(data));
-					if (msgModel.getCode(data) == '1') {
-						if (msgModel.getData(data) == '0') {
-							ajax.POST('verificationcode', 'sendCode=true&phone='+ phone.val(),
-									function(data) {
-										if(msgModel.getCode(data)=='1')
-											return $('#f0').submit();
-										else
-											alert(msgModel.getMsg(data));
-									})
 
-						} else
-							return alert('此号码已经是会员');
-					} else
-						alert(msgModel.getMsg(data));
-				});
-			});
-</script>
+<body>
+	<div id="header">
+		<a href="login.html" class="l_ico ico_back"></a>
+		<span class="m_text">注册</span>
+	</div>
+	<div class="main">
+		<form action="reg_2" method="POST" id="f0">
+			<div class="line">
+				<div class="iphone">
+				
+					<input type="text" class="area" value="+86" readonly="readonly">
+					<input type="text" name="phone" class="nober" placeholder="手机号码" value="" style="text-align: left; margin-left: 10px" maxlength="11" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+				</div>
+			</div>
+			<div>
+				<a href="javascript:void(0);" class="massage" style="width: 90%" id="submit">获取验证码</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
+
+

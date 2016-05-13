@@ -1,33 +1,102 @@
+<!DOCTYPE HTML>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
-
-</head>
-<body>
-	<h2>index</h2>
-	<form method="POST" id="f0">
-		<input type="text" name="phone">
-		<input type="password" name="password">
-		<a id="submit" href="javascript:void(0);">登录</a>
-	</form>
-	<a href="${request.contextPath}/register/reg_1">注册</a>
-</body>
-</html>
 <script type="text/javascript">
-	$("#submit").click(function() {
-		var phone = $("input[name='phone']").val();
-		var password = $("input[name='password']").val();
-		
-		if (phone.length < 1 && password.length < 1)
-			return alert("用户名/密码输入有误");
-		
-		ajax.POST("register/login", $("#f0").serialize(), function(data) {
-			if (msgModel.getCode(data) == '1')
-				location.href = "${request.contextPath}/system/index";
-			else {
-				alert("登录失败");
-			}
+	$(function() {
+		$("#submit").click(function() {
+			var phone = $("input[name='phone']").val();
+			var password = $("input[name='password']").val();
+
+			if (phone.length < 1 && password.length < 1)
+				return alert("用户名/密码输入有误");
+
+			ajax.POST("register/login", $("#f0").serialize(), function(data) {
+				if (msgModel.getCode(data) == '1')
+					location.href = "${request.contextPath}/system/index";
+				else {
+					alert("登录失败");
+				}
+			});
 		});
 	});
 </script>
+</head>
+<style>
+body {
+ background-color: #131112; background-image: url(${request.contextPath}/resource/images/bg.jpg); background-size: cover; background-repeat: no-repeat;
+}
+
+.main {
+ background: none
+}
+
+#header {
+ background: none; border: none;
+}
+
+.login_input {
+ text-align: center; margin: 20px auto;
+}
+
+.login_input input {
+ width: 90%; line-height: 44px; height: 44px; background: rgba(0, 0, 0, 0.3) !important; filter: Alpha(opacity = 30); background: #000; border-radius: 33px; border: 1px solid #8B8786; color: #fff; font-size: 18px; text-indent: 22px;
+}
+
+.logo {
+ text-align: center; margin: 40px auto;
+}
+
+.logo img {
+ margin: 0 auto
+}
+
+a.btn_login {
+ width: 90%; display: block; line-height: 44px; height: 44px; text-align: center; background: #FF6766; border-radius: 22px; margin: 30px auto 20px; color: #fff;
+}
+
+.btnline {
+ position: absolute; bottom: 0; line-height: 44px; height: 44px; width: 100%
+}
+
+.btnline a {
+ color: #fff;
+}
+</style>
+<body>
+	<div id="header">
+		<a href="" class="l_ico ico_back2"></a>
+	</div>
+	<div class="main">
+		<form method="POST" id="f0">
+			<div class="logo">
+				<img src="${request.contextPath}/resource/images/logo.png" />
+			</div>
+			<div class="login_input">
+				<input name="phone" type="text" value="用户名/手机号码">
+			</div>
+			<div class="login_input">
+				<input type="password" value="密码" name="password">
+			</div>
+			<div>
+				<a href="javascript:void(0);" class="btn_login" id="submit">登 录</a>
+			</div>
+			<div class="btnline">
+				<span class="fl ml20">
+					<a href="../changpassword/changpassword.html">忘记密码了？</a>
+				</span>
+				<span class="fr mr20">
+					<a href="${request.contextPath}/register/reg_1">新用户注册</a>
+				</span>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

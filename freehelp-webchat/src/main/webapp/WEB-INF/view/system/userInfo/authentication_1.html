@@ -1,23 +1,8 @@
-<html>
+<!-- <html>
 <head>
-<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
-<style>
-/* input[type=file] {
-	position: absolute;
-	right: 0;
-	top: 0;
-	font-size: 100px;
-	opacity: 0;
-	filter: alpha(opacity = 0);
-	width: 400px;
-	height: 200px;
-} */
-</style>
+
 </head>
 <body>
-
-
 	<h2>实名验证</h2>
 	<form action="" id="aaxx" enctype="multipart/form-data">
 		<label>真实姓名</label>
@@ -32,9 +17,33 @@
 		</a>
 		<a href="javascript:void(0)" id="submit">提交</a>
 	</form>
+</body>
+</html>
+ -->
 
 
-	<script type="text/javascript">
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var upimg0 = $('#upimg0');
+		$("input[type='file']").each(function(index) {
+			$(this).css({
+				width : upimg0.width() + 'px',
+				height : upimg0.height() + 'px'
+			});
+		});
+
 		$("#submit").click(function() {
 			submitEvent();
 		});
@@ -53,69 +62,121 @@
 					msg += o.attr('msg') + '\n';
 				}
 			});
-			if (!pass)
-				return alert(msg);
+			$("input[type='file']").each(function(index) {
+				if ($(this)[0].files.length == 0) {
+					isPass = false;
+				} else
+					isPass = true;
+			});
+			if (!isPass)
+				return alert(msg + '请选择证件照片\n');
+
 			var fd = new FormData($('#aaxx')[0]);
-			//var fd = new FormData();
-			var file = $("#file");
-			
-			if (file[0].files.length < 2)
-					return alert("前选择身份证：正面，和背面照");
-			
+
 			$("#submit").off("click", "**");
-			for(var i=0;i<file[0].files.length;i++)
-				fd.append("file"+i, file[0].files[i]);
-			//fd.append("file2", file[0].files[1]);
-			$.ajax({
-						url : "${request.contextPath}/system/userInfo/",
-						type : "POST",
-						data : fd,
-						processData : false, // 告诉jQuery不要去处理发送的数据
-						contentType : false,// 告诉jQuery不要去设置Content-Type请求头
-						success : function(data) {
-							if (msgModel.getCode(data) == '1')
-								location.href = "${request.contextPath}/system/userInfo/authentication_2";
-						},
-						error : function(XMLHttpRequest, textStatus,
-								errorThrown) {
-							// 通常 textStatus 和 errorThrown 之中
-							// 只有一个会包含信息
-							// this; // 调用本次AJAX请求时传递的options参数
-							$("#submit").click(function() {
-								submitEvent()
-							});
-							alert('提交失败，请重试');
-						}
-					});
+
+			ajax.POST_FILE("${request.contextPath}/system/userInfo/", fd, function(data) {
+				if (msgModel.getCode(data) == '1')
+					location.href = "${request.contextPath}/system/userInfo/authentication_2";
+				else
+					alert(msgModel.getMsg(data));
+			}, function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#submit").click(function() {
+					submitEvent()
+				});
+				alert('提交失败，请重试');
+			});
 		}
 
-		$("#file").change(function() {
+		$("input[type='file']").change(function() {
 			var obj = $(this)[0];
 			//console.log(obj.files);
-			if (obj.files.length != 2)
-				return alert("前选择身份证：正面，和背面照");
 			for (var i = 0; i < obj.files.length; i++) {
 				if (!/image\/\w+/.test(obj.files[i].type))
 					return alert("只能选择图片格式文件");
 				//console.log(obj.files[i]);
 			}
 			if (window.FileReader) {
-				loading(obj, 0, obj.files.length);
+				var fr = new FileReader();
+				var img = '#' + $(this).attr('display');
+				fr.onloadend = function(e) {
+					$(img).attr('src', e.target.result);
+				};
+				fr.readAsDataURL(obj.files[0]);
 			} else
 				return alert("不支持HTML5");
 		});
 
-		function loading(obj, current, last) {
-			if (current >= last)
-				return;
-			var fr = new FileReader();
-			fr.onloadend = function(e) {
-				//document.getElementById("portrait").src = e.target.result;
-				$('#upimg' + current).attr('src', e.target.result);
-				loading(obj, ++current, last);
-			};
-			fr.readAsDataURL(obj.files[current]);
-		}
-	</script>
+	});
+</script>
+</head>
+<body>
+	<#if userInfo.idCardImage??>
+		<#if userInfo.idCardImage?length gt 4>
+			<#assign jsonX=userInfo.idCardImage?eval /> 
+		</#if>
+	 </#if>
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">实名验证</span>
+	</div>
+	<div class="main" style="padding-top: 0px">
+		<form action="" id="aaxx" enctype="multipart/form-data">
+			<div class="gray_title">验证方式</div>
+			<div class="reg_line">
+				<div class="iphone3">
+					<em class="ico_sfz"></em>身份证<em class="ico_g1"></em>
+				</div>
+			</div>
+			<div class="l"></div>
+			<div class="myinfo2">
+				<ul>
+					<li><span class="fl">真实姓名：</span> <span class="fl">
+							<input type="text" value="${userInfo.reallyName?default('')}" class="inputstyle f_gray2" placeholder="请输入证件上的真实姓名" name="reallyName" v="true" msg="请输入真实姓名">
+						</span></li>
+					<li><span class="fl">身份证号：</span> <span class="fl">
+							<input value="${userInfo.idCard?default('')}" type="text" class="inputstyle f_gray2" placeholder="请输入身份证号码" name="idCard" v="true" msg="请输入有效身份证号码" test='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/'>
+						</span></li>
+				</ul>
+			</div>
+			<div class="picturebox  mt15">
+				<div class="imgbox">
+					<div class="oneside2">
+						<a href="">
+							<input type="file" name="file1" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg0">
+							<#if jsonX??>
+								<img alt="+" src="${(jsonX[0].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[0].src,'')} " width="100%;" height="100%;" id="upimg0">
+								<#else>
+									<img alt="+" src="" width="100%;" height="100%;" id="upimg0">
+							</#if>
+								
+						</a>
+					</div>
+					<p>身份证正面相片</p>
+				</div>
+				<div class="imgbox">
+					<div class="oneside2">
+						<a href="">
+							<input type="file" name="file2" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg1">
+							<#if jsonX??>
+								<img alt="+" src="${(jsonX[1].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[1].src,'')}" width="100%" height="100%" id="upimg1">
+							<#else>
+									<img alt="+" src="" width="100%;" height="100%;" id="upimg1">
+							</#if>
+						</a>
+					</div>
+					<p>身份证背面相片</p>
+				</div>
+			</div>
+			<div class="remarks">身份证需实拍，清晰可见、不得涂改，自由帮承诺不以任何形式邪路您的身份证信息</div>
+
+			<div class="btn_reg">
+				<input type="hidden" name="type" value="jpg">
+				<a href="javascript:void(0)" id="submit">提交</a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
+
+

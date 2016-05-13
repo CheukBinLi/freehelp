@@ -1,53 +1,81 @@
+<!DOCTYPE HTML>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script>
+	$(function() {
+		var phone = $("input[name='phone']");
+		$("input[name='verificationcode']").keyup(function() {
+			if ($(this).val().length == 6) {
+				if (phone.val().length < 11) {
+					alert('操作有误，请重新注册');
+					location.href = "${request.contextPath}/register/reg_1";
+				}
+				var code = '&verificationcode=' + $(this).val();
+				ajax.POST('verificationcode', 'phone=' + phone.val() + code, function(data) {
+					if (msgModel.getCode(data) == '1') {
+						alert('通过');
+						$("input[name='verificationcode']").attr("readonly", "readonly");
+						$('#submit').click(function() {
+							var password = $("input[name='password']");
+							if (password.val().length < 6)
+								return alert('请输入6位以上12位以下密码');
 
+							fromData = $('#f0').serialize();
+							ajax.POST("../register/", fromData, function(data) {
+								if (msgModel.getCode(data) == '1') {
+									alert("注册成功,请重新登录系统");
+									location.href = "${request.contextPath}/index";
+								} else {
+									alert(msgModel.getMsg(data));
+									location.href = "${request.contextPath}/register/reg_1";
+								}
+							});
+						});
+					} else
+						alert('验证码输入有误');
+				});
+			}
+		});
+	});
+</script>
 </head>
+
 <body>
-	<h2>index</h2>
-	<form action="register" method="POST" id="f0">
-		<input type="text" name="verificationcode" placeholder="验证码" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;"
-			onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-		<input type="text" name="password" placeholder="密码">
-		<input type="text" name="phone" placeholder="手机号" value="${phone}" hidden="true">
-		<!-- <input type="submit" value="完成"> -->
-		<a href="javascript:void(0)" id="submit">完成 </a>
-	</form>
+	<div id="header">
+		<a href="login.html" class="l_ico ico_back"></a>
+		<span class="m_text">注册</span>
+	</div>
+	<div class="main">
+		<form action="register" method="POST" id="f0">
+			<div class="line">
+				<div class="iphone2">
+					<input type="text" name="verificationcode" class="code" placeholder="验证码" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+					<input type="text" class="code2" value="重新获取60" readonly="readonly" style="color: red !important;">
+					<input type="hidden" name="phone" placeholder="手机号" value="${phone?default('')}">
+				</div>
+			</div>
+			<div class="line">
+				<div class="iphone4">
+					<input type="password" name="password" class="input_noid" placeholder="请输入密码">
+					<div class="kg">
+						<img src="${request.contextPath}/resource/images/ico_kg2.jpg">
+					</div>
+				</div>
+			</div>
+			<div>
+				<a href="javascript:void(0);" class="massage" style="width: 90%" id="submit">完成注册</a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
-<script>
-	var phone = $("input[name='phone']");
-	$("input[name='verificationcode']").keyup(
-			function() {
-				if ($(this).val().length == 6) {
-					var code = '&verificationcode=' + $(this).val();
-					ajax.POST('verificationcode',
-							'phone=' + phone.val() + code, function(data) {
-								if (msgModel.getCode(data) == '1') {
-									alert('通过');
-									$("input[name='verificationcode']").attr("readonly","readonly");
-									$('#submit').click(function() {
-										var password=$("input[name='password']");
-										if(password.val().length<6)
-											return alert('请输入6位以上12位以下密码');
-										
-										
-										fromData = $('#f0').serialize();
-										ajax.POST("../register/", fromData, function(data) {
-											if(msgModel.getCode(data)=='1'){
-													alert("注册成功,请重新登录系统");
-													location.href = "${request.contextPath}/index";
-												}
-											else{
-													alert(msgModel.getMsg(data));
-													location.href = "${request.contextPath}/register/reg_1";
-												}
-										});	
-									});
-								} else
-									alert('验证码输入有误');
-							});
-				}
-			});
-</script>
+
+
