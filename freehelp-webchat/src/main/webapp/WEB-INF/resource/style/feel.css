@@ -1,0 +1,402 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body { background:#fff; font-family:Verdana, Geneva, sans-serif,"Microsoft YaHei"; margin:0; font-size:14px}
+p,h1,h2,h3,h4,h5,ul,li,dd,dt,dl,img { margin:0; padding:0}
+ul,li,dd,dt,dl { list-style:none}
+img { vertical-align:top; display:block; border:none}
+.fl { float:left;}
+.fr { float:right;}
+a:link,a:visited { color:#333; text-decoration:none;}
+a:hover { color:#F30; text-decoration:none;}
+.fl { float:left}
+.fr { float:right}
+.l { background:#efefef; height:10px; line-height:10px; overflow:hidden}
+
+input:focus {  outline:none;}
+
+#header { height:44px; line-height:44px; text-align:center; width:100%; position:relative; border-bottom:1px solid #efefef;}
+#header .l_ico { float:left; overflow:hidden; margin-left:15px;}
+#header .r_ico { float:right; overflow:hidden; margin-right:15px;}
+#header .m_text { position:absolute; left:50%; margin-left:-100px; width:200px; text-align:center; display:inline-block; font-size:20px;}
+#header .m_text img { margin:0 auto}
+#header .ico_back { background:url(../images/ico_back.jpg) no-repeat; width:16px; height:16px; margin-top:14px;}
+#header .ico_back2 { background:url(../images/arrow-icon16x16.png) no-repeat; width:16px; height:16px; margin-top:14px;}
+#header .ico_user { background:url(../images/ico_user.jpg) no-repeat; background-size:cover; width:16px; height:16px; margin-top:14px;}
+#header .ico_massg { background:url(../images/ico_mas.jpg) no-repeat; background-size:cover; width:16px; height:16px; margin-top:14px;}
+
+.main { padding-top:10px; width:100%; margin:0 auto; overflow:hidden; background:#fff; position:absolute}
+.main2 { width:100%; margin:0 auto; overflow:hidden; background:#efefef; position:absolute; width:100%; height:100%;}
+/*注册、登录、忘记密码*/
+a.massage { background:#DF4D50; display:block; height:44px; line-height:44px; border-radius:22px; width:80%; margin:20px auto; text-align:center; color:#fff}
+a.noid { background:#67C2C5; display:block; height:44px; line-height:44px; border-radius:22px; width:80%; margin:20px auto; text-align:center; color:#fff}
+.line { line-height:66px; height:66px; width:90%; margin:0 auto; border-bottom:1px solid #efefef}
+.iphone { background:url(../images/iphone.jpg) no-repeat 0 50%; padding-left:40px; height:66px;}
+.iphone2 { background:url(../images/iphone2.jpg) no-repeat 0 50%; padding-left:40px; height:66px;}
+.iphone input,.iphone input:hover { line-height:60px; height:60px; border:none; background:#fff; text-align:center; font-size:16px;}
+input.area { width:20%; float:left; border-right:1px solid #efefef;}
+.nober { width:70%; float:left; color:#999}
+.code { width:65%; float:left; color:#999; text-indent:20px; line-height:60px; height:60px; border:none; background:#fff;  font-size:16px;}
+input.code2 { width:32%; float:right; color:#999; text-align:center; border:1px solid #efefef; line-height:40px; height:40px;background:#fff; margin-top:10px; font-size:16px; cursor:pointer}
+.iphone3 input { width:100%; border:none; line-height:60px; height:60px; font-size:16px;}
+.iphone3 .input_noid { background:url(../images/no_id.jpg) no-repeat 0 50%; height:66px; float:left; text-indent:40px; color:#999}
+.iphone4 input { width:85%; border:none; line-height:60px; height:60px; font-size:16px; background:url(../images/iphone3.jpg) no-repeat 0 50%; height:66px; float:left; text-indent:40px; color:#999}
+.iphone4 .kg { display:block; float:right; margin-top:18px;}
+.cpw_succ { background:url(../images/cp_succ.jpg) no-repeat 50% 110px; line-height:550px; overflow:hidden; height:400px; text-align:center;}
+
+/*房东和管家的快捷按钮*/
+.quick_menu { height:44px;}
+.quick_menu a { display:inline-block; width:100px; line-height:41px; text-align:center; text-indent:20px; border-bottom:3px solid #fff}
+.quick_menu a.text_hover { color:#FF6766; border-bottom:3px solid #FF6766}
+.ico_fd { background:url(../images/ico_fd.jpg) no-repeat 20% 50%;}
+.ico_gj { background:url(../images/ico_gj.jpg) no-repeat 20% 50%;}
+.ico_fd2 { background:url(../images/ico_fd2.jpg) no-repeat 20% 50%;}
+.ico_gj2 { background:url(../images/ico_gj2.jpg) no-repeat 20% 50%;}
+.ad1 { width:100%; overflow:hidden;}
+.adtext { margin:20px auto 30px; text-align:center}
+.adtext .bigtext { font-size:24px;}
+.adtext .smalltext { font-size:14px; color:#999; line-height:35px;}
+.btn_reg a { position:fixed; bottom:0; line-height:44px; height:44px; background:#DF4D50; text-align:center; color:#fff; font-size:18px; display:block; width:100%;}
+.listbox { width:90%; margin:0 auto; overflow:hidden}
+.listbox li { width:100%; float:left; line-height:43px; height:43px; border-bottom:1px solid #efeffe; position:relative; overflow:hidden; font-size:14px; }
+.listbox li .listbox_left { width:100px; position:absolute;}
+.listbox li .rightinput {  padding-left:110px; overflow:hidden}
+.listbox li .rightinput .listinput { width:100%; border:none; line-height:42px; color:#999}
+.listbox li .rightinput label { font-size:12px; margin-right:20px; color:#999}
+
+.gray_title { background:#efefef; line-height:44px; height:44px; text-indent:20px; color:#333}
+.btnline a { background:#DF4D50; line-height:44px; height:44px; text-align:center; width:100%; color:#fff; font-size:18px; display:block; cursor:pointer; margin-top:30px;}
+
+.centerhead { height:176px; background:#333; position:relative; width:100%;}
+.centerhead .goodbox { position:absolute; width:70px; height:30px; line-height:30px; right:20px; top:20px; background:#fff; border:1px solid #efefef;  border-radius:20px; font-size:12px}
+.centerhead .goodbox em { display:inline-block; width:24px; height:24px; background:url(../images/ico_good.jpg) no-repeat; background-size:cover; margin:3px 0 0 9px;}
+.centerhead .goodbox span { float:right; margin-right:10px; color:#333;}
+.centerhead .headimg { position:absolute; background:#fff; left:50%; bottom:-20px; height:110px; width:110px; margin-left:-55px; border-radius:66px;  border:5px solid #fff; overflow:hidden; box-shadow:0 0 5px #888888;}
+.myinfo { text-align:center; line-height:25px; margin-top:30px; font-size:14px; color:#999}
+.myinfo h3 { font-size:18px; color:#000; text-align:center}
+.myinfo h3 div { display:inline-block}
+.myinfo h3 em { display:inline-block; width:16px; height:16px; background:url(../images/ico_my.jpg) no-repeat; background-size:cover; margin:5px 0 0 10px}
+.myinfo h3 span,.myinfo h3 en { float:left}
+.evaluate { text-align:center; overflow:hidden; margin:10px auto;}
+.evaluate em { display:inline-block; border:1px solid #DF4D50; color:#DF4D50; line-height:30px; height:30px; margin:5px; padding:0 15px; font-style:normal; border-radius:20px; font-size:14px }
+.evaluate em.add a { padding:0 15px; color:#DF4D50}
+.myinfo2 { width:90%; margin:0 auto; overflow:hidden; border-top:1px solid #efefef;}
+.myinfo2 li { line-height:44px; height:44px; border-bottom:1px solid #efefef;}
+.comment { text-align:center; overflow:hidden; margin:10px auto; line-height:25px; width:90%}
+.comment .comment_no { font-size:16px;}
+.comment .comment_level { color:#FFC600; font-size:14px; }
+.comment .com_tx { width:88px; height:88px; overflow:hidden; border-radius:50px; overflow:hidden; margin:10px auto}
+.comment .date_fb { font-size:14px; color:#999}
+.comment a.all_com { font-size:24px; display:block; border:1px solid #DF4D50; color:#DF4D50; line-height:44px; height:44px; width:160px; margin:20px auto 10px;}
+.photo { display:inline-block; height:16px; width:16px; background:url(../images/ico_photo.jpg) no-repeat; background-size:cover; float:right; margin-top:14px;}
+.myhouse h3 { font-size:16px; line-height:60px; text-align:center}
+.myhouse .houselist { width:90%; margin:0 auto 20px; overflow:hidden}
+.myhouse .houselist .housebox { display:block; width:1200px; overflow-x:scroll}
+.myhouse .houselist .housebox li { float:left; width:230px; height:250px; overflow:hidden; position:relative; border-radius:10px; overflow:hidden}
+.myhouse .houselist .housebox li .money { position:absolute; top:0; line-height:30px; text-indent:10px; color:#fff; font-size:12px}
+.myhouse .houselist .housebox li { float:left; width:230px; height:250px; overflow:hidden; position:relative; border-radius:10px; margin-right:10px; overflow:hidden}
+.myhouse .houselist .housebox li .houseinfo { position:absolute; z-index:999; border-top:1px solid #fff; padding:10px; line-height:25px; bottom:0px; font-size:14px; color:#fff; background:rgba(0, 0, 0, 0.3)!important; filter:Alpha(opacity=30); background:#000}
+
+.picturebox { width:100%; margin:0 auto; overflow:hidden}
+.picturebox .imgbox { float:left; width:50%; font-size:14px; color:#999; line-height:40px; text-align:center}
+.picturebox .imgbox .oneside { width:90%; background:#c4c4c4; height:120px; margin:0 auto}
+.picturebox .imgbox .oneside2 { width:90%; background:#fff; height:120px; line-height:120px; margin:0 auto; text-align:center}
+.picturebox .imgbox .oneside2 a { font-size:64px; color:#c4c4c4}
+.remarks { font-size:14px; color:#F79A30; width:80%; text-align:center; margin:20px auto; line-height:25px;}
+
+/*订单*/
+.order_house { display:block; background:#fff; padding:15px; min-height:90px; border-bottom:1px solid #efefef; position:relative; overflow:hidden}
+.order_house .limg { position:absolute;}
+.order_house .limg img { width:120px; height:90px;}
+.order_house .order_house_info { line-height:25px; padding-left:130px; overflow:hidden}
+.order_house .order_house_info p { display:block; overflow:hidden; color:#999}
+.order_house .order_house_info p.title .fl { font-size:18px; line-height:35px; color:#333; font-weight:bold}
+.order_house .order_house_info p.title .fr { font-size:14px; color:#DE4C4D; line-height:35px;}
+.order_house .order_house_info p.pj { color:#FFC600;}
+.order_keeper { display:block; overflow:hidden; padding:5px 15px 10px;}
+.order_keeper .order_keeper_info { line-height:66px; height:44px; line-height:44px}
+.order_keeper .order_keeper_info .keeperinfo { display:inline-block; width:36px; height:36px; border-radius:30px; overflow:hidden; float:left; margin:3px 10px 0 0;}
+.order_keeper .order_keeper_info .keepername { font-size:18px; color:#333; font-weight:bold; float:left}
+.order_keeper .order_keeper_info .keeperico { float:right;}
+.order_keeper .order_keeper_info .keeperico a { display:inline-block; width:20px; height:20px; margin-left:10px; margin-top:13px; overflow:hidden; float:left}
+.order_keeper .order_keeper_info .keeperico a.order_phone { background:url(../images/ico_photo2.jpg) no-repeat; background-size:cover;}
+.order_keeper .order_keeper_info .keeperico a.order_meg { background:url(../images/ico_massg.jpg) no-repeat; background-size:cover;}
+
+.pricebox { padding:10px 15px;}
+.pricebox .price_zj { line-height:30px; font-size:16px; overflow:hidden; border-bottom:1px solid #efefef; padding-bottom:10px}
+.pricebox .pricelist { overflow:hidden; margin-top:10px;}
+.pricebox .pricelist li { float:left; width:100%; font-size:14px; line-height:30px;}
+.price_state { line-height:44px; height:44px; width:100%; position:fixed; bottom:0; border-top:1px solid #efefef}
+.statetext { color:#DE4D50; font-size:16px; padding-left:15px;}
+.statetext .time { display:inline-block; width:16px; height:16px; background:url(../images/ico_nz.jpg) no-repeat; background-size:cover; float:left; margin:
+13px 5px 0 0;}
+.statetext .timed { display:inline-block; width:16px; height:16px; background:url(../images/ico_timed.jpg) no-repeat; background-size:cover; float:left; margin:
+13px 5px 0 0;}
+.price_state .cancel,.bz_line .cancel { padding:5px 15px; border-radius:5px; font-size:14px; border:1px solid #999; color:#666; margin-right:15px;}
+.popprice { background:#efefef; padding:15px; overflow:hidden}
+.popprice .popmain { width:100%; background:#fff; box-shadow:0 0 5px #ccc; padding-bottom:15px}
+.popprice .popmain h5 { font-size:18px; text-align:center; line-height:44px; height:44px;}
+.popprice .pricelibox { border:1px solid #efefef; line-height:40px; height:40px; width:90%; margin-left:auto; margin-right:auto; margin-bottom:5px;}
+.popprice .pricelibox em { margin:10px 5px 0 10px; width:20px; height:20px; overflow:hidden;}
+.popprice .pricelibox .fr { margin-right:10px;}
+.popprice .price_hj { border-top:1px solid #efefef; padding:15px; overflow:hidden}
+.popprice .price_hj .l_price { line-height:20px; color:#666; float:left}
+.popprice .price_hj .r_price { line-height:60px; font-size:20px;  float:right}
+.btn_tj a { display:block; background:#DF4D50; line-height:44px; color:#fff; height:44px; text-align:center; width:90%; border-radius:30px; margin:10px auto;}
+
+.houseimg { width:100%; position:relative; height:240px; overflow:hidden}
+.houseimg .price { color:#fff; position:absolute; line-height:30px; height:30px; width:100px; font-size:16px; border-radius:20px; left:-20px; bottom:20px; text-align:center; background:rgba(0, 0, 0, 0.3)!important; filter:Alpha(opacity=30); background:#000}
+.keeperhouse { text-align:center; line-height:25px; margin:10px auto; font-size:16px;}
+.keeperhouse .keeperimg { width:66px; height:66px; display:block; border-radius:40px; border:2px solid #efefef; margin:5px auto; overflow:hidden}
+.houstype,.bedtype,.peop{ line-height:20px; padding:15px 0 15px 75px; color:#333; }
+.houstype { background:url(../images/ico_house.jpg) no-repeat 15px 10px; border-top:1px solid #efefef;}
+.bedtype { background:url(../images/ico_bad.jpg) no-repeat 15px 10px; margin:10px auto;}
+.peop { background:url(../images/ico_peop.jpg) no-repeat 15px 3px; border-bottom:1px solid #efefef;}
+.botline a { width:50%; display:inline-block; line-height:44px; height:44px; text-align:center; font-size:18px; float:left; color:#fff;}
+.botline a.btn_c1 { background:#DF4D50;}
+.botline a.btn_c2 { background:#666;}
+.order_succ { background:url(../images/cp_succ.jpg) no-repeat 50% 110px; line-height:550px; overflow:hidden; height:400px; text-align:center;}
+
+/*房东*/
+.sort { line-height:44px; height:44px; text-align:center; font-size:16px;}
+.sort em { display:inline-block; width:10px; height:8px; background:url(../images/ico_sj.jpg) no-repeat; background-size:cover}
+.keeperlist { overflow:hidden}
+.keeperlist li { padding:15px 20px; border-bottom:1px solid #efefef; overflow:hidden; position:relative}
+.keeperlist li .keeperimg { width:66px; height:66px; overflow:hidden; border-radius:40px; float:left}
+.keeper_zl { float:left; margin-left:10px;}
+.keeper_zl .keeper_name { font-size:18px; color:#333; line-height:30px; margin-top:10px}
+.keeper_zl .keeper_int { color:#999}
+.checkmore { background:url(../images/ico_sj_r.jpg) no-repeat; width:22px; height:22px; overflow:hidden; background-size:cover; position:absolute; right:20px; top:50%; margin-top:-11px;}
+.myhead { width:100%; margin:0 auto; text-align:center;position:relative; overflow:hidden }
+.myhead .headerimg { width:100px; height:100px; border-radius:70px; box-shadow:0 0 20px #ccc; overflow:hidden; border:3px solid #fff; margin:30px auto 15px;}
+.myhead em { position:absolute; top:30px; left:54%; width:20px; height:20px; z-index:99}
+.myname { font-size:18px; color:#333; text-align:center; line-height:30px; height:30px}
+.myname span { margin:0 auto; position:relative; padding-right:30px;}
+.myname span a { position:absolute; right:0; width:20px; height:20px; background:url(../images/ico_bi.jpg) no-repeat; background-size:cover;}
+.myinfo_mycenter { text-align:center; overflow:hidden;}
+.myinfo_mycenter li { width:33.3%; float:left; color:#666; padding:10px 0}
+.myinfo_mycenter li .f_red { font-size:18px; line-height:30px;}
+
+.landlordbox { padding:0 15px; overflow:hidden}
+.landlordbox h3 { border-bottom:1px solid #efefef; border-top:1px solid #efefef; line-height:44px; height:44px;}
+.my_set { overflow:hidden}
+.my_set li { width:50%; float:left; padding:10px 0}
+.my_set li p { padding-left:65px; line-height:25px; font-size:14px; color:#999}
+.my_set li p.typename { font-size:16px; color:#333}
+.my_set .my_house { background:url(../images/ico_myhouse.jpg) no-repeat 30px 10px;}
+.my_set .my_keeper { background:url(../images/ico_my_keeper.jpg) no-repeat 30px  10px;}
+.my_set .my_order { background:url(../images/ico_order.jpg) no-repeat 30px  10px;}
+.my_set .my_order2 { background:url(../images/ico_order_zk.jpg) no-repeat 30px  10px;}
+.my_set .my_set { background:url(../images/ico_set.jpg) no-repeat 30px  10px;}
+
+.ico_g1,.ico_g2 { width:20px; height:20px; overflow:hidden; display:block}
+.ico_g1 { background:url(../images/ico_g1.jpg) no-repeat; background-size:cover;}
+.ico_g2 { background:url(../images/ico_g2.jpg) no-repeat; background-size:cover;}
+
+.changheadimg { padding:15px 15px 0; overflow:hidden; position:relative}
+.changheadimg .leftimg { position:absolute;}
+.changheadimg .leftimg img { width:90px; height:90px;}
+.changheadimg .righttetx { padding-left:105px;}
+.changheadimg .righttetx p { border-bottom:1px solid #efefef}
+.changinfo { overflow:hidden}
+.changinfo li { width:90%; margin:0 auto; line-height:44px; height:44px; border-bottom:1px solid #efefef; position:relative}
+.changinfo li .input_text { position:absolute}
+.changinfo li .spaninput { width:100%}
+.changinfo li .spaninput input { text-align:right; color:#999; float:right}
+a.changbtn { color:#C8C7CD; float:right; margin-right:15px;}
+.taglist { width:90%; margin:10px auto; text-align:center}
+.taglist li a { padding:0 15px; line-height:27px; height:25px; display:inline-block; overflow:hidden; border-radius:20px; border:1px solid #999; color:#999; margin:5px; float:left}
+.taglist li a.on { background:#DE4D50; color:#fff; border-color:#DE4D50}
+
+.com_mainbox { padding:10px 15px; line-height:30px;}
+.inputstyle { background:#fff; border:none; line-height:41px; height:41px; font-size:14px}
+
+.reg_line { width:90%; margin:0 auto; line-height:44px; height:44px; border-bottom: 1px solid #efefef;}
+.reg_line  .ico_sfz { background:url(../images/no_id.jpg) no-repeat 0 0; background-size:cover; width:16px; height:16px; display:inline-block; float:left; margin:13px 10px 0 0}
+.reg_line  .ico_g1 { float:right; margin-top:12px;}
+.nomore { text-align:center; position:relative; height:44px; overflow:hidden}
+.nomore span { position:absolute; margin:0 auto; width:150px; margin-left:-75px; padding:10px 0}
+.nomore .ico_sx { background:url(../images/ico_sx.jpg) no-repeat 0 50%;; background-size:cover; width:16px; height:16px; margin-right:5px; display:inline-block;}
+.massgbox  { width:100%; overflow:hidden;}
+.massgbox li { width:100%; border-bottom:1px solid #efefef; height:66px; display:block; overflow:hidden}
+.massgbox li .massgli  { position:relative}
+.massgbox li .massgli .l_redico { width:44px; height:44px; display:inline-block; border-radius:30px; background:#DF4D50; position:absolute; margin:10px 10px 0 20px;}
+.massgbox li .massgli .m_textbox { padding-left:80px; overflow:hidden; padding-top:8px;}
+.massgbox li .massgli .m_textbox p { display:block; line-height:25px; overflow:hidden; color:#666; padding-right:20px;}
+.massgbox li .massgli .m_textbox p.oneline .fl { font-size:16px; color:#000; font-weight:bold}
+.massgbox li .massgli .r_delbtn { display:none; position:absolute; right:0; top:0}
+.massgbox li .massgli .r_delbtn a { float:right; display:inline-block; width:66px; height:66px; line-height:66px; background:#DF4D50; text-align:center; color:#fff;}
+
+/*查找房源中心*/
+.graybg { background:#efefef; padding:15px; margin-bottom:60px; overflow:hidden}
+.graybg .findkeeper a { display:block;}
+
+.bottombtn { background:#fff; overflow:hidden; position:fixed; bottom:0; width:100%; border-top:1px solid #efefef;}
+.bottombtn .leftdiv { width:50%; float:left}
+.bottombtn .rightdiv { width:50%; float:right}
+.bottombtn .leftdiv a { background:#DF4D50; border:1px solid #DF4D50; line-height:44px; height:44px; overflow:hidden; display:block; text-align:center; color:#fff; margin-right:7px}
+.bottombtn .rightdiv a { background:#fff; border:1px solid #DF4D50; line-height:44px; height:44px; overflow:hidden; display:block; text-align:center; color:#DF4D50; margin-left:8px}
+.bottombtn .midbtn a {background:#DF4D50; border:1px solid #DF4D50; line-height:44px; height:44px; overflow:hidden; display:block; text-align:center; color:#fff;}
+
+.houseinfo2 { padding:15px; overflow:hidden; }
+.houseinfo2 .houseimg { float:left;width:66px; height:66px; border-radius:30px; overflow:hidden; display:inline-block}
+.houseinfo2 .houseint { margin-left:80px; padding-top:5px; overflow:hidden;}
+.houseinfo2 .houseint h3 { line-height:35px; overflow:hidden}
+.houseinfo2 .houseint h3 .fl { font-size:16px;}
+.houseinfo2 .houseint h3 .fr { font-size:14px;color:#DF4D50}
+a.alltext { color:#DF4D50; border:1px solid #DF4D50; line-height:40px; height:40px; padding:0 30px; display:inline-block; margin:0 auto}
+.sslist { margin:20px auto; overflow:hidden}
+.sslist li { float:left; text-align:center; width:25%; margin-bottom:15px;}
+.sslist li p { color:#333; line-height:30px; height:30px;}
+.sslist li em { display:block; width:24px; height:24px; overflow:hidden; margin:0 auto}
+.sslist li .rs { background:url(../images/ico_rs.jpg) no-repeat; background-size:cover}
+.sslist li .yj { background:url(../images/ico_ys.jpg) no-repeat; background-size:cover}
+.sslist li .tx { background:url(../images/ico_tx.jpg) no-repeat; background-size:cover}
+.sslist li .xz { background:url(../images/ico_xz.jpg) no-repeat; background-size:cover}
+.sslist li .mj { background:url(../images/ico_mj.jpg) no-repeat; background-size:cover}
+.sslist li .xs { background:url(../images/ico_xs.jpg) no-repeat; background-size:cover}
+.sslist li .yg { background:url(../images/ico_yg.jpg) no-repeat; background-size:cover}
+.sslist li .sz { background:url(../images/ico_sz.jpg) no-repeat; background-size:cover}
+.sslist li .tv { background:url(../images/ico_tv.jpg) no-repeat; background-size:cover}
+.sslist li .ysj { background:url(../images/ico_ysj.jpg) no-repeat; background-size:cover}
+.sslist li .kt { background:url(../images/ico_kt.jpg) no-repeat; background-size:cover}
+.sslist li .bx { background:url(../images/ico_bx.jpg) no-repeat; background-size:cover}
+
+.sslist2 { margin:20px auto; overflow:hidden}
+.sslist2 li { float:left; text-align:center; width:25%; margin-bottom:15px;}
+.sslist2 li p { color:#333; line-height:30px; height:30px;}
+.sslist2 li em { display:block; width:32px; height:32px; overflow:hidden; margin:0 auto}
+.sslist2 li .fac1 { background:url(../images/ico_fac1.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac2 { background:url(../images/ico_fac2.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac3 { background:url(../images/ico_fac3.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac4 { background:url(../images/ico_fac4.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac5 { background:url(../images/ico_fac5.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac6 { background:url(../images/ico_fac6.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac7 { background:url(../images/ico_fac7.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac8 { background:url(../images/ico_fac8.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac9 { background:url(../images/ico_fac9.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac10 { background:url(../images/ico_fac10.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac11 { background:url(../images/ico_fac11.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac12 { background:url(../images/ico_fac12.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac13 { background:url(../images/ico_fac13.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac14 { background:url(../images/ico_fac14.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac15 { background:url(../images/ico_fac15.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac16 { background:url(../images/ico_fac16.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac17 { background:url(../images/ico_fac17.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac18 { background:url(../images/ico_fac18.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac19 { background:url(../images/ico_fac19.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac20 { background:url(../images/ico_fac20.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac21 { background:url(../images/ico_fac21.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac22 { background:url(../images/ico_fac22.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac23 { background:url(../images/ico_fac23.jpg) no-repeat; background-size:cover}
+.sslist2 li .fac24 { background:url(../images/ico_fac24.jpg) no-repeat; background-size:cover}
+.bz_line { line-height:44px; height:44px; background:#fff;}
+
+.quickmeun { overflow:hidden; height:44px; background:#fff;}
+.quickmeun li { line-height:41px; height:41px; border-bottom:3px solid #fff; text-align:center; float:left; width:20%;}
+.quickmeun li a.onli { color:#DF4D50; border-bottom:3px solid #DF4D50; display:block}
+.nooreder em { display:block; width:66px; height:66px; background:url(../images/ico_noorder.jpg) no-repeat; background-size:cover; margin:60px auto 20px}
+.nooreder p { font-size:18px; text-align:center; line-height:30px; height:33px;}
+
+.bedlist { overflow:hidden}
+.bedlist li { line-height:43px; height:43px; border-bottom:1px solid #efefef;}
+.bedlist li em.li_ico { float:left; display:inline-block; margin:13px 10px 0 15px; width:16px; height:16px; background:url(../images/ico_bed.jpg) no-repeat; background-size:cover;}
+.bedlist li span { display:inline-block; width:25%; overflow:hidden}
+.bedlist li em.click_ico { float:right; display:inline-block; margin:13px 10px 0 15px; width:16px; height:16px; background:url(../images/ico_sj_r.jpg) no-repeat; background-size:cover;}
+.bedlist li .ico_del { display:inline-block; background:#DF4D50; float:right; height:43px; display:none}
+.bedlist li .ico_del em { display:block; width:20px; height:20px; margin:12px auto 0; background:url(../images/ico_del.jpg) no-repeat; background-size:cover}
+.bedlist li.delli { margin-left:-45px;}
+.bedlist li.delli span { width:20%}
+.bedlist li.delli span.ico_del { width:10%; margin-left:15px;}
+
+/*弹出窗口*/
+.popbox { position:absolute; height:100%; width:100%;  z-index:100; background:rgba(0, 0, 0, 0.3)!important; filter:Alpha(opacity=30); background:#000; display:none;}
+.popmain { background:#fff; position:fixed; bottom:0; width:100%; z-index:150; overflow:hidden}
+.popmain .poptitle { line-height:43px; height:43px; border-bottom:1px solid #efefef; width:90%; margin:0 auto}
+.popmain .popul li { line-height:44px; height:44px; overflow:hidden;}
+.popmain .popul li a { display:block; text-align:center; border-bottom:1px solid #efefef}
+.popmain .popul li a:hover { background:#f9f9f9; color:#DF4D50}
+
+.selbed em { display:inline-block; width:16px; height:16px; background:url(../images/ico_sj_r.jpg) no-repeat; background-size:cover; float:right; margin:13px 0 0 10px}
+.bottomline { bottom:0; position:fixed; width:100%; line-height:88px; height:88px; border-top:1px solid #efefef;}
+.headupimg { height:240px; width:100%; position:relative; background:url(../images/imgbg.jpg) no-repeat; background-size:cover; text-align:center}
+.headupimg .upimg { display:block; background:url(../images/ico_upimg.png) no-repeat; background-size:cover; width:60px; height:45px; position:absolute; left:50%; margin-left:-30px; top:80px; }
+.headupimg p { padding-top:130px; color:#fff; font-size:16px;}
+
+.icolistbox li .listbox_left { width:30px;}
+.icolistbox li .rightinput { padding-left:30px;}
+.fy1,.fy2,.fy3,.fy4,.fy5,.fy6,.fy7,.fy8,.fy9,.fy10,.fy11,.fy12 { width:16px; height:16px; overflow:hidden; display:inline-block; margin-top:12px;}
+.fy1 { background: url(../images/ico_fy.jpg) no-repeat; background-size:cover;}
+.fy2 { background: url(../images/ico_fy2.jpg) no-repeat; background-size:cover;}
+.fy3 { background: url(../images/ico_fy3.jpg) no-repeat; background-size:cover;}
+.fy4 { background: url(../images/ico_fy4.jpg) no-repeat; background-size:cover;}
+.fy5 { background: url(../images/ico_fy5.jpg) no-repeat; background-size:cover;}
+.fy6 { background: url(../images/ico_fy6.jpg) no-repeat; background-size:cover;}
+.fy7 { background: url(../images/ico_fy7.jpg) no-repeat; background-size:cover;}
+.fy8 { background: url(../images/ico_fy8.jpg) no-repeat; background-size:cover;}
+.fy9 { background: url(../images/ico_fy9.jpg) no-repeat; background-size:cover;}
+.fy10 { background: url(../images/ico_fy10.jpg) no-repeat; background-size:cover;}
+.fy11 { background: url(../images/ico_fy11.jpg) no-repeat; background-size:cover;}
+.fy12 { background: url(../images/ico_fy12.jpg) no-repeat; background-size:cover;}
+.quickmenu2 { height:44px; overflow:hidden; background:#fff;}
+.quickmenu2 li { float:left; width:33.3%; text-align:center;}
+.quickmenu2 li a { display:block; border-bottom:3px solid #fff; line-height:41px; height:41px}
+.quickmenu2 li a.onli { border-bottom:3px solid #DF4D50; color:#DF4D50}
+
+.popmain1 { padding:60px 20px 20px; overflow:hidden;}
+.popmain2 { background:#fff; border-radius:10px; float:left; display:block; min-height:200px; width:100%; padding-top:10px;}
+.btnclose { position:absolute; width:24px; height:24px; padding:6px; top:40px; left:3px; background:#fff; overflow:hidden; border-radius:30px; box-shadow:0 0 5px #666}
+.btnclose a { background:url(../images/ico_close.jpg) no-repeat; background-size:cover; width:16px; height:16px; margin:3px auto; display:block}
+.popmain2 .change_title { width:90%; font-size:24px; line-height:40px; height:40px; border-bottom:1px solid #efefef;display:block; margin:0 auto}
+.popmain2 .changemain { overflow:hidden; border-bottom:1px solid #efefef; width:90%; display:block; margin:0 auto}
+.popmain2 .changemain p { display:100%; height:30px; line-height:30px; text-indent:20px;}
+.popmain2 .changemain h5 { display:block; width:100%; line-height:44px; height:44px; font-size:18px;}
+.popmain2 .changemain h5 .fr { font-size:16px; color:#DF4D50} 
+.popmain2 .changemain h5 em { font-size:16px; color:#333; margin-right:5px;}
+.popmain2 .changemain p .fr { font-size:14px; color:#DF4D50} 
+.sellist { overflow:hidden;}
+.sellist li { float:left; width:100%; line-height:43px; height:43px; overflow:hidden; border-bottom:1px solid #efefef;}
+.sellist li .fl { text-indent:20px}
+.sellist li .fr { padding-right:20px;}
+.sel_bed { padding:15px; overflow:hidden;}
+.sel_bed li { float:left; width:100%; border-bottom:1px solid #efefef; line-height:40px; height:40px; position:relative}
+.sel_bed li .selbox,.sel_bed li .selno { position:absolute;}
+.sel_bed li .selbox { margin-top:13px;}
+.sel_bed li .selno { right:0; width:80px; border:1px solid #efefef; text-align:center; margin-top:3px; color:#999; line-height:30px; height:30px;}
+.sel_bed li label { padding:0 85px 0 30px;}
+
+
+
+.tl { text-align:left}
+.tc { text-align:center}
+.tr { text-align:right}
+.p15 { padding:15px; overflow:hidden}
+.lh25 { line-height:25px;}
+.mt10 { margin-top:10px;}
+.mt15 { margin-top:15px;}
+.ml20 { margin-left:20px}
+.mr20 { margin-right:20px}
+.mb60 { margin-bottom:60px}
+.f_red,a.f_red { color:#DF4D50}
+.f_gray { color:#666}
+.f_gray2 { color:#999}
+.f_yellow { color:#FFC602}
+.db { display:block}
+.dm { display:none}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
