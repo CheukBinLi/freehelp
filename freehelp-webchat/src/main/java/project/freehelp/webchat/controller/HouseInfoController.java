@@ -1,5 +1,7 @@
 package project.freehelp.webchat.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +15,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import project.freehelp.common.Constant;
+import project.freehelp.common.SessionType;
 import project.freehelp.common.entity.HouseInfo;
 import project.freehelp.common.service.HouseInfoService;
 import project.master.fw.sh.common.AbstractController;
+import project.master.fw.sh.common.UpLoadFileFactory;
 
 @Controller
 @Scope("prototype")
-@RequestMapping(value = { "/system/houseInfo/", "/system/houseRelease/" })
-public class HouseInfoController extends AbstractController {
+@RequestMapping(value = { "/system/houseInfo/" })
+public class HouseInfoController extends AbstractController implements Constant, SessionType {
 
 	@Autowired
 	private HouseInfoService houseInfoService;
+
+	@Autowired
+	private UpLoadFileFactory upLoadFileFactory;
 
 	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
@@ -46,11 +57,44 @@ public class HouseInfoController extends AbstractController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public Object postJ(HttpServletRequest request, HttpServletResponse response) {
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		String realPath = request.getServletContext().getRealPath("/") + HOUSE_IMAGE_PATH;
+		HouseInfo houseInfo = new HouseInfo(true);
+		List<String> fileList = null;
+		if (commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> it = multiRequest.getFileNames();
+			MultipartFile multipartFile;
+			String fileName = null;
+			int count = 0;
+			StringBuffer sb = new StringBuffer();
+			fileList = new ArrayList<String>();
+			try {
+				while (it.hasNext()) {
+					fileName = String.format("house_%s_%s.%s", houseInfo.getId(), count++, request.getParameter("type"));
+					fileList.add(fileName);
+					multipartFile = multiRequest.getFile(it.next());
+					upLoadFileFactory.saveFile(multipartFile.getInputStream(), realPath, fileName);
+					sb.append("{\"src\":\"").append(fileName).append("\"},");
+				}
+				if (sb.length() > 2) {
+					sb.insert(0, "[");
+					sb.deleteCharAt(sb.length() - 1);
+					sb.append("]");
+				}
+				houseInfo.setImage(sb.length() > 0 ? sb.toString() : null);
+			} catch (Throwable e) {
+				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+				return fail(e);
+			}
+		}
 		try {
-			HouseInfo houseInfo = fillObject(new HouseInfo(), getParams(request));
+			houseInfo = fillObject(houseInfo, getParams(request));
 			houseInfoService.save(houseInfo);
-			return success(houseInfo);
+			return success();
 		} catch (Throwable e) {
+			if (null != fileList)
+				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
 			return fail(e);
 		}
 	}

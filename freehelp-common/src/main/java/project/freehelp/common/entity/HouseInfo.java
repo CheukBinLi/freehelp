@@ -217,6 +217,10 @@ public class HouseInfo extends AbstractEntity {
 		this.id = id;
 	}
 
+	public HouseInfo(boolean createId) {
+		this.id = generatedValue();
+	}
+
 	public HouseInfo() {
 		super();
 	}

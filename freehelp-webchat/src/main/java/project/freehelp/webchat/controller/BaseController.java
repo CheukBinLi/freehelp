@@ -43,8 +43,8 @@ public class BaseController extends AbstractController implements Constant, Sess
 	 */
 	@RequestMapping("**/index")
 	public ModelAndView anythingPath(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(request.getScheme());
-		System.out.println(request.getPathInfo());
+		// System.out.println(request.getScheme());
+		// System.out.println(request.getPathInfo());
 		return new ModelAndView(request.getPathInfo());
 	}
 

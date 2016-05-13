@@ -1,6 +1,6 @@
 package project.freehelp.webchat.controller;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class UserInfoController extends AbstractController implements Constant, 
 		try {
 			UserInfo userInfo = fillObject(new UserInfo(), getParams(request));
 			userInfoService.save(userInfo);
-			return new ModelAndView("userInfo_" + next).addObject("userInfo", userInfo);
+			return new ModelAndView(request.getPathInfo().replace("post/", "")).addObject("userInfo", userInfo);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
@@ -67,16 +67,20 @@ public class UserInfoController extends AbstractController implements Constant, 
 		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String realPath = request.getServletContext().getRealPath("/") + ID_CARD_IMAGE_PATH;
 		String id = request.getSession().getAttribute(USER_ID).toString();
+		List<String> fileList = null;
+		StringBuffer sb = null;
 		if (commonsMultipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> it = multiRequest.getFileNames();
 			MultipartFile multipartFile;
 			String fileName = null;
 			int count = 0;
-			StringBuffer sb = new StringBuffer();
+			sb = new StringBuffer();
+			fileList = new ArrayList<String>();
 			try {
 				while (it.hasNext()) {
 					fileName = String.format("idcard_%s_%s.%s", id, count++, request.getParameter("type"));
+					fileList.add(fileName);
 					multipartFile = multiRequest.getFile(it.next());
 					upLoadFileFactory.saveFile(multipartFile.getInputStream(), realPath, fileName);
 					sb.append("{\"src\":\"").append(fileName).append("\"},");
@@ -86,19 +90,26 @@ public class UserInfoController extends AbstractController implements Constant, 
 					sb.deleteCharAt(sb.length() - 1);
 					sb.append("]");
 				}
-				// 更新
-				UserInfo userInfo = userInfoService.getByPk(id);
-				userInfo.setReallyName(request.getParameter("reallyName")).setIdCard(request.getParameter("idCard")).setIdCardImage(sb.length() > 2 ? sb.toString() : null).setStatus(1);
-				userInfoService.update(userInfo);
-				return success();
 			} catch (Throwable e) {
-				e.printStackTrace();
+				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+				return fail(e);
 			}
+		}
+		// 更新
+		try {
+			UserInfo userInfo = userInfoService.getByPk(id);
+			userInfo = fillObject(userInfo, getParams(request));
+			// userInfo.setReallyName(request.getParameter("reallyName")).setIdCard(request.getParameter("idCard")).setIdCardImage(sb.length() > 2 ? sb.toString() : null).setStatus(1);
+			userInfo.setIdCardImage(null != sb ? sb.toString() : null).setStatus(1);
+			userInfoService.update(userInfo);
+			return success();
+		} catch (Throwable e) {
+			upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+			return fail(e);
 		}
 
 		// ModelAndView mav = new ModelAndView("forward:/system/userInfo/authentication_2");
 		// ModelAndView mav = new ModelAndView(new RedirectView("/system/userInfo/authentication_2"));
-		return fail("上传失败", null);
 	}
 
 	@RequestMapping(value = "put/{next}", method = RequestMethod.POST)
@@ -106,7 +117,7 @@ public class UserInfoController extends AbstractController implements Constant, 
 		try {
 			UserInfo userInfo = fillObject(new UserInfo(), getParams(request));
 			userInfoService.update(userInfo);
-			return new ModelAndView("userInfo_" + next).addObject("userInfo", userInfo);
+			return new ModelAndView(request.getPathInfo().replace("put/", "")).addObject("userInfo", userInfo);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
@@ -139,7 +150,7 @@ public class UserInfoController extends AbstractController implements Constant, 
 	public ModelAndView getj(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") String id, @PathVariable("next") String next) {
 		try {
 			UserInfo userInfo = userInfoService.getByPk(id);
-			return new ModelAndView("userInfo_" + next).addObject("userInfo", userInfo);
+			return new ModelAndView(request.getPathInfo().replace("get/" + id + "/", "")).addObject("userInfo", userInfo);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
@@ -152,7 +163,7 @@ public class UserInfoController extends AbstractController implements Constant, 
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
 			List<UserInfo> list = userInfoService.getList(map, true, page, size);
-			return new ModelAndView("userInfo_" + next).addObject("userInfoList", list);
+			return new ModelAndView(request.getPathInfo().replace("list/", "")).addObject("userInfoList", list);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
