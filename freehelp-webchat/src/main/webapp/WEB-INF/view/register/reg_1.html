@@ -27,8 +27,11 @@
 					if (msgModel.getCode(data) == '1') {
 						if (msgModel.getData(data) == '0') {
 							ajax.POST('verificationcode', 'sendCode=true&phone='+ phone.val(),
-									function() {
-										return $('#f0').submit();
+									function(data) {
+										if(msgModel.getCode(data)=='1')
+											return $('#f0').submit();
+										else
+											alert(msgModel.getMsg(data));
 									})
 
 						} else
