@@ -24,7 +24,9 @@ import project.freehelp.common.Constant;
 import project.freehelp.common.SessionType;
 import project.freehelp.common.entity.HouseInfo;
 import project.freehelp.common.service.HouseInfoService;
+import project.freehelp.common.vo.ImageVo;
 import project.master.fw.sh.common.AbstractController;
+import project.master.fw.sh.common.JsonObjectFactory;
 import project.master.fw.sh.common.UpLoadFileFactory;
 
 @Controller
@@ -60,31 +62,39 @@ public class HouseInfoController extends AbstractController implements Constant,
 		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String realPath = request.getServletContext().getRealPath("/") + HOUSE_IMAGE_PATH;
 		HouseInfo houseInfo = new HouseInfo(true);
-		List<String> fileList = null;
+		// List<String> fileList = null;
+		List<ImageVo> images = null;
 		if (commonsMultipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> it = multiRequest.getFileNames();
 			MultipartFile multipartFile;
 			String fileName = null;
+			images = new ArrayList<ImageVo>();
 			int count = 0;
-			StringBuffer sb = new StringBuffer();
-			fileList = new ArrayList<String>();
+			// StringBuffer sb = new StringBuffer();
+			// fileList = new ArrayList<String>();
 			try {
 				while (it.hasNext()) {
-					fileName = String.format("house_%s_%s.%s", houseInfo.getId(), count++, request.getParameter("type"));
-					fileList.add(fileName);
 					multipartFile = multiRequest.getFile(it.next());
+					if (multipartFile.getSize() < 1)
+						continue;
+					fileName = String.format("house_%s_%s.%s", houseInfo.getId(), count++, request.getParameter("type"));
+					// fileList.add(fileName);
+					images.add(new ImageVo(fileName));
 					upLoadFileFactory.saveFile(multipartFile.getInputStream(), realPath, fileName);
-					sb.append("{\"src\":\"").append(fileName).append("\"},");
+					// sb.append("{\"src\":\"").append(fileName).append("\"},");
 				}
-				if (sb.length() > 2) {
-					sb.insert(0, "[");
-					sb.deleteCharAt(sb.length() - 1);
-					sb.append("]");
-				}
-				houseInfo.setImage(sb.length() > 0 ? sb.toString() : null);
+				// if (sb.length() > 2) {
+				// sb.insert(0, "[");
+				// sb.deleteCharAt(sb.length() - 1);
+				// sb.append("]");
+				// }
+				if (!images.isEmpty())
+					houseInfo.setImage(JsonObjectFactory.newInstance().toJson(images, false));
 			} catch (Throwable e) {
-				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+				// upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+				for (ImageVo vo : images)
+					upLoadFileFactory.deleteSignleFile(realPath, vo.getSrc());
 				return fail(e);
 			}
 		}
@@ -93,8 +103,11 @@ public class HouseInfoController extends AbstractController implements Constant,
 			houseInfoService.save(houseInfo);
 			return success();
 		} catch (Throwable e) {
-			if (null != fileList)
-				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+			if (null != images) {
+				// upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+				for (ImageVo vo : images)
+					upLoadFileFactory.deleteSignleFile(realPath, vo.getSrc());
+			}
 			return fail(e);
 		}
 	}

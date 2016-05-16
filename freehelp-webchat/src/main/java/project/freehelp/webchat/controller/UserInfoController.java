@@ -24,7 +24,11 @@ import project.freehelp.common.Constant;
 import project.freehelp.common.SessionType;
 import project.freehelp.common.entity.UserInfo;
 import project.freehelp.common.service.UserInfoService;
+import project.freehelp.common.vo.ImageVo;
+import project.freehelp.common.vo.UserInfoAuthorityVo;
+import project.freehelp.common.vo.UserInfoVo;
 import project.master.fw.sh.common.AbstractController;
+import project.master.fw.sh.common.JsonObjectFactory;
 import project.master.fw.sh.common.UpLoadFileFactory;
 
 @Controller
@@ -67,44 +71,47 @@ public class UserInfoController extends AbstractController implements Constant, 
 		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String realPath = request.getServletContext().getRealPath("/") + ID_CARD_IMAGE_PATH;
 		String id = request.getSession().getAttribute(USER_ID).toString();
-		List<String> fileList = null;
-		StringBuffer sb = null;
-		if (commonsMultipartResolver.isMultipart(request)) {
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			Iterator<String> it = multiRequest.getFileNames();
-			MultipartFile multipartFile;
-			String fileName = null;
-			int count = 0;
-			sb = new StringBuffer();
-			fileList = new ArrayList<String>();
-			try {
-				while (it.hasNext()) {
-					fileName = String.format("idcard_%s_%s.%s", id, count++, request.getParameter("type"));
-					fileList.add(fileName);
-					multipartFile = multiRequest.getFile(it.next());
-					upLoadFileFactory.saveFile(multipartFile.getInputStream(), realPath, fileName);
-					sb.append("{\"src\":\"").append(fileName).append("\"},");
-				}
-				if (sb.length() > 2) {
-					sb.insert(0, "[");
-					sb.deleteCharAt(sb.length() - 1);
-					sb.append("]");
-				}
-			} catch (Throwable e) {
-				upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
-				return fail(e);
-			}
-		}
+		// List<String> fileList = null;
+		List<ImageVo> images = null;
+		// StringBuffer sb = null;
 		// 更新
+		Map<String, Object> params = getParams(request);
 		try {
 			UserInfo userInfo = userInfoService.getByPk(id);
-			userInfo = fillObject(userInfo, getParams(request));
-			// userInfo.setReallyName(request.getParameter("reallyName")).setIdCard(request.getParameter("idCard")).setIdCardImage(sb.length() > 2 ? sb.toString() : null).setStatus(1);
-			userInfo.setIdCardImage(null != sb ? sb.toString() : null).setStatus(1);
+			userInfo = fillObject(userInfo, params);
+			UserInfoAuthorityVo userInfoVo = JsonObjectFactory.newInstance().toObject(userInfo.getAuthority(), UserInfoAuthorityVo.class, false);
+			userInfoVo.setMaster(0);
+			userInfo.setInfo(fillObject(new UserInfoVo(), params).toJson()).setAuthority(userInfoVo.toJson());
+			if (commonsMultipartResolver.isMultipart(request)) {
+				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+				Iterator<String> it = multiRequest.getFileNames();
+				MultipartFile multipartFile;
+				String fileName = null;
+				int count = 0;
+				images = new ArrayList<ImageVo>();
+				try {
+					while (it.hasNext()) {
+						multipartFile = multiRequest.getFile(it.next());
+						if (multipartFile.getSize() < 1)
+							continue;
+						fileName = String.format("idcard_%s_%s.%s", id, count++, request.getParameter("type"));
+						images.add(new ImageVo(fileName));
+						upLoadFileFactory.saveFile(multipartFile.getInputStream(), realPath, fileName);
+					}
+					if (!images.isEmpty())
+						userInfo.setIdCardImage(JsonObjectFactory.newInstance().toJson(images, false));
+				} catch (Throwable e) {
+					for (ImageVo vo : images)
+						upLoadFileFactory.deleteSignleFile(realPath, vo.getSrc());
+					return fail(e);
+				}
+			}
+			userInfo.setStatus(1);
 			userInfoService.update(userInfo);
 			return success();
 		} catch (Throwable e) {
-			upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
+			for (ImageVo vo : images)
+				upLoadFileFactory.deleteSignleFile(realPath, vo.getSrc());
 			return fail(e);
 		}
 

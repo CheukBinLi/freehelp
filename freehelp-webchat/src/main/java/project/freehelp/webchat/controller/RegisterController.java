@@ -19,6 +19,8 @@ import project.freehelp.common.SettingSession;
 import project.freehelp.common.entity.UserInfo;
 import project.freehelp.common.service.UserInfoService;
 import project.freehelp.common.service.UserService;
+import project.freehelp.common.vo.UserInfoAuthorityVo;
+import project.freehelp.common.vo.UserInfoVo;
 import project.master.fw.sh.common.AbstractController;
 import project.master.fw.sh.common.SmsEntry;
 import project.master.fw.sh.common.SmsFactory;
@@ -51,13 +53,14 @@ public class RegisterController extends AbstractController {
 		String verificationcode = request.getParameter("verificationcode");
 		String phone = request.getParameter("phone");
 		SmsEntry sms = smsFactory.getAndRemoveCode(phone);
+		Map<String, Object> o = getParams(request);
 		if (null != sms && !verificationcode.equals(sms.getCode()))
 			return exceptionPage("重复注册", null);
 		try {
-			User user = fillObject(new User(), getParams(request));
+			User user = fillObject(new User(), o);
 			user.setId(user.generatedValue());
 			userService.save(user);
-			userInfoService.save(new UserInfo(user.getId()));
+			userInfoService.save(new UserInfo(user.getId()).setAuthority(new UserInfoAuthorityVo(-1, -1).toJson()).setInfo(new UserInfoVo().toJson()));
 			try {
 				Integer.parseInt(next);
 			} catch (Exception e) {
@@ -81,7 +84,7 @@ public class RegisterController extends AbstractController {
 			User user = fillObject(new User(), getParams(request));
 			user.setId(user.generatedValue());
 			userService.save(user);
-			userInfoService.save(new UserInfo(user.getId()));
+			userInfoService.save(new UserInfo(user.getId()).setAuthority(new UserInfoAuthorityVo(-1, -1).toJson()).setInfo(new UserInfoVo().toJson()));
 			return success(user);
 		} catch (Throwable e) {
 			return fail(e);
@@ -214,7 +217,7 @@ public class RegisterController extends AbstractController {
 		try {
 			User user = userService.getlogin(getParams(request));
 			if (null != user) {
-				UserInfo userInfo = userInfoService.getByPk(user.generatedValue());
+				UserInfo userInfo = userInfoService.getByPk(user.getId());
 				// 设置Session
 				settingSession.SettionSession(request, user, userInfo);
 				return success();

@@ -30,8 +30,10 @@ public class UserInfo extends AbstractEntity {
 	@Id
 	private String id;// master用户表ID，非生成
 	private String openid;// 微信关注id
-	private String reallyName;
-	private String idCard;// 身份证
+	private String info;// 所有信息
+	private String extend;// 扩展字段
+	// private String reallyName;
+	// private String idCard;// 身份证
 	private String idCardImage;// 身份证图片(正面、反面、人头+正面);
 	private String authority;// 权限
 	private int status;
@@ -54,21 +56,21 @@ public class UserInfo extends AbstractEntity {
 		return this;
 	}
 
-	public String getReallyName() {
-		return reallyName;
+	public String getInfo() {
+		return info;
 	}
 
-	public UserInfo setReallyName(String reallyName) {
-		this.reallyName = reallyName;
+	public UserInfo setInfo(String info) {
+		this.info = info;
 		return this;
 	}
 
-	public String getIdCard() {
-		return idCard;
+	public String getExtend() {
+		return extend;
 	}
 
-	public UserInfo setIdCard(String idCard) {
-		this.idCard = idCard;
+	public UserInfo setExtend(String extend) {
+		this.extend = extend;
 		return this;
 	}
 
