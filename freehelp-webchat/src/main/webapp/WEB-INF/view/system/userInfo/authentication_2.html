@@ -1,6 +1,24 @@
+<!DOCTYPE HTML>
 <html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
 <body>
-	<h2>实名验证2</h2>
-	<a href="${request.contextPath}/system/index">完成</a>
+<div id="header">
+	<a href="${request.contextPath}/system/index" class="l_ico ico_back"></a>
+    <span class="m_text">操作完成</span>
+</div>
+<div class="main">
+	<div class="cpw_succ">提交完成，请耐心等待审核。</div>
+	<div><a href="${request.contextPath}/system/index" class="massage" style="width:90%">确认</a></div>
+</div>
 </body>
 </html>

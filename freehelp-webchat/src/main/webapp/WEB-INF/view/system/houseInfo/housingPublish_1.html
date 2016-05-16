@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 <head>
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
@@ -80,4 +80,109 @@
 	</div>
 	<div id="browse" style="display: none;">123</div>
 </body>
+</html> -->
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+<div id="header">
+	<a href="javascript:history.go(-1);"  class="l_ico ico_back"></a>
+    <span class="m_text">发布房源</span>
+    <a href="" class="r_ico ico_massg"></a>
+</div>
+<div class="main" style="padding-top:0">
+    <div class="headupimg">
+    	<a href="" class="upimg"></a>
+    	<p>添加图片</p>
+    </div>
+    <div class="listbox icolistbox">
+    	<div class="com_mainbox tc">房源描述</div>
+		<ul>
+			<li>
+				<span class="listbox_left"><em class="fy1"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="标题" name="title"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy2"></em></span>
+				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="详细地址" name="address"></span>
+				<input type="hidden" name="longitude" placeholder="经度" value="0.0">
+				<input type="hidden" name="latitude" placeholder="纬度" value="0.0">
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy3"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="交通描述" name="traffic"></span>
+			</li>
+		</ul>
+	</div>
+    <div class="l"></div>
+    <div class="listbox icolistbox">
+    	<div class="com_mainbox tc">房源信息</div>
+		<ul>
+			<li>
+				<span class="listbox_left"><em class="fy4"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="房屋面积(平方)" name="area" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy5"></em></span>
+				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="房屋户型" name="design" ></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy6"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="入住人数" name="count" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy7"></em></span>
+				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="床型" name="bed"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy8"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="配套设施" name="facility"></span>
+			</li>
+		</ul>
+	</div>
+    <div class="l"></div>
+    <div class="listbox icolistbox">
+    	<div class="com_mainbox tc">价格规则</div>
+		<ul>
+			<li>
+				<span class="listbox_left"><em class="fy9"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="日价" name="price" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy10"></em></span>
+				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="押金" name="pledge" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy11"></em></span>
+				<span class="rightinput"><input type="text" class="listinput" placeholder="是否接纳外籍人士" name="foregn"></span>
+			</li>
+			<li>
+				<span class="listbox_left"><em class="fy12"></em></span>
+				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="隐藏帖士" name="remark"></span>
+			</li>
+		</ul>
+	</div>
+    <div class="btnline"><a href="">完成</a></div>
+</div>
+
+</body>
 </html>
+
+
+
+
+
+
+
