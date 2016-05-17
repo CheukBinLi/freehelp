@@ -1,6 +1,7 @@
 package project.freehelp.webchat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.freehelp.common.Constant;
+import project.freehelp.common.DictionaryType;
 import project.freehelp.common.SessionType;
+import project.freehelp.common.entity.Dictionary;
 import project.freehelp.common.entity.HouseInfo;
+import project.freehelp.common.service.DictionaryService;
 import project.freehelp.common.service.HouseInfoService;
 import project.freehelp.common.vo.ImageVo;
 import project.master.fw.sh.common.AbstractController;
@@ -32,10 +36,13 @@ import project.master.fw.sh.common.UpLoadFileFactory;
 @Controller
 @Scope("prototype")
 @RequestMapping(value = { "/system/houseInfo/" })
-public class HouseInfoController extends AbstractController implements Constant, SessionType {
+public class HouseInfoController extends AbstractController implements Constant, SessionType, DictionaryType {
 
 	@Autowired
 	private HouseInfoService houseInfoService;
+
+	@Autowired
+	private DictionaryService dictionaryService;
 
 	@Autowired
 	private UpLoadFileFactory upLoadFileFactory;
@@ -62,6 +69,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String realPath = request.getServletContext().getRealPath("/") + HOUSE_IMAGE_PATH;
 		HouseInfo houseInfo = new HouseInfo(true);
+		houseInfo.setMaster(request.getSession().getAttribute(USER_ID).toString());
 		// List<String> fileList = null;
 		List<ImageVo> images = null;
 		if (commonsMultipartResolver.isMultipart(request)) {
@@ -193,4 +201,19 @@ public class HouseInfoController extends AbstractController implements Constant,
 			return fail(e);
 		}
 	}
+
+	// ################################
+	@RequestMapping(value = { "housingPublish_1" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView hp_1(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<Dictionary> dicts = null;
+		params.put("parent", BED_TYPE);
+		try {
+			dicts = dictionaryService.getList(params, false, -1, -1);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request)).addObject("dicts", dicts);
+	}
+
 }

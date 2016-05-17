@@ -34,7 +34,7 @@ public class Dictionary extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = true)
 	public int id;// ID
-	private String parent;// 父ID(0：主节点)
+	private int parent;// 父ID(0：主节点)
 	@Column(name = "dect_key")
 	private String key;// 键
 	@Column(name = "dect_value")
@@ -53,11 +53,11 @@ public class Dictionary extends AbstractEntity {
 		return this;
 	}
 
-	public String getParent() {
+	public int getParent() {
 		return parent;
 	}
 
-	public Dictionary setParent(String parent) {
+	public Dictionary setParent(int parent) {
 		this.parent = parent;
 		return this;
 	}

@@ -37,17 +37,21 @@ public class HouseInfo extends AbstractEntity {
 	// private String coordinates;// 坐标
 	private double longitude;// 经度
 	private double latitude;// 纬度
+	@Column(columnDefinition = "text")
 	private String traffic;// 交通描述
 	private int area;// 面积
 	private int count;// 入住人数
 	private String design;// 户型
 	@Column(columnDefinition = "text")
 	private String facility;// 配套设施(数据字典)
+	@Column(columnDefinition = "text")
 	private String bed;// 床型(数据字典)
 	private int price;// 日价
 	private int pledge;// 押金
 	private int foregn;// 是否接纳外国人
 	private int status;// 状态
+	@Column(name="SERVICE_CHARGE")
+	private int serviceCharge;// 服务费
 	private String remark;// 备注
 
 	public String getId() {
@@ -215,6 +219,15 @@ public class HouseInfo extends AbstractEntity {
 	public HouseInfo(String id) {
 		super();
 		this.id = id;
+	}
+
+	public int getServiceCharge() {
+		return serviceCharge;
+	}
+
+	public HouseInfo setServiceCharge(int serviceCharge) {
+		this.serviceCharge = serviceCharge;
+		return this;
 	}
 
 	public HouseInfo(boolean createId) {
