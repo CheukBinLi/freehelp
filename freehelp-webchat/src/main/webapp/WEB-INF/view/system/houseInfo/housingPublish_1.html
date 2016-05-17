@@ -40,46 +40,6 @@
 	});
 </script>
 </head>
-<body>
-	<button id="x" status='0'>显示</button>
-	<div id="main">
-		<form action="" id="f0">
-			<input type="file" multiple="multiple" accept="image/*">
-			<input type="hidden" name="type" value="jpg">
-			<h2>房源描述</h2>
-			<i>图</i>
-			<input type="text" name="title" placeholder="标题">
-			<i>图</i>
-			<input type="text" name="address" placeholder="门牌地址">
-			<input type="hidden" name="longitude" placeholder="经度" value="0.0">
-			<input type="hidden" name="latitude" placeholder="纬度" value="0.0">
-			<i>图</i>
-			<input type="text" name="traffic" placeholder="交通描述">
-			<h2>房源描述</h2>
-			<i>图</i>
-			<input type="text" name="area" placeholder="房屋面积" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-			<i>图</i>
-			<input type="text" name="design" placeholder="房屋户型">
-			<i>图</i>
-			<input type="text" name="count" placeholder="入住人数" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-			<i>图</i>
-			<input type="text" name="bed" placeholder="床型">
-			<i>图</i>
-			<input type="text" name="facility" placeholder="配套设施">
-			<h2>价格规则</h2>
-			<i>图</i>
-			<input type="text" name="price" placeholder="日 价" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-			<i>图</i>
-			<input type="text" name="pledge" placeholder="押金" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
-			<i>图</i>
-			<input type="text" name="foregn" placeholder="是否接纳外籍人员">
-			<i>图</i>
-			<input type="text" name="remark" placeholder="贴士">
-		</form>
-		<button id="submit">提交</button>
-	</div>
-	<div id="browse" style="display: none;">123</div>
-</body>
 </html> -->
 
 
@@ -87,99 +47,509 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
 <title>自由帮</title>
 
 <link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+<script type="text/javascript">
+	var beds;
+	var selectBed;
+	var selectBedPay = 0;//床费
+	var carFare = 4;//交通费
+	var springCleaning = 400;//大扫除
+	var bedRoomPay = 0;//一般性卫生
+
+	$(function() {
+		var upimg = $('#upimg');
+		$("input[type='file']").each(function(index) {
+			$(this).css({
+				width : upimg.width() + 'px',
+				height : upimg.height() + 'px'
+			});
+		});
+		$("input").each(function() {
+			var obj = $(this);
+			if (null != obj.attr('action')) {
+				//console.log(obj.attr('action'));
+				obj.click(function() {
+					$('#' + obj.attr('action')).show();
+				});
+			}
+		});
+
+		//人数/平方
+		$("a[select]").each(function() {
+			$(this).click(function() {
+				var obj = $(this);
+				var count = $("input[name='" + obj.attr('select') + "']");
+				//$("input[name='" + obj.attr('select') + "']").val(obj.html());
+				$("input[name='" + obj.attr('select') + "']").val(obj.attr('value'));
+				close(obj.parents("div[class='popbox']").attr('id'));
+			});
+		});
+
+		//床
+		$('#bedXSubmit').click(function() {
+			beds = [];
+			selectBed = [];
+			$(this).parents('form').find('input[type="checkbox"]').each(function() {
+				if ($(this).is(':checked')) {
+					bed = {};
+					var li = $(this).parents('li');
+					var selno = li.find('input[class="selno"]');
+					//bed.select = 1;
+					//bed.name = li.find('label').html();
+					bed.id = selno.attr('no');
+					//bed.money = selno.attr('money');
+					bed.count = selno.val();
+					beds.push(bed);
+					bed.name = li.find('label').html();
+					bed.money = selno.attr('money');
+					selectBed.push(bed);
+				}
+			});
+			close('bedX');
+			//console.log(JSON.stringify(beds));
+			$('input[type="hidden"][placeholder="床型"][name="bed"]').val(JSON.stringify(beds));
+
+			var str = '<h5><em>●</em> 布草洗涤</h5>';
+			for ( var a in selectBed) {
+				str += '<p><span class="fl">' + selectBed[a].name + '</span><span class="fr">￥' + selectBed[a].money + ' x ' + selectBed[a].count + '</span></p>';
+				selectBedPay += parseInt(selectBed[a].money) * parseInt(selectBed[a].count);
+			}
+			$('#pay_list_bed').html(str);
+		});
+
+		//提交
+
+		$('#confirm_submit').click(function() {
+			$('input[name="serviceCharge"][type="hidden"][placeholder="服务费"]').val((parseInt(selectBedPay) + parseInt(carFare) + parseInt(springCleaning) + parseInt(bedRoomPay)));
+			var f0 = $('#f0');
+			var file = $("input[type='file']")[0].files;
+
+			var fd = new FormData(f0[0]);
+			for (var i = 0; i < file.length; i++)
+				fd.append("file" + i, file[i]);
+			ajax.POST_FILE("${request.contextPath}/system/houseInfo/", fd, function(data) {
+				if (msgModel.getCode(data) == '1')
+					location.href = "${request.contextPath}/system/houseInfo/housingPublish_2";
+				else
+					alert(msgModel.getMsg(data));
+			});
+		});
+	});
+
+	function close(obj) {
+		$('#' + obj).hide();
+	}
+</script>
+
 </head>
 
 <body>
-<div id="header">
-	<a href="javascript:history.go(-1);"  class="l_ico ico_back"></a>
-    <span class="m_text">发布房源</span>
-    <a href="" class="r_ico ico_massg"></a>
-</div>
-<div class="main" style="padding-top:0">
-    <div class="headupimg">
-    	<a href="" class="upimg"></a>
-    	<p>添加图片</p>
-    </div>
-    <div class="listbox icolistbox">
-    	<div class="com_mainbox tc">房源描述</div>
-		<ul>
-			<li>
-				<span class="listbox_left"><em class="fy1"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="标题" name="title"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy2"></em></span>
-				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="详细地址" name="address"></span>
-				<input type="hidden" name="longitude" placeholder="经度" value="0.0">
-				<input type="hidden" name="latitude" placeholder="纬度" value="0.0">
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy3"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="交通描述" name="traffic"></span>
-			</li>
-		</ul>
+	<form id="f0" enctype="multipart/form-data">
+		<div id="main_form">
+			<div id="header">
+				<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+				<span class="m_text">发布房源</span>
+				<a href="" class="r_ico ico_massg"></a>
+			</div>
+			<div class="main" style="padding-top: 0">
+				<div class="headupimg">
+					<a href="javascript:void(0);" class="upimg" id="upimg"> </a>
+					<input type="file" multiple="multiple" class="upimg" style="float: left; position: absolute; left: 50%; z-index: 100; opacity: 0; filter: alpha(opacity = 0); padding: 0;" accept="image/*">
+					<p>添加图片</p>
+				</div>
+				<div class="listbox icolistbox">
+					<div class="com_mainbox tc">房源描述</div>
+					<ul>
+						<li>
+							<span class="listbox_left">
+								<em class="fy1"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" class="listinput" placeholder="标题" name="title">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy2"></em>
+							</span>
+							<span class="rightinput">
+								<input action="addressX" readonly="readonly" name="address" class="listinput" type="text" placeholder="详细地址" name="address">
+							</span>
+							<input type="hidden" name="longitude" placeholder="经度" value="0.0">
+							<input type="hidden" name="latitude" placeholder="纬度" value="0.0">
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy3"></em>
+							</span>
+							<span class="rightinput">
+								<input action="trafficX" type="text" readonly="readonly" class="listinput" placeholder="交通描述" name="traffic">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="l"></div>
+				<div class="listbox icolistbox">
+					<div class="com_mainbox tc">房源信息</div>
+					<ul>
+						<li>
+							<span class="listbox_left">
+								<em class="fy4"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" action="areaX" name="area" readonly="readonly" class="listinput" readonly="readonly" placeholder="房屋面积(平方)">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy5"></em>
+							</span>
+							<span class="rightinput">
+								<input class="listinput" readonly="readonly" type="text" placeholder="房屋户型" name="design" action="designX">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy6"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" class="listinput" readonly="readonly" action="countX" placeholder="入住人数" name="count" maxlength="6">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy7"></em>
+							</span>
+							<span class="rightinput">
+								<input action="bedX" class="listinput" readonly="readonly" type="text" placeholder="床型">
+								<input type="hidden" placeholder="床型" name="bed">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy8"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" class="listinput" placeholder="配套设施" name="facility" action="facilityX">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="l"></div>
+				<div class="listbox icolistbox">
+					<div class="com_mainbox tc">价格规则</div>
+					<ul>
+						<li>
+							<span class="listbox_left">
+								<em class="fy9"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" class="listinput" placeholder="日价" name="price" maxlength="6">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy10"></em>
+							</span>
+							<span class="rightinput">
+								<input class="listinput" type="text" placeholder="押金" name="pledge" maxlength="6">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy11"></em>
+							</span>
+							<span class="rightinput">
+								<input type="text" class="listinput" placeholder="是否接纳外籍人士" name="foregn">
+							</span>
+						</li>
+						<li>
+							<span class="listbox_left">
+								<em class="fy12"></em>
+							</span>
+							<span class="rightinput">
+								<input class="listinput" type="text" placeholder="隐藏帖士" name="remark">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="btnline">
+					<input name="serviceCharge" type="hidden" placeholder="服务费">
+					<input name="type" type="hidden" value="jpg">
+					<a href="javascript:$('#confirm').show();">完成</a>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- 组件  -->
+	<!-- 面积 -->
+	<div class="popbox" style="display: none;" id="areaX">
+		<div class="popmain">
+			<div class="poptitle">
+				<span class="fl">
+					<a href="javascript:close('areaX');" class="close">取消</a>
+				</span>
+				<span>
+					<a href="javascript:void(0);" class="fr">确认</a>
+				</span>
+			</div>
+			<div class="popul">
+				<ul>
+					<#list 50..60 as data>
+					<li>
+						<a href="javascript:void(0);" class="close" select="area" value="${data}">${data}平方</a>
+					</li>
+					</#list>
+				</ul>
+			</div>
+		</div>
 	</div>
-    <div class="l"></div>
-    <div class="listbox icolistbox">
-    	<div class="com_mainbox tc">房源信息</div>
-		<ul>
-			<li>
-				<span class="listbox_left"><em class="fy4"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="房屋面积(平方)" name="area" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy5"></em></span>
-				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="房屋户型" name="design" ></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy6"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="入住人数" name="count" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy7"></em></span>
-				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="床型" name="bed"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy8"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="配套设施" name="facility"></span>
-			</li>
-		</ul>
+	<!-- 入住人数 -->
+	<div class="popbox" style="display: none;" id="countX">
+		<div class="popmain">
+			<div class="poptitle">
+				<span class="fl">
+					<a href="javascript:close('countX');" class="close">取消</a>
+				</span>
+				<span>
+					<a href="" class="fr">确认</a>
+				</span>
+			</div>
+			<div class="popul">
+				<ul>
+					<#list 1..8 as data>
+					<li>
+						<a href="javascript:void(0);" class="close" select="count" value="${data}">${data}人</a>
+					</li>
+					</#list>
+				</ul>
+			</div>
+		</div>
 	</div>
-    <div class="l"></div>
-    <div class="listbox icolistbox">
-    	<div class="com_mainbox tc">价格规则</div>
-		<ul>
-			<li>
-				<span class="listbox_left"><em class="fy9"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="日价" name="price" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy10"></em></span>
-				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="押金" name="pledge" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy11"></em></span>
-				<span class="rightinput"><input type="text" class="listinput" placeholder="是否接纳外籍人士" name="foregn"></span>
-			</li>
-			<li>
-				<span class="listbox_left"><em class="fy12"></em></span>
-				<span class="rightinput"><input name="" class="listinput" type="text" placeholder="隐藏帖士" name="remark"></span>
-			</li>
-		</ul>
-	</div>
-    <div class="btnline"><a href="">完成</a></div>
-</div>
 
+	<!-- 配套 -->
+	<div class="popbox" style="display: none" id="facilityX">
+		<div class="popmain1">
+			<div class="btnclose">
+				<a href="javascript:close('facilityX');"></a>
+			</div>
+			<div class="popmain2">
+				<div class="gray_title">卫浴</div>
+				<div class="sellist">
+					<ul>
+						<li>
+							<span class="fl">热水淋具</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">牙具</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">拖鞋</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">香皂</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">毛巾</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">洗漱用品</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">浴缸</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">手纸</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="gray_title">电器</div>
+				<div class="sellist">
+					<ul>
+						<li>
+							<span class="fl">电视</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">空调</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">饮水设施</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">冰箱</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+						<li>
+							<span class="fl">电视</span>
+							<span class="fr">
+								<input type="checkbox" value="">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<a href="" class="massage" style="width: 90%">确认</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 床型 -->
+	<div class="popbox" style="display: none" id="bedX">
+		<form id="f000">
+			<div class="popmain1">
+				<div class="btnclose">
+					<a href="javascript:$('#f000')[0].reset();close('bedX');"></a>
+				</div>
+				<div class="popmain2">
+					<div class="sel_bed">
+						<ul>
+							<#if dicts??> <#list dicts as item>
+							<li>
+								<input type="checkbox" class="selbox" value="">
+								<label>${item.key}</label>
+								<input name="bed1" money="${item.value}" no="${item.id}" type="text" class="selno" value="1">
+							</li>
+							</#list> </#if>
+						</ul>
+					</div>
+
+					<div>
+						<a href="javascript:void(0);" class="massage" style="width: 90%" id="bedXSubmit">确认</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- 收费确认 -->
+	<div class="popbox" style="display: none" id="confirm">
+		<div class="popmain1">
+			<div class="btnclose">
+				<a href="javascript:close('confirm');"></a>
+			</div>
+			<div class="popmain2">
+				<div class="change_title">(服务项目收费标准)</div>
+				<div class="changemain">
+					<h5>
+						<span class="fl">
+							<em>●</em> 计划性卫生（大扫除）
+						</span>
+						<span class="fr">￥400</span>
+					</h5>
+				</div>
+				<div class="changemain">
+					<h5>
+						<em>●</em> 一般性卫生
+					</h5>
+					<p>
+						<span class="fl">一厅</span>
+						<span class="fr">￥4</span>
+					</p>
+					<p>
+						<span class="fl">两室</span>
+						<span class="fr">￥4 x 2</span>
+					</p>
+					<p>
+						<span class="fl">一卫</span>
+						<span class="fr">￥4</span>
+					</p>
+					<p>
+						<span class="fl">一厨</span>
+						<span class="fr">￥4</span>
+					</p>
+					<p>
+						<span class="fl">一阳台</span>
+						<span class="fr">￥4</span>
+					</p>
+				</div>
+				<div class="changemain" id="pay_list_bed">
+					<h5>
+						<em>●</em> 布草洗涤
+					</h5>
+					<p>
+						<span class="fl">1.2m-床</span>
+						<span class="fr">￥4</span>
+					</p>
+					<p>
+						<span class="fl">1.5m-床</span>
+						<span class="fr">￥4 x 2</span>
+					</p>
+					<p>
+						<span class="fl">1.8m-床</span>
+						<span class="fr">￥4</span>
+					</p>
+					<p>
+						<span class="fl">2.2m-床</span>
+						<span class="fr">￥4</span>
+					</p>
+				</div>
+				<div class="changemain">
+					<h5>
+						<span class="fl">
+							<em>●</em> 车马费
+						</span>
+						<span class="fr">￥4</span>
+					</h5>
+				</div>
+				<div class="changemain">
+					<h5>
+						<span class="fl">
+							<em>●</em> 设备检查
+						</span>
+						<span class="fr">￥4</span>
+					</h5>
+				</div>
+				<div>
+					<a href="javascript:void(0);" class="massage" style="width: 90%" id="confirm_submit">确认</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
-
 
 
 
