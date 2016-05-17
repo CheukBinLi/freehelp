@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <List>
 	<Dictionary status="0" key="床型" parent="0" id="101" />
-<!-- 	<Dictionary status="0" key="床型1.0*2.0" parent="101" id="102" value="10" />
+ 	<Dictionary status="0" key="床型1.0*2.0" parent="101" id="102" value="10" />
 	<Dictionary status="0" key="床型1.2*2.0" parent="101" id="103" value="20" />
 	<Dictionary status="0" key="床型1.5*2.0" parent="101" id="104" value="30" />
 	<Dictionary status="0" key="床型1.8*2.0" parent="101" id="105" value="40" />
-	<Dictionary status="0" key="榻榻米" parent="101" id="106" value="50" /> -->
+	<Dictionary status="0" key="榻榻米" parent="101" id="106" value="50" />
 
 	<Dictionary status="0" key="房屋户型" parent="0" id="201" value="" />
 <!-- 	<Dictionary status="0" key="室" parent="201" id="202" value="" />
