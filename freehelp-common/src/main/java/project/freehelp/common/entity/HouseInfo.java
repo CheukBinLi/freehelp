@@ -1,5 +1,7 @@
 package project.freehelp.common.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,7 +34,9 @@ public class HouseInfo extends AbstractEntity {
 	private String id;
 	private String master;// 业主ID
 	private String title;// 标题
+	@Column(columnDefinition = "text")
 	private String image;// 照片(json image:[{image:1},{iamge:2}])
+	private String mainImage;// 标题显示图片
 	private String address;// 详细地址(可API选择)
 	// private String coordinates;// 坐标
 	private double longitude;// 经度
@@ -49,9 +53,14 @@ public class HouseInfo extends AbstractEntity {
 	private int price;// 日价
 	private int pledge;// 押金
 	private int foregn;// 是否接纳外国人
-	private int status;// 状态
-	@Column(name="SERVICE_CHARGE")
+	@Column(name = "SERVICE_CHARGE")
 	private int serviceCharge;// 服务费
+	@Column(name = "CHECK_IN")
+	private int checkIn;// 入住数
+	private int score;// 总分数
+	private int status;// 状态
+	@Column(updatable = false, name = "CREATE_DATE")
+	private Date createDate;
 	private String remark;// 备注
 
 	public String getId() {
@@ -87,6 +96,15 @@ public class HouseInfo extends AbstractEntity {
 
 	public HouseInfo setImage(String image) {
 		this.image = image;
+		return this;
+	}
+
+	public String getMainImage() {
+		return mainImage;
+	}
+
+	public HouseInfo setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 		return this;
 	}
 
@@ -195,6 +213,24 @@ public class HouseInfo extends AbstractEntity {
 
 	public HouseInfo setForegn(int foregn) {
 		this.foregn = foregn;
+		return this;
+	}
+
+	public int getCheckIn() {
+		return checkIn;
+	}
+
+	public HouseInfo setCheckIn(int checkIn) {
+		this.checkIn = checkIn;
+		return this;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public HouseInfo setScore(int score) {
+		this.score = score;
 		return this;
 	}
 

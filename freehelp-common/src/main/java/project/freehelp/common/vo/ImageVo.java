@@ -1,6 +1,8 @@
 package project.freehelp.common.vo;
 
-public class ImageVo {
+public class ImageVo extends AbstractAuthorityVo {
+
+	private transient static final long serialVersionUID = 1L;
 
 	private String src;
 

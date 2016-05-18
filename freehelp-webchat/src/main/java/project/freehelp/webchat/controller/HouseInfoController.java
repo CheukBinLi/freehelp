@@ -47,7 +47,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 	@Autowired
 	private UpLoadFileFactory upLoadFileFactory;
 
-	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number},houseManage_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request));
 	}
@@ -98,7 +98,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 				// sb.append("]");
 				// }
 				if (!images.isEmpty())
-					houseInfo.setImage(JsonObjectFactory.newInstance().toJson(images, false));
+					houseInfo.setImage(JsonObjectFactory.newInstance().toJson(images, false)).setMainImage(images.get(0).getSrc());
 			} catch (Throwable e) {
 				// upLoadFileFactory.deleteFile(realPath, fileList.toArray(new String[0]));
 				for (ImageVo vo : images)
@@ -158,7 +158,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 	public ModelAndView getj(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") String id, @PathVariable("next") String next) {
 		try {
 			HouseInfo houseInfo = houseInfoService.getByPk(id);
-			return new ModelAndView("houseInfo_" + next).addObject("houseInfo", houseInfo);
+			return new ModelAndView(request.getPathInfo().replace("get/" + id + "/", "")).addObject("houseInfo", houseInfo);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
@@ -214,6 +214,19 @@ public class HouseInfoController extends AbstractController implements Constant,
 			e.printStackTrace();
 		}
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request)).addObject("dicts", dicts);
+	}
+
+	@RequestMapping(value = { "houseManage_1" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView hm_1(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("master", request.getSession().getAttribute(USER_ID));
+		List<HouseInfo> houseInfos = null;
+		try {
+			houseInfos = houseInfoService.getList(params, false, -1, -1);
+		} catch (Throwable e) {
+			return exceptionPage(e);
+		}
+		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
 	}
 
 }
