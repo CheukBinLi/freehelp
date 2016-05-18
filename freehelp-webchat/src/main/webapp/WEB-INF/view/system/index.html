@@ -20,13 +20,12 @@
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
 <script type="text/javascript">
-
 	$(function() {
-		$("a[lang='m1']").click(function(){
+		$("a[lang='m1']").click(function() {
 			$('#master').show();
 			$('#steward').hide();
 		});
-		$("a[lang='m2']").click(function(){
+		$("a[lang='m2']").click(function() {
 			$('#master').hide();
 			$('#steward').show();
 		});
@@ -36,19 +35,19 @@
 
 <body>
 	<div id="header">
-		<a href="javascript:void(0);" class="l_ico ico_user" ></a>
+		<a href="javascript:void(0);" class="l_ico ico_user"></a>
 		<span class="m_text">
 			<img src="${request.contextPath}/resource/images/logo_head.jpg" height="40" />
 		</span>
-		<a href="javascript:void(0);" class="r_ico ico_massg" ></a>
+		<a href="javascript:void(0);" class="r_ico ico_massg"></a>
 	</div>
 
 
-<#if Session.freeHelpAuthority.master==2 >
+	<#if Session.freeHelpAuthority.master==2 >
 	<div class="main" id="master">
 		<div class="quick_menu">
 			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
-			<a href="javascript:void(0);" class="ico_gj2" id="m2" lang="m2" >管家</a>
+			<a href="javascript:void(0);" class="ico_gj2" id="m2" lang="m2">管家</a>
 		</div>
 		<div class="l"></div>
 		<div class="ad1">
@@ -60,6 +59,77 @@
 			<div class="findkeeper">
 				<a href="">
 					<img src="${request.contextPath}/resource/images/btn_findkeeper.jpg" width="100%">
+				</a>
+			</div>
+			<div class="mt15"></div>
+
+			<#if houseInfos??> <#list houseInfos as item>
+			<a href="${request.contextPath}/system/houseInfo/get/${item.id}/houseInfo_1">
+				<div class="order_house">
+					<div class="limg">
+						<img src="${request.contextPath}/resource/upload/house/${item.mainImage!''}" width="100%">
+					</div>
+					<div class="order_house_info">
+						<p class="title">
+							<span class="fl">${item.address!''}</span>
+							<span class="fr">${item.price!''}元/晚</span>
+						</p>
+						<p>${item.title!''}</p>
+						<p class="pj">★★★★☆</p>
+					</div>
+				</div>
+			</a>
+			</#list> </#if>
+
+
+		</div>
+		<div class="bottombtn">
+			<div class="p15">
+				<div class="leftdiv">
+					<a href="${request.contextPath}/system/houseInfo/housingPublish_1">发布房源</a>
+				</div>
+				<div class="rightdiv">
+					<a href="${request.contextPath}/system/houseInfo/houseManage_1">管理房源</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<#else>
+	<div class="main" id="master">
+		<div class="quick_menu">
+			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
+			<a href="javascript:void(0);" class="ico_gj2" id="m2" lang="m2">管家</a>
+		</div>
+		<div class="l"></div>
+		<div class="ad1">
+			<div>
+				<img src="${request.contextPath}/resource/images/ad.jpg" width="100%" />
+			</div>
+			<div class="adtext">
+				<p class="bigtext">家在四方</p>
+				<p class="smalltext">成为房东在世界各地缔造一个个有归属感的家</p>
+			</div>
+		</div>
+		<div class="btn_reg">
+			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_1">成为房东</a>
+		</div>
+	</div>
+	</#if> <#if Session.freeHelpAuthority.steward==2 >
+	<div class="main" style="display: none;" " id="steward">
+		<div class="quick_menu">
+			<a href="javascript:void(0);" class="ico_fd2" id="m1" lang="m1">房东</a>
+			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2">管家</a>
+		</div>
+		<div class="l"></div>
+		<div class="ad1">
+			<div>
+				<img src="${request.contextPath}/resource/images/ad.jpg" width="100%" />
+			</div>
+		</div>
+		<div class="graybg">
+			<div class="findkeeper">
+				<a href="">
+					<img src="${request.contextPath}/resource/images/btn_findkeeper2.jpg" width="100%">
 				</a>
 			</div>
 			<div class="order_house mt15">
@@ -91,20 +161,18 @@
 		</div>
 		<div class="bottombtn">
 			<div class="p15">
-				<div class="leftdiv">
-					<a href="${request.contextPath}/system/houseInfo/housingPublish_1">发布房源</a>
-				</div>
-				<div class="rightdiv">
-					<a href="">管理房源</a>
+				<div class="midbtn">
+					<a href="">管理丰源</a>
 				</div>
 			</div>
 		</div>
 	</div>
-<#else>
-	<div class="main" id="master">
+
+	<#else>
+	<div class="main" id="steward" style="display: none;">
 		<div class="quick_menu">
-			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
-			<a href="javascript:void(0);" class="ico_gj2" id="m2" lang="m2" >管家</a>
+			<a href="javascript:void(0);" class="ico_fd2" id="m1" lang="m1">房东</a>
+			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2">管家</a>
 		</div>
 		<div class="l"></div>
 		<div class="ad1">
@@ -117,65 +185,10 @@
 			</div>
 		</div>
 		<div class="btn_reg">
-			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_1">成为房东</a>
+			<a href="reg_housekeeper2.html">成为管家</a>
 		</div>
 	</div>
-</#if>
-
-
-
-<#if Session.freeHelpAuthority.steward==2 >
-	<div class="main" style="display: none;"" id="steward">
-			<div class="quick_menu">
-			<a href="javascript:void(0);" class="ico_fd2" id="m1" lang="m1">房东</a>
-			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2" >管家</a>
-		</div>
-    <div class="l"></div>
-    <div class="ad1">
-    	<div><img src="${request.contextPath}/resource/images/ad.jpg" width="100%" /></div>
-    </div>
-    <div class="graybg">
-    	<div class="findkeeper"><a href=""><img src="${request.contextPath}/resource/images/btn_findkeeper2.jpg" width="100%"></a></div>
-        <div class="order_house mt15">
-            <div class="limg"><img src="${request.contextPath}/resource/images/u=3508899871,1728074629&amp;fm=21&amp;gp=0.jpg" width="100%"></div>
-            <div class="order_house_info">
-                <p class="title"><span class="fl">长安街7号702</span><span class="fr">156元/晚</span></p>
-                <p>温馨实用的家庭式公寓</p>
-                <p class="pj">★★★★☆</p>
-            </div>
-        </div><div class="order_house">
-            <div class="limg"><img src="${request.contextPath}/resource/images/u=3508899871,1728074629&amp;fm=21&amp;gp=0.jpg" width="100%"></div>
-            <div class="order_house_info">
-                <p class="title"><span class="fl">长安街7号702</span><span class="fr">156元/晚</span></p>
-                <p>温馨实用的家庭式公寓</p>
-                <p class="pj">★★★★☆</p>
-            </div>
-        </div>
-    </div>
-    <div class="bottombtn">
-    	<div class="p15">
-            <div class="midbtn"><a href="">管理丰源</a></div>
-        </div>
-    </div>
-</div>
-	
-<#else>
-		<div class="main" id="steward" style="display: none;">
-		<div class="quick_menu">
-			<a href="javascript:void(0);" class="ico_fd2" id="m1" lang="m1">房东</a>
-			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2" >管家</a>
-		</div>
-	    <div class="l"></div>
-	    <div class="ad1">
-	    	<div><img src="${request.contextPath}/resource/images/ad.jpg" width="100%" /></div>
-	        <div class="adtext">
-	        	<p class="bigtext">家在四方</p>
-	            <p class="smalltext">成为房东在世界各地缔造一个个有归属感的家</p>
-	        </div>
-	    </div>
-	    <div class="btn_reg"><a href="reg_housekeeper2.html">成为管家</a></div>
-	</div>
-</#if>
+	</#if>
 
 
 

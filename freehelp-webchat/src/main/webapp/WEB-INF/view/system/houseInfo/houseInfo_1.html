@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+
+
+<div id="header">
+	<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+    <span class="m_text">${houseInfo.title!''}</span>
+</div>
+<div class="main" style="padding-top:0">
+	<div class="houseimg">
+    	<img src="${request.contextPath}/resource/images/u=3508899871,1728074629&fm=21&gp=0.jpg" width="100%" />
+        <div class="price">￥450</div>
+    </div>
+    <div class="keeperhouse">
+    	<p>${houseInfo.title!''}</p>
+        <p class="keeperimg"><img src="${request.contextPath}/resource/images/9d82d158ccbf6c812df2e2c6be3eb13532fa40d3.jpg" width="100%" /></p>
+        <p class="f_yellow">★★★★☆</p>
+        <p>${Session.userName}</p>
+    </div>
+    <div class="houstype">
+    	<p>户型</p>
+        <p class="f_gray">房间面积：${houseInfo.area!''}平方米</p>
+        <p class="f_gray">房屋类型：${houseInfo.design!''}</p>
+    </div>
+    <div class="bedtype">
+    	<p>床</p>
+    	<#if houseInfo.bed??>
+    	<#assign bed=houseInfo.bed?eval >
+    		<#if bed??>
+    			<#list bed as item>
+	        		<p class="f_gray">${item.name}</p>
+	        	</#list>
+        	</#if>
+        </#if>
+    </div>
+    <div class="peop">
+    	<p>可住${houseInfo.count!''}人</p>
+    </div>
+    <div class="keeperhouse" style="margin-bottom:0">
+    	<p><strong>地址</strong></p>
+        <p class="f_gray">${houseInfo.address!''}</p>
+        <div class="mt15"><img src="${request.contextPath}/resource/images/map.jpg" width="100%" /></div>
+    </div>
+    <div class="keeperhouse" style="margin-bottom:0">
+    	<p><strong>交通描述</strong></p>
+        <p class="f_gray p15" style="text-align:left">${houseInfo.traffic!''}</p>
+        <p><a href="" class="alltext" style="display: none;">全部描述</a></p>
+    </div>
+    <div class="keeperhouse mt15" style="margin-bottom:0;display: none;">
+    	<p><strong>房源信息</strong></p>
+        <div class="myinfo2">
+    	<ul>
+        	<li><span class="fl">房间数</span><span class="fr">3</span></li>
+        	<li><span class="fl">厅</span><span class="fr">1</span></li>
+        	<li><span class="fl">洗手间</span><span class="fr">2</span></li>
+        	<li><span class="fl">可入住人数</span><span class="fr">8</span></li>
+        	<li><span class="fl">床型</span><span class="fr">双人床</span></li>
+        	<li><span class="fl">是否接纳外籍人士</span><span class="fr">是</span></li>
+        	<li><span class="fl">押金</span><span class="fr">50</span></li>
+        </ul>
+    </div>
+    </div>
+    <div class="keeperhouse mt15" style="margin-bottom:0">
+    	<p><strong>配套设施</strong></p>
+        <div class="sslist">
+            <ul>
+                <li><em class="rs"></em><p>热水淋具</p></li>
+                <li><em class="yj"></em><p>牙具</p></li>
+                <li><em class="tx"></em><p>拖鞋</p></li>
+                <li><em class="xz"></em><p>香皂</p></li>
+                <li><em class="mj"></em><p>毛巾</p></li>
+                <li><em class="xs"></em><p>洗漱用品</p></li>
+                <li><em class="yg"></em><p>浴缸</p></li>
+                <li><em class="sz"></em><p>手纸</p></li>
+                <li><em class="tv"></em><p>电视</p></li>
+                <li><em class="ysj"></em><p>饮水设施</p></li>
+                <li><em class="kt"></em><p>空调</p></li>
+                <li><em class="bx"></em><p>冰箱</p></li>
+            </ul>
+            <p><a href="${request.contextPath}/system/houseInfo/houseInfo_2" class="alltext">全部配套</a></p>
+    	</div>
+    </div>
+    <div class="keeperhouse mt15 mb60">
+    	<p><strong>管家服务需求</strong></p>
+        <div class="com_mainbox tl">
+        	<p>计划性卫生（大扫除）</p>
+            <p>常规维护（一般性卫生。设备检修，绿植）</p>
+            <p>常客看房，入住手续</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
