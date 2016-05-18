@@ -119,6 +119,7 @@
 					and A.area=:area
 				</#if>
 			</#if>
+			 ORDER BY id ASC
 		]]>
 	</Query>
 </QueryList>
