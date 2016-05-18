@@ -43,7 +43,7 @@
 	</div>
 
 
-	<#if Session.freeHelpAuthority.master==2 >
+	<#if Session.master==2 >
 	<div class="main" id="master">
 		<div class="quick_menu">
 			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
@@ -114,7 +114,7 @@
 			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_1">成为房东</a>
 		</div>
 	</div>
-	</#if> <#if Session.freeHelpAuthority.steward==2 >
+	</#if> <#if Session.steward==2 >
 	<div class="main" style="display: none;" " id="steward">
 		<div class="quick_menu">
 			<a href="javascript:void(0);" class="ico_fd2" id="m1" lang="m1">房东</a>
@@ -185,7 +185,7 @@
 			</div>
 		</div>
 		<div class="btn_reg">
-			<a href="reg_housekeeper2.html">成为管家</a>
+			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_3">成为管家</a>
 		</div>
 	</div>
 	</#if>

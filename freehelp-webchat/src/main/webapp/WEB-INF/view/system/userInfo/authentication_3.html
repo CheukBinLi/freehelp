@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#submit").click(function() {
+			submitEvent();
+		});
+		function submitEvent() {
+			var o;
+			var pass = true;
+			var msg = '';
+			$("input[v='true']").each(function(index) {
+				o = $(this);
+				var test = o.attr('test');
+				if (test && !eval(test).test(o.val())) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				} else if (o.val().length < 1) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				}
+			});
+			/* 			$("input[type='file']").each(function(index) {
+			 if ($(this)[0].files.length == 0) {
+			 isPass = false;
+			 } else
+			 isPass = true;
+			 });
+			 if (!isPass)
+			 return alert(msg + '请选择证件照片\n'); */
+
+			var fd = new FormData($('#aaxx')[0]);
+
+			$("#submit").off("click", "**");
+
+			ajax.POST_FILE("${request.contextPath}/system/userInfo/", fd, function(data) {
+				if (msgModel.getCode(data) == '1')
+					location.href = "${request.contextPath}/system/userInfo/authentication_2";
+				else
+					alert(msgModel.getMsg(data));
+			}, function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#submit").click(function() {
+					submitEvent()
+				});
+				alert('提交失败，请重试');
+			});
+		}
+
+		$("input[type='file']").change(function() {
+			var obj = $(this)[0];
+			//console.log(obj.files);
+			for (var i = 0; i < obj.files.length; i++) {
+				if (!/image\/\w+/.test(obj.files[i].type))
+					return alert("只能选择图片格式文件");
+				//console.log(obj.files[i]);
+			}
+			if (window.FileReader) {
+				var fr = new FileReader();
+				var img = '#' + $(this).attr('display');
+				fr.onloadend = function(e) {
+					$(img).attr('src', e.target.result);
+				};
+				fr.readAsDataURL(obj.files[0]);
+			} else
+				return alert("不支持HTML5");
+		});
+
+	});
+	var change = true;
+	function showAndHide(show, hide) {
+		$(show).show();
+		$(hide).hide();
+		if (change) {
+			change = false;
+			var upimg0 = $('#upimg0');
+			$("input[type='file']").each(function(index) {
+				$(this).css({
+					width : upimg0.outerWidth() + 'px',
+					height : upimg0.height() + 'px'
+				});
+			});
+		}
+	}
+</script>
+</head>
+
+<body>
+	<#if userInfo.idCardImage??> <#if userInfo.idCardImage?length gt 4> <#assign jsonX=userInfo.idCardImage?eval /> </#if> </#if> <#assign text=userInfo.info /> <#assign data=text?eval />
+	<form id="aaxx" enctype="multipart/form-data">
+		<div id="main_form">
+			<div id="header">
+				<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+				<span class="m_text">管家验证</span>
+			</div>
+			<div class="main">
+				<div class="gray_title">欢迎注册自由帮管家</div>
+				<div class="listbox">
+					<ul>
+						<li><span class="listbox_left">所在城市</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.address!''}" placeholder="例如：广东省 广州市 白云区 " name="address">
+							</span></li>
+						<li><span class="listbox_left">真实姓名</span> <span class="rightinput">
+								<input v="true" msg="请输入真实姓名" name="name" placeholder="真实姓名" class="listinput" type="text" value="${data.name!''}">
+							</span></li>
+						<li><span class="listbox_left">性别</span> <span class="rightinput">
+								<input name="sex" type="radio" value="男" class="dx_box">
+								<label>男士</label>
+								<input name="sex" type="radio" value="女" class="dx_box">
+								<label>女士</label>
+								<input name="sex" type="radio" value="保密" class="dx_box">
+								<label>保密</label>
+							</span></li>
+						<li><span class="listbox_left">身份证</span> <span class="rightinput">
+								<input type="text" v="true" msg="请输入有效身份证号码" test='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/' class="listinput" name="idCard" value="${data.idCard!''}" style="width: 50%">
+								<a href="javascript:showAndHide('#uploadImg','#main_form');" class="uploadinging"></a>
+							</span></li>
+						<li><span class="listbox_left">手机号码</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.phone!''}" placeholder="例如：134567890123" name="phone">
+							</span></li>
+						<li><span class="listbox_left">银行卡号</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.bankAccount!''}" placeholder="此信息只作为结算转账使用" name="bankAccount">
+							</span></li>
+						<li><span class="listbox_left">开户银行</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.bank!''}" placeholder="此信息只作为结算转账使用" name="bank">
+							</span></li>
+						<li><span class="listbox_left">开户行地址</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.bankAddress!''}" name="bankAddress">
+							</span></li>
+						<li><span class="listbox_left">支付宝账号</span> <span class="rightinput">
+								<input type="text" class="listinput" value="${data.payAccount!''}" placeholder="此信息只作为结算转账使用" name="payAccount">
+							</span></li>
+					</ul>
+				</div>
+				<div class="btnline">
+					<input type="hidden" name="type" value="jpg">
+					<a href="javascript:void(0)" id="submit">提交</a>
+				</div>
+			</div>
+		</div>
+
+		<div id="uploadImg" style="display: none;">
+			<div id="header">
+				<a href="javascript:showAndHide('#main_form','#uploadImg');" class="l_ico ico_back"></a>
+				<span class="m_text">上传图片</span>
+			</div>
+			<div class="main_1">
+				<div class="picturebox">
+					<div class="imgbox">
+						<div class="oneside2">
+							<a href="javascript:void(0);" id="a0">
+								<input type="file" name="file1" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg0">
+								<#if jsonX??>
+								<img alt="+" src="${(jsonX[0].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[0].src,'')}" width="100%" height="100%" id="upimg0">
+								<#else>
+								<img alt="+" src="" width="100%;" height="100%;" id="upimg0">
+								</#if>
+							</a>
+						</div>
+						<p>身份证背面相片</p>
+					</div>
+					<div class="imgbox">
+						<div class="oneside2">
+							<a href="javascript:void(0);">
+								<input type="file" name="file2" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg1">
+								<#if jsonX??>
+								<img alt="+" src="${(jsonX[1].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[1].src,'')}" width="100%" height="100%" id="upimg1">
+								<#else>
+								<img alt="+" src="" width="100%;" height="100%;" id="upimg1">
+								</#if>
+							</a>
+						</div>
+						<p>身份证背面相片</p>
+					</div>
+				</div>
+				<div class="remarks">身份证需实拍，清晰可见、不得涂改，自由帮承诺不以任何形式邪路您的身份证信息</div>
+
+				<div class="btn_reg">
+					<a href="javascript:showAndHide('#main_form','#uploadImg');">完成</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
