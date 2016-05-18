@@ -19,7 +19,6 @@ import project.freehelp.common.SettingSession;
 import project.freehelp.common.entity.UserInfo;
 import project.freehelp.common.service.UserInfoService;
 import project.freehelp.common.service.UserService;
-import project.freehelp.common.vo.UserInfoAuthorityVo;
 import project.freehelp.common.vo.UserInfoVo;
 import project.master.fw.sh.common.AbstractController;
 import project.master.fw.sh.common.SmsEntry;
@@ -59,7 +58,7 @@ public class RegisterController extends AbstractController {
 			User user = fillObject(new User(), o);
 			user.setId(user.generatedValue());
 			userService.save(user);
-			userInfoService.save(new UserInfo(user.getId()).setAuthority(new UserInfoAuthorityVo(-1, -1).toJson()).setInfo(new UserInfoVo().toJson()));
+			userInfoService.save(new UserInfo(user.getId()).setMaster(-1).setSteward(-1).setInfo(new UserInfoVo().toJson()));
 			try {
 				Integer.parseInt(next);
 			} catch (Exception e) {
@@ -83,7 +82,7 @@ public class RegisterController extends AbstractController {
 			User user = fillObject(new User(), getParams(request));
 			user.setId(user.generatedValue());
 			userService.save(user);
-			userInfoService.save(new UserInfo(user.getId()).setAuthority(new UserInfoAuthorityVo(-1, -1).toJson()).setInfo(new UserInfoVo().toJson()));
+			userInfoService.save(new UserInfo(user.getId()).setMaster(-1).setSteward(-1).setInfo(new UserInfoVo().toJson()));
 			return success(user);
 		} catch (Throwable e) {
 			return fail(e);

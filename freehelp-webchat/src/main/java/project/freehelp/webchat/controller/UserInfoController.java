@@ -25,7 +25,6 @@ import project.freehelp.common.SessionType;
 import project.freehelp.common.entity.UserInfo;
 import project.freehelp.common.service.UserInfoService;
 import project.freehelp.common.vo.ImageVo;
-import project.freehelp.common.vo.UserInfoAuthorityVo;
 import project.freehelp.common.vo.UserInfoVo;
 import project.master.fw.sh.common.AbstractController;
 import project.master.fw.sh.common.JsonObjectFactory;
@@ -79,9 +78,7 @@ public class UserInfoController extends AbstractController implements Constant, 
 		try {
 			UserInfo userInfo = userInfoService.getByPk(id);
 			userInfo = fillObject(userInfo, params);
-			UserInfoAuthorityVo userInfoVo = JsonObjectFactory.newInstance().toObject(userInfo.getAuthority(), UserInfoAuthorityVo.class, false);
-			userInfoVo.setMaster(0);
-			userInfo.setInfo(fillObject(new UserInfoVo(), params).toJson()).setAuthority(userInfoVo.toJson());
+			userInfo.setInfo(fillObject(new UserInfoVo(), params).toJson()).setMaster(0);
 			if (commonsMultipartResolver.isMultipart(request)) {
 				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 				Iterator<String> it = multiRequest.getFileNames();

@@ -36,6 +36,8 @@ public class UserInfo extends AbstractEntity {
 	// private String idCard;// 身份证
 	private String idCardImage;// 身份证图片(正面、反面、人头+正面);
 	private String authority;// 权限
+	private int master;// 业主 状态 -1,0,1,2(初始化，申请，修改再申请，完成通过)
+	private int steward;// 管家 状态 -1,0,1,2(初始化，申请，修改再申请，完成通过)
 	private int status;
 
 	public String getId() {
@@ -92,6 +94,24 @@ public class UserInfo extends AbstractEntity {
 		return this;
 	}
 
+	public int getMaster() {
+		return master;
+	}
+
+	public UserInfo setMaster(int master) {
+		this.master = master;
+		return this;
+	}
+
+	public int getSteward() {
+		return steward;
+	}
+
+	public UserInfo setSteward(int steward) {
+		this.steward = steward;
+		return this;
+	}
+
 	public int getStatus() {
 		return status;
 	}
@@ -109,4 +129,5 @@ public class UserInfo extends AbstractEntity {
 	public UserInfo() {
 		super();
 	}
+
 }

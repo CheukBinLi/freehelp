@@ -3,18 +3,15 @@ package project.freehelp.common;
 import javax.servlet.http.HttpServletRequest;
 
 import project.freehelp.common.entity.UserInfo;
-import project.freehelp.common.vo.UserInfoAuthorityVo;
-import project.master.fw.sh.common.JsonObjectFactory;
 import project.master.user.User;
 
 public class SettingSession implements SessionType {
 
 	public void SettionSession(HttpServletRequest request, User user, UserInfo userInfo) {
-		request.getSession().setAttribute("userID", user.getId());
-		request.getSession().setAttribute("userName", user.getPhone());
-		request.getSession().setAttribute("userName", user.getPhone());
-		request.getSession().setAttribute("userName", user.getPhone());
-		request.getSession().setAttribute("freeHelpAuthority", JsonObjectFactory.newInstance().toObject(userInfo.getAuthority(), UserInfoAuthorityVo.class, false));
+		request.getSession().setAttribute(USER_ID, user.getId());
+		request.getSession().setAttribute(USER_NAME, user.getPhone());
+		request.getSession().setAttribute(STEWARD, userInfo.getSteward());
+		request.getSession().setAttribute(MASTER, userInfo.getMaster());
 	}
 
 	public boolean isLogin(HttpServletRequest request) {
@@ -22,10 +19,20 @@ public class SettingSession implements SessionType {
 	}
 
 	public boolean isMaster(HttpServletRequest request) {
-		return 2 == ((UserInfoAuthorityVo) request.getSession().getAttribute(FREE_HELP_AUTHORITY)).getMaster();
+		try {
+			return 2 == Integer.valueOf(request.getSession().getAttribute(MASTER).toString());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public boolean isSteward(HttpServletRequest request) {
-		return 2 == ((UserInfoAuthorityVo) request.getSession().getAttribute(FREE_HELP_AUTHORITY)).getSteward();
+		try {
+			return 2 == Integer.valueOf(request.getSession().getAttribute(STEWARD).toString());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

@@ -7,5 +7,6 @@ public interface SessionType {
 	final String USER_HEAD = "userHead";
 	final String USER_OPEN_ID = "userOpenId";
 	final String FREE_HELP_AUTHORITY = "freeHelpAuthority";
-
+	final String MASTER = "master";
+	final String STEWARD = "steward";
 }
