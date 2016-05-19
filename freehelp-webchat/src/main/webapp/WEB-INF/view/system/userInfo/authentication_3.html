@@ -37,6 +37,11 @@
 			 });
 			 if (!isPass)
 			 return alert(msg + '请选择证件照片\n'); */
+			if (!pass)
+				//return alert(msg + '请选择证件照片\n');
+				return alert(msg);
+				
+			$('input[name="brithday"]').val(brithdayDay($('input[name="idCard"]').val()));
 
 			var fd = new FormData($('#aaxx')[0]);
 
@@ -90,6 +95,20 @@
 			});
 		}
 	}
+	function brithdayDay(idCard) {
+		if (idCard.length == 18)
+			idCard = idCard.substring(6, 14);
+		else
+			idcard = 19 + idCard.substring(6, 12);
+		var x = [ 0, 4, 4, 6, 6, 8 ];
+		var result = '';
+		for (var i = 0; i < x.length; i++) {
+			result += idCard.substring(x[i], x[++i]);
+			if (x[i] != x[x.length - 1])
+				result += '-';
+		}
+		return result;
+	}
 </script>
 </head>
 
@@ -120,7 +139,8 @@
 								<label>保密</label>
 							</span></li>
 						<li><span class="listbox_left">身份证</span> <span class="rightinput">
-								<input type="text" v="true" msg="请输入有效身份证号码" test='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/' class="listinput" name="idCard" value="${data.idCard!''}" style="width: 50%">
+								<input type="text" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/' class="listinput" name="idCard" value="${data.idCard!''}" style="width: 50%">
+								<input name="brithday" type="hidden" />
 								<a href="javascript:showAndHide('#uploadImg','#main_form');" class="uploadinging"></a>
 							</span></li>
 						<li><span class="listbox_left">手机号码</span> <span class="rightinput">

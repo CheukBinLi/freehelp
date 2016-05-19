@@ -18,7 +18,7 @@
 			if (phone.length < 1 && password.length < 1)
 				return alert("用户名/密码输入有误");
 
-			ajax.POST("register/login", $("#f0").serialize(), function(data) {
+			ajax.POST("${request.contextPath}/register/login", $("#f0").serialize(), function(data) {
 				if (msgModel.getCode(data) == '1')
 					location.href = "${request.contextPath}/system/index";
 				else {

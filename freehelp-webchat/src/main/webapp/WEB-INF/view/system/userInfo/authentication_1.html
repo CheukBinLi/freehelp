@@ -62,14 +62,17 @@
 					msg += o.attr('msg') + '\n';
 				}
 			});
-/* 			$("input[type='file']").each(function(index) {
-				if ($(this)[0].files.length == 0) {
-					isPass = false;
-				} else
-					isPass = true;
-			});
-			if (!isPass)
-				return alert(msg + '请选择证件照片\n'); */
+			/* 			$("input[type='file']").each(function(index) {
+			 if ($(this)[0].files.length == 0) {
+			 isPass = false;
+			 } else
+			 isPass = true;
+			 });*/
+			if (!pass)
+				//return alert(msg + '请选择证件照片\n');
+				return alert(msg);
+
+			$('input[name="brithday"]').val(brithdayDay($('input[name="idCard"]').val()));
 
 			var fd = new FormData($('#aaxx')[0]);
 
@@ -108,21 +111,25 @@
 		});
 
 	});
+	function brithdayDay(idCard) {
+		if (idCard.length == 18)
+			idCard = idCard.substring(6, 14);
+		else
+			idcard = 19 + idCard.substring(6, 12);
+		var x = [ 0, 4, 4, 6, 6, 8 ];
+		var result = '';
+		for (var i = 0; i < x.length; i++) {
+			result += idCard.substring(x[i], x[++i]);
+			if (x[i] != x[x.length - 1])
+				result += '-';
+		}
+		return result;
+	}
 </script>
 </head>
 <body>
-	<#if userInfo.idCardImage??>
-		<#if userInfo.idCardImage?length gt 4>
-			<#assign jsonX=userInfo.idCardImage?eval /> 
-		</#if>
-	 </#if>
-	 
-	
-	 
-	 
-	<#assign text=userInfo.info />
-	<#assign data=text?eval />
-	 
+	<#if userInfo.idCardImage??> <#if userInfo.idCardImage?length gt 4> <#assign jsonX=userInfo.idCardImage?eval /> </#if> </#if> <#assign text=userInfo.info /> <#assign data=text?eval />
+
 	<div id="header">
 		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
 		<span class="m_text">实名验证</span>
@@ -142,7 +149,8 @@
 							<input type="text" value="${data.name!''}" class="inputstyle f_gray2" placeholder="请输入证件上的真实姓名" name="name" v="true" msg="请输入真实姓名">
 						</span></li>
 					<li><span class="fl">身份证号：</span> <span class="fl">
-							<input value="${data.idCard!''}" type="text" class="inputstyle f_gray2" placeholder="请输入身份证号码" name="idCard" v="true" msg="请输入有效身份证号码" test='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/'>
+							<input value="${data.idCard!''}" type="text" class="inputstyle f_gray2" placeholder="请输入身份证号码" name="idCard" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/'>
+							<input name="brithday" type="hidden" />
 						</span></li>
 				</ul>
 			</div>
@@ -152,11 +160,11 @@
 						<a href="javascript:voide(0);">
 							<input type="file" name="file1" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg0">
 							<#if jsonX??>
-								<img alt="+" src="${(jsonX[0].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[0].src,'')} " width="100%;" height="100%;" id="upimg0">
-								<#else>
-									<img alt="+" src="" width="100%;" height="100%;" id="upimg0">
+							<img alt="+" src="${(jsonX[0].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[0].src,'')} " width="100%;" height="100%;" id="upimg0">
+							<#else>
+							<img alt="+" src="" width="100%;" height="100%;" id="upimg0">
 							</#if>
-								
+
 						</a>
 					</div>
 					<p>身份证正面相片</p>
@@ -166,9 +174,9 @@
 						<a href="javascript:voide(0);">
 							<input type="file" name="file2" style="float: left; position: absolute; z-index: 100; opacity: 0; filter: alpha(opacity = 0);" accept="image/*" display="upimg1">
 							<#if jsonX??>
-								<img alt="+" src="${(jsonX[1].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[1].src,'')}" width="100%" height="100%" id="upimg1">
+							<img alt="+" src="${(jsonX[1].src)???string(request.contextPath+'/resource/upload/idcard/'+jsonX[1].src,'')}" width="100%" height="100%" id="upimg1">
 							<#else>
-									<img alt="+" src="" width="100%;" height="100%;" id="upimg1">
+							<img alt="+" src="" width="100%;" height="100%;" id="upimg1">
 							</#if>
 						</a>
 					</div>

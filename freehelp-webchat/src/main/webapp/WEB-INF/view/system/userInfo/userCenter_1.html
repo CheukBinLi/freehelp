@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">个人中心</span>
+		<a href="" class="r_ico ico_massg"></a>
+	</div>
+	<div class="main">
+		<div class="myhead">
+			<div class="headerimg">
+				<img src="${request.contextPath}/resource/images/006eDhv2gw1ewkqfcoylsj31kw11s1ao.jpg" width="100%" />
+			</div>
+			<em><img src="${request.contextPath}/resource/images/ico_green.png" /></em>
+			<div class="myname">
+				<span>
+					${Session.userName}
+					<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/userCenter_2" class="r_ico" class="ico_bj"></a>
+				</span>
+			</div>
+			<div class="myinfo_mycenter">
+				<ul>
+					<li>
+						<p class="f_red">￥200</p>
+						<p>余额</p>
+					</li>
+					<li>
+						<p class="f_red">0</p>
+						<p>积分</p>
+					</li>
+					<li>
+						<p class="f_red">1</p>
+						<p>优惠券</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="l"></div>
+		<div class="landlordbox">
+			<h3>我是业主</h3>
+			<div class="my_set">
+				<ul>
+					<li class="my_house"><a href="${request.contextPath}/system/houseInfo/houseManage_1">
+							<p class="typename">我的房源</p>
+							<p>${mesterHouseCount}个房源</p>
+						</a></li>
+					<li class="my_keeper">
+						<p class="typename">我的管家</p>
+						<p>${mySteward}个管家</p>
+					</li>
+					<li class="my_order">
+						<p class="typename">业主订单</p>
+						<p>${mesterOrder}个订单</p>
+					</li>
+				</ul>
+			</div>
+			<h3>我是管家</h3>
+			<div class="my_set">
+				<ul>
+					<li class="my_order">
+						<p class="typename">我的订单</p>
+						<p>${stewardOrder}个订单</p>
+					</li>
+					<li class="my_order2">
+						<p class="typename">租客订单</p>
+						<p>0个订单</p>
+					</li>
+					<li class="my_set">
+						<p class="typename">我的管理</p>
+						<p>${mesterHouseCount}个房源</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

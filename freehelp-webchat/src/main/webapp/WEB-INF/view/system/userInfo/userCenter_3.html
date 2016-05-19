@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#submit").click(function() {
+			submitEvent();
+		});
+		function submitEvent() {
+			var o;
+			var pass = true;
+			var msg = '';
+			$("input[v='true']").each(function(index) {
+				o = $(this);
+				var test = o.attr('test');
+				if (test && !eval(test).test(o.val())) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				} else if (o.val().length < 1) {
+					pass = false;
+					msg += o.attr('msg') + '\n';
+				}
+			});
+			/* 			$("input[type='file']").each(function(index) {
+			 if ($(this)[0].files.length == 0) {
+			 isPass = false;
+			 } else
+			 isPass = true;
+			 });
+			 if (!isPass)
+			 return alert(msg + '请选择证件照片\n'); */
+
+			var fd = new FormData($('#aaxx')[0]);
+
+			$("#submit").off("click", "**");
+
+			ajax.POST_FILE("${request.contextPath}/system/userInfo/", fd, function(data) {
+				if (msgModel.getCode(data) == '1')
+					location.href = "${request.contextPath}/system/userInfo/authentication_2";
+				else
+					alert(msgModel.getMsg(data));
+			}, function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#submit").click(function() {
+					submitEvent()
+				});
+				alert('提交失败，请重试');
+			});
+		}
+
+		$("input[type='file']").change(function() {
+			var obj = $(this)[0];
+			//console.log(obj.files);
+			for (var i = 0; i < obj.files.length; i++) {
+				if (!/image\/\w+/.test(obj.files[i].type))
+					return alert("只能选择图片格式文件");
+				//console.log(obj.files[i]);
+			}
+			if (window.FileReader) {
+				var fr = new FileReader();
+				var img = '#' + $(this).attr('display');
+				fr.onloadend = function(e) {
+					$(img).attr('src', e.target.result);
+				};
+				fr.readAsDataURL(obj.files[0]);
+			} else
+				return alert("不支持HTML5");
+		});
+
+	});
+</script>
+</head>
+<body>
+	<#assign text=userInfo.info /> <#assign data=text?eval />
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">修改资料</span>
+	</div>
+	<div class="main" style="padding-top: 0">
+		<form id="aaxx" enctype="multipart/form-data">
+			<div class="changheadimg">
+				<div class="leftimg">
+					<img src="${request.contextPath}/resource/images/headimg.jpg" />
+				</div>
+				<div class="righttetx">
+					<p>
+						<input name="name" type="text" class="inputstyle" value="${data.name!''}" placeholder="姓名">
+					</p>
+					<p>
+						<input name="introduce" type="text" class="inputstyle" value="${data.introduce!''}" placeholder="简介:">
+					</p>
+				</div>
+			</div>
+			<div class="changinfo">
+				<ul>
+					<li><span class="input_text">生日</span> <span class="spaninput">
+							<input name="brithday" type="text" readonly="readonly" class="inputstyle" value="${data.brithday!''}" placeholder="1983-09-28">
+						</span></li>
+					<li><span class="input_text">性别</span> <span class="spaninput">
+							<input name="sex" type="text" class="inputstyle" value="${data.sex!''}" placeholder="性别:男/女">
+						</span></li>
+					<li><span class="input_text">城市</span> <span class="spaninput">
+							<input name="city" type="text" class="inputstyle" value="${data.city!''}" placeholder="广东 广州">
+						</span></li>
+					<li><span class="input_text">学校</span> <span class="spaninput">
+							<input name="school" type="text" class="inputstyle" value="${data.school!''}" placeholder="广州大学">
+						</span></li>
+					<li><span class="input_text">职业</span> <span class="spaninput">
+							<input name="job" type="text" class="inputstyle" value="${data.job!''}" placeholder="司机">
+						</span></li>
+				</ul>
+			</div>
+			<div class="gray_title">
+				个人标签
+				<a href="" class="changbtn">换一批</a>
+			</div>
+			<div class="taglist">
+				<ul>
+					<#if data.tag??><#list data.tag?split(',') as item>
+					<li><a href="javascript:void(0);" class="on">${item}</a></li> </#list> </#if>
+
+					<!--<li><a href="javascript:void(0);" class="on"></a></li> -->
+				</ul>
+			</div>
+			<div class="btn_reg">
+				<a href="javascript:void(0)" id="submit">保存</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
+

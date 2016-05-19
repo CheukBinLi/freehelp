@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+	<#assign text=userInfo.info /> <#assign data=text?eval />
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">个人中心</span>
+		<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/userCenter_3" class="r_ico">编辑</a>
+	</div>
+	<div class="main" style="padding-top: 0">
+		<div class="centerhead">
+			<div class="headimg">
+				<img src="${request.contextPath}/resource/images/006eDhv2gw1ewkqfcoylsj31kw11s1ao.jpg" height="100%" />
+			</div>
+		</div>
+		<div class="myinfo">
+			<h3>
+				<div>
+					<span>${data.name!''}</span>
+					<em></em>
+				</div>
+			</h3>
+			<#setting date_format="yyyy">
+			<p><#if data.brithday??>${(.now?date)?eval-(data.brithday?substring(0,4)?eval)}</#if> . ${data.sex!''} . ${data.job!''}</p>
+			<p><#if data.tag??>${data.tag?replace(',','')}</#if></p>
+		</div>
+		<div class="myinfo2 mt15">
+			<ul>
+				<li><span class="fl">生日</span> <span class="fr">${data.brithday!''}</span></li>
+				<li><span class="fl">姓别</span> <span class="fr">${data.name!''}</span></li>
+				<li><span class="fl">城市</span> <span class="fr">${data.city!''}</span></li>
+				<li><span class="fl">学校</span> <span class="fr">${data.school!''}</span></li>
+				<li><span class="fl">职业</span> <span class="fr">${data.job!''}</span></li>
+			</ul>
+		</div>
+		<div class="myinfo">
+			<h3>身份认证</h3>
+		</div>
+		<div class="myinfo2 mt15">
+			<ul>
+				<li><span class="fl">身份证</span> <span class="fr">${data.idCard!''}
+						<A href="" class="f_red" style="display: none;">立刻验证</A>
+					</span></li>
+				<li><span class="fl">银行卡</span> <span class="fr">${data.bankAccount !''}
+						<em class="ico_g1 mt10" style="display: none;"></em>
+					</span></li>
+			</ul>
+		</div>
+		<div class="btn_tj">
+			<a href="${request.contextPath}/system/exit">退出登录</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		var pass = $('div[class="order_house"][action="display2"]');
+		var noPass = $('div[class="order_house"][action="display1"]');
+		var waiting = $('div[class="order_house"][action="display0"]');
+		$('div[class="quickmenu2"]').find('a').click(function() {
+			$('div[class="quickmenu2"]').find('a').each(function() {
+				$(this).removeClass('onli');
+			});
+			$(this).addClass('onli');
+			eval($(this).attr('action'));
+		});
+	});
+</script>
+
+</head>
+
+<body>
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">添加房源</span>
+		<a href="javascript:void(0);" class="r_ico ico_massg"></a>
+	</div>
+	<div class="main2" style="padding-top: 0">
+		<div class="quickmenu2">
+			<ul>
+				<li><a href="javascript:void(0);" class="onli" action="pass.show();noPass.show();waiting.show();">全部</a></li>
+				<li><a href="javascript:void(0);" action="pass.show();noPass.hide();waiting.hide();">已审核通过</a></li>
+				<li><a href="javascript:void(0);" action="pass.hide();noPass.show();waiting.show();">审核未通过</a></li>
+			</ul>
+		</div>
+
+
+
+		<#if houseInfos??> <#list houseInfos as item>
+		<div class="order_house" action="display${item[1].status}">
+			<div class="limg">
+				<img src="${request.contextPath}/resource/upload/house/${item[0].mainImage!''}" width="100%">
+			</div>
+			<div class="order_house_info">
+				<p class="title">
+					<span class="fl">${item[0].address!''}</span>
+					<span class="fr">${item[0].price!''}元/晚</span>
+				</p>
+				<p>${item[0].title!''}</p>
+				<p class="pj">★★★★☆</p>
+			</div>
+		</div>
+		</#list> </#if>
+	</div>
+</body>
+</html>
