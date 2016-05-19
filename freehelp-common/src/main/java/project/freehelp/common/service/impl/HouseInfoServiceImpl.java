@@ -1,5 +1,9 @@
 package project.freehelp.common.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +22,12 @@ public class HouseInfoServiceImpl extends AbstractService<HouseInfo, String> imp
 	@Override
 	public BaseDao<HouseInfo, String> getService() {
 		return houseInfoDao;
+	}
+
+	public List<HouseInfo> getStewardHouseList(String steward, int page, int size) throws Throwable {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("steward", steward);
+		return houseInfoDao.getListEntity("stewardHouseList", params, false, page, size);
 	}
 
 }

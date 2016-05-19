@@ -15,6 +15,12 @@ public class UserInfoVo extends AbstractAuthorityVo {
 	private String bank;// 开户银行
 	private String bankAddress;// 开户行地址
 	private String payAccount;// 支付帐号
+	private String job;// 职业
+	private String school;// 学校
+	private String city;// 城市
+	private String brithday;// 生日
+	private String introduce;// 简介
+	private String tag;// 个人标签
 
 	public String getName() {
 		return name;
@@ -94,6 +100,60 @@ public class UserInfoVo extends AbstractAuthorityVo {
 
 	public UserInfoVo setPayAccount(String payAccount) {
 		this.payAccount = payAccount;
+		return this;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public UserInfoVo setJob(String job) {
+		this.job = job;
+		return this;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public UserInfoVo setSchool(String school) {
+		this.school = school;
+		return this;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public UserInfoVo setCity(String city) {
+		this.city = city;
+		return this;
+	}
+
+	public String getBrithday() {
+		return brithday;
+	}
+
+	public UserInfoVo setBrithday(String brithday) {
+		this.brithday = brithday;
+		return this;
+	}
+
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public UserInfoVo setIntroduce(String introduce) {
+		this.introduce = introduce;
+		return this;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public UserInfoVo setTag(String tag) {
+		this.tag = tag;
 		return this;
 	}
 

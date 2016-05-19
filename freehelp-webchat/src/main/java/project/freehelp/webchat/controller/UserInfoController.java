@@ -1,6 +1,7 @@
 package project.freehelp.webchat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import project.freehelp.common.Constant;
 import project.freehelp.common.SessionType;
+import project.freehelp.common.SettingSession;
+import project.freehelp.common.entity.Order;
 import project.freehelp.common.entity.UserInfo;
+import project.freehelp.common.service.HouseInfoService;
+import project.freehelp.common.service.HouseStewardService;
+import project.freehelp.common.service.OrderService;
 import project.freehelp.common.service.UserInfoService;
 import project.freehelp.common.vo.ImageVo;
 import project.freehelp.common.vo.UserInfoVo;
@@ -41,7 +47,19 @@ public class UserInfoController extends AbstractController implements Constant, 
 	@Autowired
 	private UpLoadFileFactory upLoadFileFactory;
 
-	@RequestMapping(value = { "userInfo_{number}", "authentication_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
+	@Autowired
+	private HouseInfoService houseInfoService;
+
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private HouseStewardService houseStewardService;
+
+	@Autowired
+	private SettingSession settingSession;
+
+	@RequestMapping(value = { "userInfo_{number}", "authentication_{number}", "userCenter_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		// System.out.println(Thread.currentThread().getContextClassLoader().getResource("").getPath());
 		// System.out.println(request.getRealPath("/"));
@@ -78,7 +96,8 @@ public class UserInfoController extends AbstractController implements Constant, 
 		try {
 			UserInfo userInfo = userInfoService.getByPk(id);
 			userInfo = fillObject(userInfo, params);
-			userInfo.setInfo(fillObject(new UserInfoVo(), params).toJson()).setMaster(0);
+			UserInfoVo userInfoVo = null == userInfo ? new UserInfoVo() : JsonObjectFactory.newInstance().toObject(userInfo.getInfo(), UserInfoVo.class, false);
+			userInfo.setInfo(fillObject(userInfoVo, params).toJson()).setMaster(0);
 			if (commonsMultipartResolver.isMultipart(request)) {
 				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 				Iterator<String> it = multiRequest.getFileNames();
@@ -199,4 +218,37 @@ public class UserInfoController extends AbstractController implements Constant, 
 	}
 
 	/************************************ 业务 *****************************************/
+
+	// userCenter_1
+	@RequestMapping(value = { "userCenter_1" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView uc_1(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String myID = request.getSession().getAttribute(USER_ID).toString();
+		int mesterHouseCount = 0;// 业主房源
+		int stewardHouseCount = 0;// 管家的管理房
+		int stewardOrder = 0;// 管家订单
+		int mesterOrder = 0;// 业主订单
+		int mySteward = 0;// 我的管家
+		try {
+			params.put("master", myID);
+			mesterHouseCount = settingSession.isMaster(request) ? houseInfoService.getCount(params) : 0;
+			mesterOrder = settingSession.isMaster(request) ? orderService.getCount(params) : 0;
+			mySteward = settingSession.isMaster(request) ? houseStewardService.getCount(params) : 0;
+
+			params.clear();
+			params.put("steward", myID);
+			stewardHouseCount = settingSession.isSteward(request) ? houseStewardService.getCount(params) : 0;
+			stewardOrder = settingSession.isSteward(request) ? orderService.getCount(params) : 0;
+		} catch (Throwable e) {
+			return exceptionPage(e);
+		}
+		params.clear();
+		params.put("mesterHouseCount", mesterHouseCount);
+		params.put("stewardHouseCount", stewardHouseCount);
+		params.put("stewardOrder", stewardOrder);
+		params.put("mesterOrder", mesterOrder);
+		params.put("mySteward", mySteward);
+		params.putAll(getParams(request));
+		return new ModelAndView(request.getPathInfo(),params);
+	}
 }

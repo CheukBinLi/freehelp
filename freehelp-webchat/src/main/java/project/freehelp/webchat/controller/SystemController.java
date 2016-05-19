@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import project.freehelp.common.SessionType;
 import project.freehelp.common.entity.HouseInfo;
@@ -37,5 +38,11 @@ public class SystemController extends AbstractController implements SessionType 
 			return exceptionPage(e);
 		}
 		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
+	}
+
+	@RequestMapping("exit")
+	public ModelAndView exit(HttpServletRequest request, HttpServletResponse response) {
+		request.getSession().invalidate();
+		return new ModelAndView(new RedirectView("index"));
 	}
 }

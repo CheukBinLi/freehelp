@@ -1,5 +1,6 @@
 package project.freehelp.common.entity;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -272,6 +273,15 @@ public class HouseInfo extends AbstractEntity {
 
 	public HouseInfo() {
 		super();
+	}
+
+	public static void main(String[] args) {
+		Field[] fs = HouseInfo.class.getDeclaredFields();
+		for (Field f : fs)
+			System.err.println(String.format("A.%s as %s,", f.getName(), f.getName()));
+		
+		System.out.println("SELECT A.id as id,A.master as master,A.title as title,A.image as image,A.mainImage as mainImage,A.address as address,A.longitude as longitude,A.latitude as latitude,A.traffic as traffic,A.area as area,A.count as count,A.design as design,A.facility as facility,A.bed as bed,A.price as price,A.pledge as pledge,A.foregn as foregn,A.serviceCharge as serviceCharge,A.checkIn as checkIn,A.score as score,A.status as status,A.createDate as createDate,A.remark as remarkFROM project.freehelp.common.entity.HouseInfo A,project.freehelp.common.entity.HouseSteward C WHERE A.id=C.house and EXISTS (SELECT 1 FROM project.freehelp.common.entity.HouseSteward B WHERE B.steward=:steward and A.id=B.house)".substring(460, 470));
+		
 	}
 
 }

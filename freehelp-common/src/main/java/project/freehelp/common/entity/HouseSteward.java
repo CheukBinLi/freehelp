@@ -30,7 +30,9 @@ public class HouseSteward extends AbstractEntity {
 	@Id
 	private String id;
 	private String house;// 房子ID
+	private String master;// 业主ID
 	private String steward;// 管家ID
+	private int status;// 状态
 
 	public String getId() {
 		return id;
@@ -50,12 +52,30 @@ public class HouseSteward extends AbstractEntity {
 		return this;
 	}
 
+	public String getMaster() {
+		return master;
+	}
+
+	public HouseSteward setMaster(String master) {
+		this.master = master;
+		return this;
+	}
+
 	public String getSteward() {
 		return steward;
 	}
 
 	public HouseSteward setSteward(String steward) {
 		this.steward = steward;
+		return this;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public HouseSteward setStatus(int status) {
+		this.status = status;
 		return this;
 	}
 

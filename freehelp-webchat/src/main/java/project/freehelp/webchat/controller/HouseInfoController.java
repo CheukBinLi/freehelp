@@ -229,4 +229,15 @@ public class HouseInfoController extends AbstractController implements Constant,
 		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
 	}
 
+	@RequestMapping(value = { "houseManage_2" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView hm_2(HttpServletRequest request, HttpServletResponse response) {
+		List<?> houseInfos = null;
+		try {
+			houseInfos = houseInfoService.getStewardHouseList(request.getSession().getAttribute(USER_ID).toString(), -1, -1);
+		} catch (Throwable e) {
+			return exceptionPage(e);
+		}
+		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
+	}
+
 }
