@@ -91,6 +91,7 @@
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="modify*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="*Update*" propagation="REQUIRED" />
 			<!-- <tx:method name="*" propagation="REQUIRED" read-only="true" /> -->
 		</tx:attributes>
 	</tx:advice>

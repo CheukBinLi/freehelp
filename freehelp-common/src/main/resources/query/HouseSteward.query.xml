@@ -6,30 +6,30 @@
 		<![CDATA[ 
 			FROM HouseSteward A 
 			WHERE 
-			1=1
+			1=1 
 			<#if id??>
 				<#if like??>
-					and A.id like '%'||:id||'%'
+					and A.id like '%'||:id||'%' 
 				<#else>
-					and A.id=:id
+					and A.id=:id 
 				</#if>
 			</#if>
 			<#if steward??>
 				<#if like??>
-					and A.steward like '%'||:steward||'%'
+					and A.steward like '%'||:steward||'%' 
 				<#else>
-					and A.steward=:steward
+					and A.steward=:steward 
 				</#if>
 			</#if>
 			<#if house??>
 				<#if like??>
-					and A.house like '%'||:house||'%'
+					and A.house like '%'||:house||'%' 
 				<#else>
-					and A.house=:house
+					and A.house=:house 
 				</#if>
 			</#if>
 			<#if status??>
-				and A.house=:house
+				and A.status=:status 
 			</#if>
 		]]>
 	</Query>
@@ -40,27 +40,27 @@
 			1=1
 			<#if id??>
 				<#if like??>
-					and A.id like '%'||:id||'%'
+					and A.id like '%'||:id||'%' 
 				<#else>
-					and A.id=:id
+					and A.id=:id 
 				</#if>
 			</#if>
 			<#if steward??>
 				<#if like??>
-					and A.steward like '%'||:steward||'%'
+					and A.steward like '%'||:steward||'%' 
 				<#else>
-					and A.steward=:steward
+					and A.steward=:steward 
 				</#if>
 			</#if>
 			<#if house??>
 				<#if like??>
-					and A.house like '%'||:house||'%'
+					and A.house like '%'||:house||'%' 
 				<#else>
-					and A.house=:house
+					and A.house=:house 
 				</#if>
 			</#if>
 			<#if status??>
-				and A.house=:house
+				and A.status=:status 
 			</#if>			
 		]]>
 	</Query>

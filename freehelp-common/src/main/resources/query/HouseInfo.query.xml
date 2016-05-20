@@ -248,4 +248,21 @@
 			FROM HouseInfo A,HouseSteward C WHERE A.id=C.house and EXISTS (SELECT 1 FROM HouseSteward B WHERE B.steward=:steward and A.id=B.house)
 		]]>
 	</Query>
+	<Query name="stewardHouseList2" type="HQL" freemarkFormat="false" Alias="true">
+		<![CDATA[
+			FROM HouseInfo A WHERE EXISTS (SELECT 1 FROM HouseSteward B WHERE B.steward=:steward and A.id=B.house)
+		]]>
+	</Query>
+	<!-- 末确认的列表 -->
+	<Query name="noConfirmHouseList" type="HQL" freemarkFormat="false" Alias="true">
+		<![CDATA[
+			FROM HouseInfo A WHERE NOT EXISTS (SELECT 1 FROM HouseSteward B WHERE A.id=B.house AND B.status=:status)
+		]]>
+	</Query>
+	<!-- 末确认和不包括自己（管家）的列表 -->
+	<Query name="noConfirmAndNotInStewardHouseList" type="HQL" freemarkFormat="false" Alias="true">
+		<![CDATA[
+			FROM HouseInfo A WHERE NOT EXISTS (SELECT 1 FROM HouseSteward B WHERE (A.id=B.house AND B.status=:status) or (A.id=B.house AND B.steward=:steward))
+		]]>
+	</Query>
 </QueryList>
