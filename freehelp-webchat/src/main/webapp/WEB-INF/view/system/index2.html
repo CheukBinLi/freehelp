@@ -30,12 +30,11 @@
 		<a href="javascript:void(0);" class="r_ico ico_massg"></a>
 	</div>
 
-
-	<#if Session.master==2 >
-	<div class="main" id="master">
+	<#if Session.steward==2 >
+	<div class="main" id="steward">
 		<div class="quick_menu">
-			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
-			<a href="${request.contextPath}/system/index2" class="ico_gj2" id="m2" lang="m2">管家</a>
+			<a href="${request.contextPath}/system/index" class="ico_fd2" id="m1" lang="m1">房东</a>
+			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2">管家</a>
 		</div>
 		<div class="l"></div>
 		<div class="ad1">
@@ -45,14 +44,14 @@
 		</div>
 		<div class="graybg">
 			<div class="findkeeper">
-				<a href="">
-					<img src="${request.contextPath}/resource/images/btn_findkeeper.jpg" width="100%">
+				<a href="${request.contextPath}/system/houseInfo/houseList_1">
+					<img src="${request.contextPath}/resource/images/btn_findkeeper2.jpg" width="100%">
 				</a>
 			</div>
 			<div class="mt15"></div>
 
-			<#if masterHouseInfos??> <#list masterHouseInfos as item>
-			<a href="${request.contextPath}/system/houseInfo/get/${item.id}/houseInfo_1">
+			<#if stewardHouseInfos??> <#list stewardHouseInfos as item>
+			<a href="${request.contextPath}/system/order/get/${item.id}/orderInfo_1">
 				<div class="order_house">
 					<div class="limg">
 						<img src="${request.contextPath}/resource/upload/house/${item.mainImage!''}" width="100%">
@@ -68,25 +67,21 @@
 				</div>
 			</a>
 			</#list> </#if>
-
-
 		</div>
 		<div class="bottombtn">
 			<div class="p15">
-				<div class="leftdiv">
-					<a href="${request.contextPath}/system/houseInfo/housingPublish_1">发布房源</a>
-				</div>
-				<div class="rightdiv">
-					<a href="${request.contextPath}/system/houseInfo/houseManage_1">管理房源</a>
+				<div class="midbtn">
+					<a href="${request.contextPath}/system/houseInfo/houseManage_2">管理丰源</a>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<#else>
-	<div class="main" id="master">
+	<div class="main" id="steward">
 		<div class="quick_menu">
-			<a href="javascript:void(0);" class="ico_fd2 text_hover" id="m1" lang="m1">房东</a>
-			<a href="${request.contextPath}/system/index2" class="ico_gj2" id="m2" lang="m2">管家</a>
+			<a href="${request.contextPath}/system/index" class="ico_fd2" id="m1" lang="m1">房东</a>
+			<a href="javascript:void(0);" class="ico_gj2 text_hover" id="m2" lang="m2">管家</a>
 		</div>
 		<div class="l"></div>
 		<div class="ad1">
@@ -99,7 +94,7 @@
 			</div>
 		</div>
 		<div class="btn_reg">
-			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_1">成为房东</a>
+			<a href="${request.contextPath}/system/userInfo/get/${Session.userID}/authentication_3">成为管家</a>
 		</div>
 	</div>
 	</#if>

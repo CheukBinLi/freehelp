@@ -33,7 +33,7 @@
 			</h3>
 			<#setting date_format="yyyy">
 			<p><#if data.brithday??>${(.now?date)?eval-(data.brithday?substring(0,4)?eval)}</#if> . ${data.sex!''} . ${data.job!''}</p>
-			<p><#if data.tag??>${data.tag?replace(',','')}</#if></p>
+			<p>${data.tag!''}</p>
 		</div>
 		<div class="myinfo2 mt15">
 			<ul>
@@ -49,11 +49,12 @@
 		</div>
 		<div class="myinfo2 mt15">
 			<ul>
-				<li><span class="fl">身份证</span> <span class="fr">${data.idCard!''}
+				<li><span class="fl">身份证</span> <span class="fr">
+						${data.idCard!''}
 						<A href="" class="f_red" style="display: none;">立刻验证</A>
 					</span></li>
-				<li><span class="fl">银行卡</span> <span class="fr">${data.bankAccount !''}
-						<em class="ico_g1 mt10" style="display: none;"></em>
+				<li><span class="fl">银行卡</span> <span class="fr">
+						${data.bankAccount !''} <em class="ico_g1 mt10" style="display: none;"></em>
 					</span></li>
 			</ul>
 		</div>

@@ -9,6 +9,16 @@
 <link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#submit').click(function() {
+			ajax.POST("${request.contextPath}/system/houseSteward/", "house=${houseInfo.id}&master=${houseInfo.master}&steward=${Session.userID}", function(data) {
+				if (msgModel.getCode(data) == 1)
+					location.href = "${request.contextPath}/system/index2";
+			});
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -27,7 +37,8 @@
 				<img src="${request.contextPath}/resource/images/9d82d158ccbf6c812df2e2c6be3eb13532fa40d3.jpg" width="100%" />
 			</p>
 			<p class="f_yellow">★★★★☆</p>
-			<p>${Session.userName!''}</p>
+			<#if masterInfo.weiXin??> <#assign info=masterInfo.weiXin?eval> </#if>
+			<p><#if info??> ${info.name}<#else>${masterInfo.id}</#if></p>
 		</div>
 		<div class="houstype">
 			<p>户型</p>
@@ -122,6 +133,9 @@
 				<p>常规维护（一般性卫生。设备检修，绿植）</p>
 				<p>常客看房，入住手续</p>
 			</div>
+		</div>
+		<div class="btn_reg">
+			<a href="javascript:void(0);" id="submit">收房</a>
 		</div>
 	</div>
 </body>

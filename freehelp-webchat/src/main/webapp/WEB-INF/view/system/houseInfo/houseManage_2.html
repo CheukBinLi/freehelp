@@ -45,19 +45,25 @@
 
 
 		<#if houseInfos??> <#list houseInfos as item>
-		<div class="order_house" action="display${item[1].status}">
-			<div class="limg">
-				<img src="${request.contextPath}/resource/upload/house/${item[0].mainImage!''}" width="100%">
+		<#if item[1].status==2>
+		<a href="${request.contextPath}/system/order/get/${item[0].id}/orderInfo_1">
+		<#else>
+		<a href="${request.contextPath}/system/order/get/${item[0].id}/orderInfo_2">
+		</#if>
+			<div class="order_house" action="display${item[1].status}">
+				<div class="limg">
+					<img src="${request.contextPath}/resource/upload/house/${item[0].mainImage!''}" width="100%">
+				</div>
+				<div class="order_house_info">
+					<p class="title">
+						<span class="fl">${item[0].address!''}</span>
+						<span class="fr">${item[0].price!''}元/晚</span>
+					</p>
+					<p>${item[0].title!''}</p>
+					<p class="pj">★★★★☆</p>
+				</div>
 			</div>
-			<div class="order_house_info">
-				<p class="title">
-					<span class="fl">${item[0].address!''}</span>
-					<span class="fr">${item[0].price!''}元/晚</span>
-				</p>
-				<p>${item[0].title!''}</p>
-				<p class="pj">★★★★☆</p>
-			</div>
-		</div>
+		</a>
 		</#list> </#if>
 	</div>
 </body>

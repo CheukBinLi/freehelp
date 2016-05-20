@@ -12,6 +12,8 @@
 </head>
 
 <body>
+
+
 	<div id="header">
 		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
 		<span class="m_text">${houseInfo.title!''}</span>
@@ -27,7 +29,8 @@
 				<img src="${request.contextPath}/resource/images/9d82d158ccbf6c812df2e2c6be3eb13532fa40d3.jpg" width="100%" />
 			</p>
 			<p class="f_yellow">★★★★☆</p>
-			<p>${Session.userName!''}</p>
+			<#if masterInfo.weiXin??> <#assign info=masterInfo.weiXin?eval> </#if>
+			<p><#if info??> ${info.name}<#else>${masterInfo.id}</#if></p>
 		</div>
 		<div class="houstype">
 			<p>户型</p>
@@ -67,13 +70,20 @@
 			</p>
 			<div class="myinfo2">
 				<ul>
-					<li><span class="fl">房间数</span> <span class="fr">3</span></li>
-					<li><span class="fl">厅</span> <span class="fr">1</span></li>
-					<li><span class="fl">洗手间</span> <span class="fr">2</span></li>
-					<li><span class="fl">可入住人数</span> <span class="fr">8</span></li>
-					<li><span class="fl">床型</span> <span class="fr">双人床</span></li>
-					<li><span class="fl">是否接纳外籍人士</span> <span class="fr">是</span></li>
-					<li><span class="fl">押金</span> <span class="fr">50</span></li>
+					<li><span class="fl">房间数</span>
+						<span class="fr">3</span></li>
+					<li><span class="fl">厅</span>
+						<span class="fr">1</span></li>
+					<li><span class="fl">洗手间</span>
+						<span class="fr">2</span></li>
+					<li><span class="fl">可入住人数</span>
+						<span class="fr">8</span></li>
+					<li><span class="fl">床型</span>
+						<span class="fr">双人床</span></li>
+					<li><span class="fl">是否接纳外籍人士</span>
+						<span class="fr">是</span></li>
+					<li><span class="fl">押金</span>
+						<span class="fr">50</span></li>
 				</ul>
 			</div>
 		</div>
@@ -84,29 +94,29 @@
 			<div class="sslist">
 				<ul>
 					<li><em class="rs"></em>
-						<p>热水淋具</p></li>
+					<p>热水淋具</p></li>
 					<li><em class="yj"></em>
-						<p>牙具</p></li>
+					<p>牙具</p></li>
 					<li><em class="tx"></em>
-						<p>拖鞋</p></li>
+					<p>拖鞋</p></li>
 					<li><em class="xz"></em>
-						<p>香皂</p></li>
+					<p>香皂</p></li>
 					<li><em class="mj"></em>
-						<p>毛巾</p></li>
+					<p>毛巾</p></li>
 					<li><em class="xs"></em>
-						<p>洗漱用品</p></li>
+					<p>洗漱用品</p></li>
 					<li><em class="yg"></em>
-						<p>浴缸</p></li>
+					<p>浴缸</p></li>
 					<li><em class="sz"></em>
-						<p>手纸</p></li>
+					<p>手纸</p></li>
 					<li><em class="tv"></em>
-						<p>电视</p></li>
+					<p>电视</p></li>
 					<li><em class="ysj"></em>
-						<p>饮水设施</p></li>
+					<p>饮水设施</p></li>
 					<li><em class="kt"></em>
-						<p>空调</p></li>
+					<p>空调</p></li>
 					<li><em class="bx"></em>
-						<p>冰箱</p></li>
+					<p>冰箱</p></li>
 				</ul>
 				<p>
 					<a href="${request.contextPath}/system/houseInfo/houseInfo_2" class="alltext">全部配套</a>

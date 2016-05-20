@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+	<div id="header">
+		<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+		<span class="m_text">${houseInfo.title!''}</span>
+	</div>
+	<div class="main" style="padding-top: 0">
+		<div class="houseimg">
+			<img src="${request.contextPath}/resource/upload/house/${houseInfo.mainImage!''}" width="100%" />
+			<div class="price">￥${houseInfo.price!''}</div>
+		</div>
+		<div class="keeperhouse">
+			<p>${houseInfo.address!''}</p>
+			<p>${houseInfo.design!''} 整租</p>
+			<p class="keeperimg">
+				<img src="${request.contextPath}/resource/images/9d82d158ccbf6c812df2e2c6be3eb13532fa40d3.jpg" width="100%" />
+			</p>
+			<p class="f_yellow">★★★★☆</p>
+			<#if masterInfo.weiXin??> <#assign info=masterInfo.weiXin?eval> </#if>
+			<p><#if info??> ${info.name}<#else>${masterInfo.id}</#if></p>
+		</div>
+		<div class="houstype">
+			<p>户型</p>
+			<p class="f_gray">房间面积：${houseInfo.area!''}平方米</p>
+			<p class="f_gray">房屋类型：${houseInfo.design!''}</p>
+		</div>
+		<div class="bedtype">
+			<p>床</p>
+			<#if houseInfo.bed??> <#assign bed=houseInfo.bed?eval > <#if bed??> <#list bed as item>
+			<p class="f_gray">${item.name}</p>
+			</#list> </#if> </#if>
+		</div>
+		<div class="peop">
+			<p>可住${houseInfo.count!''}人</p>
+		</div>
+		<div class="keeperhouse" style="margin-bottom: 0">
+			<p>
+				<strong>地址</strong>
+			</p>
+			<p class="f_gray">${houseInfo.address!''}</p>
+			<div class="mt15">
+				<img src="${request.contextPath}/resource/images/map.jpg" width="100%" />
+			</div>
+		</div>
+		<div class="botline">
+			<a href="" class="btn_c1">提供服务</a>
+			<a href="${request.contextPath}/system/order/get/${houseInfo.id}/orderInfo_2" class="btn_c2" style="float: right;">详细信息</a>
+		</div>
+	</div>
+</body>
+</html>

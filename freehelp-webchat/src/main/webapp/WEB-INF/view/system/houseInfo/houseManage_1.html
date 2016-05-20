@@ -45,6 +45,7 @@
 
 
 		<#if houseInfos??> <#list houseInfos as item>
+		<a href="${request.contextPath}/system/houseInfo/get/${item.id}/houseInfo_1">
 		<div class="order_house" action="display${item.status}">
 			<div class="limg">
 				<img src="${request.contextPath}/resource/upload/house/${item.mainImage!''}" width="100%">
@@ -58,6 +59,7 @@
 				<p class="pj">★★★★☆</p>
 			</div>
 		</div>
+		</a>
 		</#list> </#if>
 	</div>
 </body>

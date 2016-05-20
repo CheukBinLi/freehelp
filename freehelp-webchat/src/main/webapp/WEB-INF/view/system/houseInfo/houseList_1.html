@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="renderer" content="webkit">
+<title>自由帮</title>
+
+<link href="${request.contextPath}/resource/style/feel.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${request.contextPath}/resource/plugin/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${request.contextPath}/resource/js/util.js"></script>
+</head>
+
+<body>
+<div id="header">
+	<a href="javascript:history.go(-1);" class="l_ico ico_back"></a>
+    <span class="m_text"><img src="${request.contextPath}/resource/images/logo_head.jpg" height="40" /></span>
+	<a href=""  class="r_ico ico_massg"></a>
+</div>
+<div class="main">
+	<div>
+	<#if houseInfos??>
+	<#list houseInfos as item>
+		<a href="${request.contextPath}/system/order/get/${item.id}/orderInfo_3">
+    	<div><img src="${request.contextPath}/resource/upload/house/${item.mainImage!''}" width="100%" height="240" /></div>
+        <div class="houseinfo2">
+        	<div class="houseimg"><img src="${request.contextPath}/resource/images/9d82d158ccbf6c812df2e2c6be3eb13532fa40d3.jpg" width="100%" height="100%" /></div>
+        	<div class="houseint">
+            	<h3><span class="fl">${item.address!''}</span><span class="fr">${item.price!''}元/晚</span></h3>
+                <p>${item.design!''} 整租</p>
+            </div>
+        </div>
+        </a>
+	</#list>
+	</#if>
+    </div>
+</div>
+</body>
+</html>
+
