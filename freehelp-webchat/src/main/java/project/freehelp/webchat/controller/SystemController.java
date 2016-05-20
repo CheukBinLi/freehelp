@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import project.freehelp.common.Constant;
 import project.freehelp.common.SessionType;
+import project.freehelp.common.SettingSession;
 import project.freehelp.common.entity.HouseInfo;
 import project.freehelp.common.service.HouseInfoService;
 import project.master.fw.sh.common.AbstractController;
@@ -22,22 +24,30 @@ import project.master.fw.sh.common.AbstractController;
 @Controller
 @Scope("prototype")
 @RequestMapping("/system/")
-public class SystemController extends AbstractController implements SessionType {
+public class SystemController extends AbstractController implements SessionType, Constant {
 
 	@Autowired
 	private HouseInfoService houseInfoService;
+	@Autowired
+	private SettingSession settingSession;
 
-	@RequestMapping("index")
+	@RequestMapping(value = { "index", "index2" })
 	public ModelAndView anythingPath(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("master", request.getSession().getAttribute(USER_ID));
-		List<HouseInfo> houseInfos = null;
+		String id = request.getSession().getAttribute(USER_ID).toString();
+		params.put("master", id);
+		List<HouseInfo> masterHouseInfos = null;
+		List<HouseInfo> stewardHouseInfos = null;
 		try {
-			houseInfos = houseInfoService.getList(params, false, 1, 2);
+			if (settingSession.isMaster(request))
+				masterHouseInfos = houseInfoService.getList(params, false, 1, 2);
+			if (settingSession.isSteward(request)) {
+				stewardHouseInfos = houseInfoService.getStewardHouseList2(id, 1, 2);
+			}
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
-		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
+		return new ModelAndView(request.getPathInfo()).addObject("masterHouseInfos", masterHouseInfos).addObject("stewardHouseInfos", stewardHouseInfos);
 	}
 
 	@RequestMapping("exit")

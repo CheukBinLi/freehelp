@@ -84,6 +84,12 @@ public class HouseSteward extends AbstractEntity {
 		this.id = id;
 	}
 
+	public HouseSteward(boolean settingId) {
+		super();
+		if (settingId)
+			this.id = generatedValue();
+	}
+
 	public HouseSteward() {
 		super();
 	}

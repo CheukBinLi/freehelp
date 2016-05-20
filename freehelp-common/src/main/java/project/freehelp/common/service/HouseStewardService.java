@@ -5,4 +5,6 @@ import project.master.dbmaamger.service.BaseService;
 
 public interface HouseStewardService extends BaseService<HouseSteward, String> {
 
+	HouseSteward checkSaveOrUpdate(HouseSteward houseSteward) throws Throwable;
+
 }

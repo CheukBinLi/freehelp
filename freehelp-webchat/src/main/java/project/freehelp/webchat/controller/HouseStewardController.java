@@ -47,8 +47,9 @@ public class HouseStewardController extends AbstractController {
 	@RequestMapping(method = RequestMethod.POST)
 	public Object postJ(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			HouseSteward houseSteward = fillObject(new HouseSteward(), getParams(request));
-			houseStewardService.save(houseSteward);
+			// HouseSteward houseSteward = fillObject(new HouseSteward(), getParams(request));
+			// houseStewardService.save(houseSteward);
+			HouseSteward houseSteward = houseStewardService.checkSaveOrUpdate(fillObject(new HouseSteward(true), getParams(request)));
 			return success(houseSteward);
 		} catch (Throwable e) {
 			return fail(e);
@@ -105,7 +106,7 @@ public class HouseStewardController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<HouseSteward> list = houseStewardService.getList(map, true,page, size);
+			List<HouseSteward> list = houseStewardService.getList(map, true, page, size);
 			return new ModelAndView("houseSteward_" + next).addObject("houseStewardList", list);
 		} catch (Throwable e) {
 			return exceptionPage(e);
@@ -119,7 +120,7 @@ public class HouseStewardController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<HouseSteward> list = houseStewardService.getList(map, true,page, size);
+			List<HouseSteward> list = houseStewardService.getList(map, true, page, size);
 			return success(list);
 		} catch (Throwable e) {
 			return fail(e);

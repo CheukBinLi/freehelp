@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import project.freehelp.common.entity.HouseInfo;
 import project.freehelp.common.entity.Order;
+import project.freehelp.common.entity.UserInfo;
+import project.freehelp.common.service.HouseInfoService;
 import project.freehelp.common.service.OrderService;
+import project.freehelp.common.service.UserInfoService;
 import project.master.fw.sh.common.AbstractController;
 
 @Controller
@@ -27,7 +31,13 @@ public class OrderController extends AbstractController {
 	@Autowired
 	private OrderService orderService;
 
-	@RequestMapping(value = "order_{number}", method = { RequestMethod.GET, RequestMethod.POST })
+	@Autowired
+	private HouseInfoService houseInfoService;
+
+	@Autowired
+	private UserInfoService userInfoService;
+
+	@RequestMapping(value = { "order_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request));
 	}
@@ -93,7 +103,7 @@ public class OrderController extends AbstractController {
 	public ModelAndView getj(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") String id, @PathVariable("next") String next) {
 		try {
 			Order order = orderService.getByPk(id);
-			return new ModelAndView("order_" + next).addObject("order", order);
+			return new ModelAndView(request.getPathInfo().replace("get/" + id + "/", "")).addObject("order", order);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
@@ -105,7 +115,7 @@ public class OrderController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<Order> list = orderService.getList(map, true,page, size);
+			List<Order> list = orderService.getList(map, true, page, size);
 			return new ModelAndView("order_" + next).addObject("orderList", list);
 		} catch (Throwable e) {
 			return exceptionPage(e);
@@ -119,7 +129,7 @@ public class OrderController extends AbstractController {
 			Map<String, Object> map = getParams(request);
 			int page = map.containsKey("page") ? Integer.valueOf(map.remove("page").toString()) : -1;
 			int size = map.containsKey("size") ? Integer.valueOf(map.remove("size").toString()) : -1;
-			List<Order> list = orderService.getList(map, true,page, size);
+			List<Order> list = orderService.getList(map, true, page, size);
 			return success(list);
 		} catch (Throwable e) {
 			return fail(e);
@@ -136,4 +146,21 @@ public class OrderController extends AbstractController {
 			return fail(e);
 		}
 	}
+
+	// ######################################
+
+	@RequestMapping(value = { "get/{id}/orderInfo_1", "get/{id}/orderInfo_2","get/{id}/orderInfo_3" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView oi_1(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") String id) {
+		HouseInfo houseInfo = null;
+		UserInfo userInfo = null;
+		try {
+			houseInfo = houseInfoService.getByPk(id);
+			if (null != houseInfo)
+				userInfo = userInfoService.getByPk(houseInfo.getMaster());
+		} catch (Throwable e) {
+			return exceptionPage(e);
+		}
+		return new ModelAndView(request.getPathInfo().replace("get/" + id + "/", ""), getParams(request)).addObject("houseInfo", houseInfo).addObject("masterInfo", userInfo);
+	}
+
 }

@@ -1,5 +1,7 @@
 package project.freehelp.common.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -36,6 +38,7 @@ public class Order extends AbstractEntity {
 	private String total;// 总服用
 	private int status;// 状态
 	private String remark;// 备注
+	private Date createDate;
 
 	public String getId() {
 		return id;
@@ -106,6 +109,15 @@ public class Order extends AbstractEntity {
 
 	public Order setRemark(String remark) {
 		this.remark = remark;
+		return this;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public Order setCreateDate(Date createDate) {
+		this.createDate = createDate;
 		return this;
 	}
 

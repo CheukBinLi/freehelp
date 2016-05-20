@@ -23,4 +23,21 @@ public interface Constant {
 
 	final String ACCESS_HOUSE_IMAGE_PATH = "/resource/upload/house/";
 
+	/***
+	 * 初始化
+	 */
+	final int STATUS_TYPE_INIT = 0;
+	/***
+	 * 等待审批
+	 */
+	final int STATUS_TYPE_WAIT = 1;
+	/***
+	 * 通过
+	 */
+	final int STATUS_TYPE_SUCCESS = 2;
+	/***
+	 * 不通过
+	 */
+	final int STATUS_TYPE_FAIL = -1;
+
 }

@@ -47,7 +47,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 	@Autowired
 	private UpLoadFileFactory upLoadFileFactory;
 
-	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number},houseManage_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number},houseManage_{number},houseList_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request));
 	}
@@ -234,6 +234,20 @@ public class HouseInfoController extends AbstractController implements Constant,
 		List<?> houseInfos = null;
 		try {
 			houseInfos = houseInfoService.getStewardHouseList(request.getSession().getAttribute(USER_ID).toString(), -1, -1);
+		} catch (Throwable e) {
+			return exceptionPage(e);
+		}
+		return new ModelAndView(request.getPathInfo()).addObject("houseInfos", houseInfos);
+	}
+
+	@RequestMapping(value = { "houseList_1" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView hl_1(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", STATUS_TYPE_SUCCESS);
+		params.put("steward", request.getSession().getAttribute(USER_ID).toString());
+		List<?> houseInfos = null;
+		try {
+			houseInfos = houseInfoService.getNotConfirmAndNotInStewardHouseList(params, -1, -1);
 		} catch (Throwable e) {
 			return exceptionPage(e);
 		}
