@@ -96,7 +96,11 @@ public class UserInfoController extends AbstractController implements Constant, 
 			UserInfo userInfo = userInfoService.getByPk(id);
 			userInfo = fillObject(userInfo, params);
 			UserInfoVo userInfoVo = null == userInfo ? new UserInfoVo() : JsonObjectFactory.newInstance().toObject(userInfo.getInfo(), UserInfoVo.class, false);
-			userInfo.setInfo(fillObject(userInfoVo, params).toJson()).setMaster(0);
+			userInfo.setInfo(fillObject(userInfoVo, params).toJson());
+			if (params.containsKey("master"))
+				userInfo.setMaster(2);
+			else if (params.containsKey("steward"))
+				userInfo.setSteward(2);
 			if (commonsMultipartResolver.isMultipart(request)) {
 				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 				Iterator<String> it = multiRequest.getFileNames();
@@ -248,6 +252,6 @@ public class UserInfoController extends AbstractController implements Constant, 
 		params.put("mesterOrder", mesterOrder);
 		params.put("mySteward", mySteward);
 		params.putAll(getParams(request));
-		return new ModelAndView(request.getPathInfo(),params);
+		return new ModelAndView(request.getPathInfo(), params);
 	}
 }

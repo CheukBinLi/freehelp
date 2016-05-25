@@ -47,7 +47,7 @@ public class HouseInfoController extends AbstractController implements Constant,
 	@Autowired
 	private UpLoadFileFactory upLoadFileFactory;
 
-	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number},houseManage_{number},houseList_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = { "houseInfo_{number}", "housingPublish_{number}","houseManage_{number}","houseList_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		return new ModelAndView(request.getPathInfo()).addAllObjects(getParams(request));
 	}

@@ -9,7 +9,7 @@ public class UserInfoVo extends AbstractAuthorityVo {
 	private String name; // 姓名
 	private String address;// 地址
 	private String sex;// 性别
-	private String idCard;// 身份证
+	// private String idCard;// 身份证
 	private String phone;// 手机
 	private String bankAccount;// 银行卡号
 	private String bank;// 开户银行
@@ -49,14 +49,14 @@ public class UserInfoVo extends AbstractAuthorityVo {
 		return this;
 	}
 
-	public String getIdCard() {
-		return idCard;
-	}
-
-	public UserInfoVo setIdCard(String idCard) {
-		this.idCard = idCard;
-		return this;
-	}
+	// public String getIdCard() {
+	// return idCard;
+	// }
+	//
+	// public UserInfoVo setIdCard(String idCard) {
+	// this.idCard = idCard;
+	// return this;
+	// }
 
 	public String getPhone() {
 		return phone;

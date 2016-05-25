@@ -1,5 +1,6 @@
 package project.freehelp.webchat.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import project.freehelp.common.SessionType;
 import project.freehelp.common.SettingSession;
 import project.freehelp.common.entity.UserInfo;
 import project.freehelp.common.service.UserInfoService;
@@ -28,7 +30,7 @@ import project.master.user.User;
 @Controller
 @Scope("prototype")
 @RequestMapping("/register/")
-public class RegisterController extends AbstractController {
+public class RegisterController extends AbstractController implements SessionType {
 
 	@Autowired
 	private UserService userService;
@@ -39,7 +41,7 @@ public class RegisterController extends AbstractController {
 	@Autowired
 	private SettingSession settingSession;
 
-	@RequestMapping(value = "reg_{number}", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = { "reg_{number}", "changPassword_{number}" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView getPage(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView(request.getPathInfo(), getParams(request));
 		return mav;
@@ -231,4 +233,41 @@ public class RegisterController extends AbstractController {
 	// return mav;
 	// }
 
+	@ResponseBody
+	@RequestMapping(value = "changPassword")
+	public Object cp_0(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String verificationcode = request.getParameter("verificationcode");
+			String phone = request.getParameter("phone");
+			SmsEntry sms = smsFactory.getAndRemoveCode(phone);
+			if (null != sms && !verificationcode.equals(sms.getCode()))
+				return exceptionPage("校验码失校，请重新获取。", null);
+			Map<String, Object> o = getParams(request);
+			String id = request.getSession().getAttribute(CHANGET_PASSWORD_USER_ID).toString();
+			User user = userService.getByPk(id);
+			if (null != user) {
+				userService.update(fillObject(user, o));
+				return success();
+			}
+			return fail();
+		} catch (Throwable e) {
+			return fail(e);
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "phoneIn")
+	public Object phoneIn(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Map<String, Object> o = getParams(request);
+			List<?> list = userService.getList(o, false, -1, -1);
+			if (list.size() > 0) {
+				request.getSession().setAttribute(CHANGET_PASSWORD_USER_ID, ((User) list.get(0)).getId());
+				return success();
+			}
+			return fail("此帐号不存在");
+		} catch (Throwable e) {
+			return fail(e);
+		}
+	}
 }

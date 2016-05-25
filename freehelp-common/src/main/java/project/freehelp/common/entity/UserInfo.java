@@ -34,7 +34,7 @@ public class UserInfo extends AbstractEntity {
 	private String extend;// 扩展字段
 	private String weixin;// 微信信息
 	// private String reallyName;
-	// private String idCard;// 身份证
+	private String idCard;// 身份证
 	private String idCardImage;// 身份证图片(正面、反面、人头+正面);
 	private String authority;// 权限
 	private int master;// 业主 状态 -1,0,1,2(初始化，申请，修改再申请，完成通过)
@@ -128,6 +128,15 @@ public class UserInfo extends AbstractEntity {
 
 	public UserInfo setWeixin(String weixin) {
 		this.weixin = weixin;
+		return this;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public UserInfo setIdCard(String idCard) {
+		this.idCard = idCard;
 		return this;
 	}
 
