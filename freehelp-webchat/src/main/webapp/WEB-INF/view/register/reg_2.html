@@ -21,7 +21,7 @@
 				var code = '&verificationcode=' + $(this).val();
 				ajax.POST('verificationcode', 'phone=' + phone.val() + code, function(data) {
 					if (msgModel.getCode(data) == '1') {
-						alert('通过');
+						//alert('通过');
 						$("input[name='verificationcode']").attr("readonly", "readonly");
 						$('#submit').click(function() {
 							var password = $("input[name='password']");
@@ -50,7 +50,7 @@
 
 <body>
 	<div id="header">
-		<a href="login.html" class="l_ico ico_back"></a>
+		<a href="${request.contextPath}/" class="l_ico ico_back"></a>
 		<span class="m_text">注册</span>
 	</div>
 	<div class="main">

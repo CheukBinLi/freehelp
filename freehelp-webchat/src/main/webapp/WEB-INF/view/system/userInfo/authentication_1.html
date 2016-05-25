@@ -149,7 +149,7 @@
 							<input type="text" value="${data.name!''}" class="inputstyle f_gray2" placeholder="请输入证件上的真实姓名" name="name" v="true" msg="请输入真实姓名">
 						</span></li>
 					<li><span class="fl">身份证号：</span> <span class="fl">
-							<input value="${data.idCard!''}" type="text" class="inputstyle f_gray2" placeholder="请输入身份证号码" name="idCard" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/'>
+							<input value="${userInfo.idCard!''}" type="text" class="inputstyle f_gray2" placeholder="请输入身份证号码" name="idCard" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/'>
 							<input name="brithday" type="hidden" />
 						</span></li>
 				</ul>
@@ -187,6 +187,7 @@
 
 			<div class="btn_reg">
 				<input type="hidden" name="type" value="jpg">
+				<input type="hidden" name="master" value="1">
 				<a href="javascript:void(0)" id="submit">提交</a>
 			</div>
 		</form>

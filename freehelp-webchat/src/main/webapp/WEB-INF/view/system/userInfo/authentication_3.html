@@ -139,7 +139,7 @@
 								<label>保密</label>
 							</span></li>
 						<li><span class="listbox_left">身份证</span> <span class="rightinput">
-								<input type="text" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/' class="listinput" name="idCard" value="${data.idCard!''}" style="width: 50%">
+								<input type="text" v="true" msg="请输入有效身份证号码" test='/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/' class="listinput" name="idCard" value="${userInfo.idCard!''}" style="width: 50%">
 								<input name="brithday" type="hidden" />
 								<a href="javascript:showAndHide('#uploadImg','#main_form');" class="uploadinging"></a>
 							</span></li>
@@ -162,6 +162,7 @@
 				</div>
 				<div class="btnline">
 					<input type="hidden" name="type" value="jpg">
+					<input type="hidden" name="steward" value="1">
 					<a href="javascript:void(0)" id="submit">提交</a>
 				</div>
 			</div>

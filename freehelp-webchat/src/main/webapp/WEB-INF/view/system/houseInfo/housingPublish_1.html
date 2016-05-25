@@ -130,7 +130,6 @@
 			$('input[name="serviceCharge"][type="hidden"][placeholder="服务费"]').val((parseInt(selectBedPay) + parseInt(carFare) + parseInt(springCleaning) + parseInt(bedRoomPay)));
 			var f0 = $('#f0');
 			var file = $("input[type='file']")[0].files;
-
 			var fd = new FormData(f0[0]);
 			for (var i = 0; i < file.length; i++)
 				fd.append("file" + i, file[i]);
@@ -167,117 +166,84 @@
 				<div class="listbox icolistbox">
 					<div class="com_mainbox tc">房源描述</div>
 					<ul>
-						<li>
-							<span class="listbox_left">
+						<li><span class="listbox_left">
 								<em class="fy1"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input type="text" class="listinput" placeholder="标题" name="title">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy2"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input action="addressX" readonly="readonly" name="address" class="listinput" type="text" placeholder="详细地址" name="address">
-							</span>
-							<input type="hidden" name="longitude" placeholder="经度" value="0.0">
-							<input type="hidden" name="latitude" placeholder="纬度" value="0.0">
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span> <input type="hidden" name="longitude" placeholder="经度" value="0.0"> <input type="hidden" name="latitude" placeholder="纬度" value="0.0"></li>
+						<li><span class="listbox_left">
 								<em class="fy3"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input action="trafficX" type="text" readonly="readonly" class="listinput" placeholder="交通描述" name="traffic">
-							</span>
-						</li>
+							</span></li>
 					</ul>
 				</div>
 				<div class="l"></div>
 				<div class="listbox icolistbox">
 					<div class="com_mainbox tc">房源信息</div>
 					<ul>
-						<li>
-							<span class="listbox_left">
+						<li><span class="listbox_left">
 								<em class="fy4"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input type="text" action="areaX" name="area" readonly="readonly" class="listinput" readonly="readonly" placeholder="房屋面积(平方)">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy5"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input class="listinput" readonly="readonly" type="text" placeholder="房屋户型" name="design" action="designX">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy6"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input type="text" class="listinput" readonly="readonly" action="countX" placeholder="入住人数" name="count" maxlength="6">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy7"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input action="bedX" class="listinput" readonly="readonly" type="text" placeholder="床型">
 								<input type="hidden" placeholder="床型" name="bed">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy8"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input type="text" class="listinput" placeholder="配套设施" name="facility" action="facilityX">
-							</span>
-						</li>
+							</span></li>
 					</ul>
 				</div>
 				<div class="l"></div>
 				<div class="listbox icolistbox">
 					<div class="com_mainbox tc">价格规则</div>
 					<ul>
-						<li>
-							<span class="listbox_left">
+						<li><span class="listbox_left">
 								<em class="fy9"></em>
-							</span>
-							<span class="rightinput">
-								<input type="text" class="listinput" placeholder="日价" name="price" maxlength="6">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span> <span class="rightinput">
+								<input type="text" class="listinput" placeholder="日价" name="price" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy10"></em>
-							</span>
-							<span class="rightinput">
-								<input class="listinput" type="text" placeholder="押金" name="pledge" maxlength="6">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span> <span class="rightinput">
+								<input class="listinput" type="text" placeholder="押金" name="pledge" maxlength="6" onkeydown="if(event.keyCode==13)event.keyCode=9;" onKeyPress="if ((event.keyCode<48 || event.keyCode>57))event.returnValue=false;">
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy11"></em>
-							</span>
-							<span class="rightinput">
-								<input type="text" class="listinput" placeholder="是否接纳外籍人士" name="foregn">
-							</span>
-						</li>
-						<li>
-							<span class="listbox_left">
+							</span> <span class="rightinput">
+								<!-- <input type="text" class="listinput" placeholder="是否接纳外籍人士" name="foregn" readonly="readonly"> -->
+								是否接纳外籍人士
+								<input type="radio" id="radio2" name="foregn" value="1" />
+								是
+								<input type="radio" id="radio3" name="foregn" value="0" />
+								否
+							</span></li>
+						<li><span class="listbox_left">
 								<em class="fy12"></em>
-							</span>
-							<span class="rightinput">
+							</span> <span class="rightinput">
 								<input class="listinput" type="text" placeholder="隐藏帖士" name="remark">
-							</span>
-						</li>
+							</span></li>
 					</ul>
 				</div>
 				<div class="btnline">
@@ -303,10 +269,7 @@
 			<div class="popul">
 				<ul>
 					<#list 50..60 as data>
-					<li>
-						<a href="javascript:void(0);" class="close" select="area" value="${data}">${data}平方</a>
-					</li>
-					</#list>
+					<li><a href="javascript:void(0);" class="close" select="area" value="${data}">${data}平方</a></li> </#list>
 				</ul>
 			</div>
 		</div>
@@ -325,10 +288,7 @@
 			<div class="popul">
 				<ul>
 					<#list 1..8 as data>
-					<li>
-						<a href="javascript:void(0);" class="close" select="count" value="${data}">${data}人</a>
-					</li>
-					</#list>
+					<li><a href="javascript:void(0);" class="close" select="count" value="${data}">${data}人</a></li> </#list>
 				</ul>
 			</div>
 		</div>
@@ -344,93 +304,54 @@
 				<div class="gray_title">卫浴</div>
 				<div class="sellist">
 					<ul>
-						<li>
-							<span class="fl">热水淋具</span>
-							<span class="fr">
+						<li><span class="fl">热水淋具</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">牙具</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">牙具</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">拖鞋</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">拖鞋</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">香皂</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">香皂</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">毛巾</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">毛巾</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">洗漱用品</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">洗漱用品</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">浴缸</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">浴缸</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">手纸</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">手纸</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
+							</span></li>
 					</ul>
 				</div>
 				<div class="gray_title">电器</div>
 				<div class="sellist">
 					<ul>
-						<li>
-							<span class="fl">电视</span>
-							<span class="fr">
+						<li><span class="fl">电视</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">空调</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">空调</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">饮水设施</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">饮水设施</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">冰箱</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">冰箱</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
-						<li>
-							<span class="fl">电视</span>
-							<span class="fr">
+							</span></li>
+						<li><span class="fl">电视</span> <span class="fr">
 								<input type="checkbox" value="">
-							</span>
-						</li>
+							</span></li>
 					</ul>
 				</div>
 				<div>
-					<a href="" class="massage" style="width: 90%">确认</a>
+					<a href="javascript:close('facilityX');" class="massage" style="width: 90%">确认</a>
 				</div>
 			</div>
 		</div>
@@ -447,12 +368,7 @@
 					<div class="sel_bed">
 						<ul>
 							<#if dicts??> <#list dicts as item>
-							<li>
-								<input type="checkbox" class="selbox" value="">
-								<label>${item.key}</label>
-								<input name="bed1" money="${item.value}" no="${item.id}" type="text" class="selno" value="1">
-							</li>
-							</#list> </#if>
+							<li><input type="checkbox" class="selbox" value=""> <label>${item.key}</label> <input name="bed1" money="${item.value}" no="${item.id}" type="text" class="selno" value="1"></li> </#list> </#if>
 						</ul>
 					</div>
 

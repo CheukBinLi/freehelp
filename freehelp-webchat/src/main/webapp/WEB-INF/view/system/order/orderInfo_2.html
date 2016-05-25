@@ -39,9 +39,9 @@
 		</div>
 		<div class="bedtype">
 			<p>床</p>
-			<#if houseInfo.bed??> <#assign bed=houseInfo.bed?eval > <#if bed??> <#list bed as item>
+			<#if houseInfo.bed??><#if houseInfo.bed?length gt 2> <#assign bed=houseInfo.bed?eval > <#if bed??> <#list bed as item>
 			<p class="f_gray">${item.name}</p>
-			</#list> </#if> </#if>
+			</#list> </#if> </#if></#if>
 		</div>
 		<div class="peop">
 			<p>可住${houseInfo.count!''}人</p>
